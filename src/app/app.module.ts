@@ -11,10 +11,13 @@ import { EventService } from './demo/service/event.service';
 import { IconService } from './demo/service/icon.service';
 import { NodeService } from './demo/service/node.service';
 import { PhotoService } from './demo/service/photo.service';
+import { RestaurantService } from './services/Restaurant/restaurant.service';
+import { UsersService } from './services/Users/users.service';
+import { UserComponentComponent } from './user-component/user-component.component';
 
 @NgModule({
     declarations: [
-        AppComponent, NotfoundComponent
+        AppComponent, NotfoundComponent,UserComponentComponent
     ],
     imports: [
         AppRoutingModule,
@@ -23,7 +26,7 @@ import { PhotoService } from './demo/service/photo.service';
     providers: [
         { provide: LocationStrategy, useClass: HashLocationStrategy },
         CountryService, CustomerService, EventService, IconService, NodeService,
-        PhotoService, ProductService
+        PhotoService, ProductService,RestaurantService,UsersService
     ],
     bootstrap: [AppComponent]
 })
