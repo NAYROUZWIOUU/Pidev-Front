@@ -14,14 +14,16 @@ import { PhotoService } from './demo/service/photo.service';
 import { RestaurantService } from './services/Restaurant/restaurant.service';
 import { UsersService } from './services/Users/users.service';
 import { UserComponentComponent } from './user-component/user-component.component';
+import { UserComponentModule } from './user-component/user-component.module';
 
 @NgModule({
     declarations: [
-        AppComponent, NotfoundComponent,UserComponentComponent
+        AppComponent, NotfoundComponent
     ],
     imports: [
         AppRoutingModule,
-        AppLayoutModule
+        AppLayoutModule,
+        UserComponentModule
     ],
     providers: [
         { provide: LocationStrategy, useClass: HashLocationStrategy },

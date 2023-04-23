@@ -16,9 +16,12 @@ export class UsersService {
   b: boolean = false;
   text: string = "";
 
-  apiUrl = "http://localhost:8082";
+  apiUrl = "http://localhost:8083/test/";
+
+  constructor(private http: HttpClient) {}
+
   getUsers(): Observable<User[]> {
-    return this.http.get<User[]>(this.apiUrl + "/User");
+    return this.http.get<User[]>(this.apiUrl +"get-all-users");
   }
 
   deleteUser(idUser: number): Observable<User> {
@@ -47,6 +50,6 @@ export class UsersService {
     return this.http.get<User>(this.apiUrl + "/User/" + idUser);
   }
 
-  constructor(private http: HttpClient) {}
+
 
 }

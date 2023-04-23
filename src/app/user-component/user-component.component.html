@@ -1,1 +1,26 @@
-<p>user-component works!</p>
+List Of Users:
+<div class="body table-responsive">
+<table class="table table-bordered">
+<thead>
+<tr>
+<th>#</th>
+<th>FIRST NAME</th>
+<th>LAST NAME</th>
+<th>EMAIL</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr *ngFor="let User of users">
+<th scope="row">{{User.idUser}}</th>
+<td>{{User.firstName}}</td>
+<td>{{User.lastName}}</td>
+<td>{{User.email}}</td>
+
+<td><button type="button" class="btn btn-
+primary">DELETE</button></td>
+
+</tr>
+</tbody>
+</table>
+</div>
