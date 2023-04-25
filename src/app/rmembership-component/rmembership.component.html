@@ -1,0 +1,141 @@
+<div class="grid">
+    <div class="col-12">
+        <div class="card px-6 py-6">
+            <p-toast></p-toast>
+            <p-toolbar styleClass="mb-4">
+                <ng-template pTemplate="left">
+                    <div class="my-2">
+                        <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNew()"></button>
+                        <button pButton pRipple label="Delete" icon="pi pi-trash" class="p-button-danger" (click)="deleteSelectedrmemberships()" [disabled]="!selectedRmemberships || !selectedRmemberships.length"></button>
+                    </div>
+                </ng-template>
+
+                <ng-template pTemplate="right">
+                    <p-fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" label="Import" chooseLabel="Import" class="mr-2 inline-block"></p-fileUpload>
+                    <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help" (click)="dt.exportCSV()"></button>
+                </ng-template>
+            </p-toolbar>
+
+            <p-table #dt [value]="rmemberships" [columns]="cols" responsiveLayout="scroll" [rows]="10" [globalFilterFields]="['name','country.name','representative.name','status']" [rows]="10" [paginator]="true" [rowsPerPageOptions]="[10,20,30]" [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" selectionMode="multiple" [rowHover]="true" dataKey="id">
+                <ng-template pTemplate="caption">
+                    <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+                        <h5 class="m-0">Manage Rmemberships</h5>
+                        <span class="block mt-2 md:mt-0 p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text" pInputText placeholder="Search..."  class="w-full sm:w-auto"/>
+                        </span>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th style="width: 3rem">
+                            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                        </th>
+                        <th pSortableColumn="code">Code <p-sortIcon field="code"></p-sortIcon></th>
+                        <th pSortableColumn="typemembership">Type Membership <p-sortIcon field="type"></p-sortIcon></th>
+                        <th pSortableColumn="duration">Duration <p-sortIcon field="duration"></p-sortIcon></th>
+                        <th pSortableColumn="startdate">Startdate <p-sortIcon field="startdate"></p-sortIcon></th>
+                        <th pSortableColumn="endDate">EndDate <p-sortIcon field="endDate"></p-sortIcon></th>
+                        <th></th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-rmembership>
+                    <tr>
+                        <td>
+                            <p-tableCheckbox [value]="rmembership"></p-tableCheckbox>
+                        </td>
+                        <td style="width:14%; min-width:10rem;"><span class="p-column-title">Code</span>
+                            {{rmembership.code || rmembership.idRMembership}}
+                        </td>
+                        <td style="width:14%; min-width:10rem;">
+                            <span class="p-column-title">TypeMembership</span>
+                            {{rmembership.typeMembership}}
+                        </td>
+                        <td style="width:14%; min-width:8rem;">
+                            <span class="p-column-title">Duration</span>
+                            {{rmembership.duration}}
+                        </td>
+                        <td style="width:14%; min-width:10rem;">
+                            <span class="p-column-title">StartDate</span>
+                            {{rmembership.startdate}}
+                        </td>
+                        <td style="width:14%; min-width:10rem;">
+                          <span class="p-column-title">EndDate</span>
+                          {{rmembership.endDate}}
+                      </td>
+                      <td style="width:14%; min-width:10rem;">
+                        <span class="p-column-title">Price</span>
+                        {{rmembership.price}}
+                      </td>
+
+                        <td>
+                            <div class="flex">
+                                <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editrmembership(rmembership)"></button>
+                                <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="rmembership.idRMembership && deleteRmembership(rmembership.idRMembership)"></button>
+                            </div>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+
+        <p-dialog [(visible)]="rmembershipDialog" [style]="{width: '450px'}" header="Rmembership Details" [modal]="true" class="p-fluid">
+
+          <form #form="ngForm" (ngSubmit)="saveRMembership()">
+            <div class="field">
+              <label for="typeMembership">Type of Membership</label>
+              <select  id="typeMembership" pInputText name="typeMembership" [(ngModel)]="rmembership.typeMembership" required>
+                <option value="">Select a membership type</option>
+                <option value="HALFPENSION">HALFPENSION</option>
+                <option value="FULLPENSION">FULLPENSION</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="startDate">Start Date</label>
+              <input type="datetime-local" pInputText id="startDate" name="startDate" [(ngModel)]="rmembership.startDate" required>
+            </div>
+           <div class="field">
+              <label for="duration">Duration</label>
+              <select  id="duration" pInputText name="duration" [(ngModel)]="rmembership.duration" required>
+                <option value="">Select the duration</option>
+                <option value="DAY">DAY</option>
+                <option value="MONTH">MONTH</option>
+                <option value="SEMESTER">SEMESTER</option>
+              </select>
+            </div>
+              <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+              <button pButton type="submit"
+              [disabled]="form.invalid" pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveRMembership()"></button>
+            </form>
+
+      </p-dialog>
+
+
+
+
+
+      <p-dialog [(visible)]="deletermembershipDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
+          <div class="flex align-items-center justify-content-center">
+              <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+              <span *ngIf="rmembership">Are you sure you want to delete <b>{{rmembership.idRMembership}}</b>?</span>
+          </div>
+          <ng-template pTemplate="footer">
+              <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No" (click)="deletermembershipDialog = false"></button>
+              <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes" (click)="confirmDelete()"></button>
+          </ng-template>
+      </p-dialog>
+
+      <p-dialog [(visible)]="deletermembershipDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
+        <div class="flex align-items-center justify-content-center">
+            <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+            <span>Are you sure you want to delete selected products?</span>
+        </div>
+
+        <ng-template pTemplate="footer">
+            <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No" (click)="deletermembershipDialog = false"></button>
+            <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes" (click)="confirmDeleteSelected()"></button>
+        </ng-template>
+    </p-dialog>
+
+           </div>
+</div>

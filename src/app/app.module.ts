@@ -13,8 +13,9 @@ import { NodeService } from './demo/service/node.service';
 import { PhotoService } from './demo/service/photo.service';
 import { RestaurantService } from './services/Restaurant/restaurant.service';
 import { UsersService } from './services/Users/users.service';
-import { UserComponentComponent } from './user-component/user-component.component';
 import { UserComponentModule } from './user-component/user-component.module';
+import { RmembershipComponentModule } from './rmembership-component/rmembership.module';
+import { RmembershipService } from './services/Rmembership/rmembership.service';
 
 @NgModule({
     declarations: [
@@ -23,12 +24,13 @@ import { UserComponentModule } from './user-component/user-component.module';
     imports: [
         AppRoutingModule,
         AppLayoutModule,
-        UserComponentModule
+        UserComponentModule,
+        RmembershipComponentModule
     ],
     providers: [
         { provide: LocationStrategy, useClass: HashLocationStrategy },
         CountryService, CustomerService, EventService, IconService, NodeService,
-        PhotoService, ProductService,RestaurantService,UsersService
+        PhotoService, ProductService,RestaurantService,UsersService,RmembershipService
     ],
     bootstrap: [AppComponent]
 })

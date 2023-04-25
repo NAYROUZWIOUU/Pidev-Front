@@ -1,11 +1,13 @@
 import { User } from './user';
 import { Restaurant } from './restaurant';
+import { TypeMembership } from './typeMembership';
+import { Duration } from './duration';
 export class RMembership {
   idRMembership?: number;
-  typeMembership?: string;
-  startDate?: string;
-  endDate?: string;
-  duration?: string;
+  typeMembership?: TypeMembership;
+  startDate?: any  ;
+  endDate?: any | undefined;
+  duration?: Duration;
   price?: number;
   validated?: boolean;
   hasRenewed?: boolean;
