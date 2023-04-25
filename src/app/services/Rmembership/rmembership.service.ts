@@ -33,15 +33,15 @@ export class RmembershipService {
 
   addRmembership(rmembership: RMembership): Observable<RMembership> {
     return this.http.post<RMembership>(
-      this.apiUrl + "/addRMembershipWithVerify/6",
+      this.apiUrl + "/addRMembershipWithVerify/1",
       rmembership,
       this.httpOptions
     );
   }
 
-  updateRmembership(rmembership: RMembership, idRmembership: number): Observable<RMembership> {
+  updateRmembership(rmembership: RMembership, idRmembership: number,): Observable<RMembership> {
     return this.http.put<RMembership>(
-      this.apiUrl + "/updateRMembership/" + idRmembership,
+      this.apiUrl + "/renewMembership/" + idRmembership + "/"+rmembership.duration+"/"+rmembership.typeMembership,
       RMembership,
       this.httpOptions
     );

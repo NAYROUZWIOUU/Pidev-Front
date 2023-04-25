@@ -5,6 +5,7 @@ import { MessageService } from 'primeng/api';
 import { Duration } from '../models/duration';
 import { TypeMembership } from '../models/typeMembership';
 import { DatePipe } from '@angular/common';
+import { Table } from 'primeng/table';
 
 
 
@@ -15,7 +16,7 @@ import { DatePipe } from '@angular/common';
   providers: [MessageService,DatePipe]
 })
 export class RmembershipComponent implements OnInit{
-  rmemberships!: RMembership[];
+
   list!: RMembership[];
   idRmembership!: number;
   cols: any[] = [];
@@ -26,22 +27,26 @@ export class RmembershipComponent implements OnInit{
 
   deletermembershipsDialog: boolean = false;
 
+  rmemberships: RMembership[] = [];
+
   rmembership: RMembership = {};
 
-  selectedRmemberships: RMembership[] = [];
+  selectedrmemberships: RMembership[] = [];
 
   submitted: boolean = false;
   messageService: any;
 
-  Durations: Duration[] = [];
-  TypeMemberships: TypeMembership[]= [];
+
+
+  rowsPerPageOptions = [5, 10, 20];
+
 
   constructor(private rs: RmembershipService,private datePipe: DatePipe) {}
 
   ngOnInit(): void {
 
     this.cols = [
-      { field: 'membership', header: 'Membership' },
+      { field: 'rmembership', header: 'Rmembership' },
       { field: 'typemembership', header: 'TypeMembership' },
       { field: 'duration', header: 'Duration' },
       { field: 'startdate', header: 'Startdate' },
@@ -55,12 +60,11 @@ export class RmembershipComponent implements OnInit{
   }
 
   deleteRmembership(idRmembership: number) {
-    this.rs.deleteRmembership(idRmembership).subscribe(() =>
-      this.rs.getRmemberships().subscribe((res) => {
-        this.list = res;
-        this.rmemberships = this.list;
-      })
-    );
+    if (confirm("do you really want to delete this item ?"))
+    {
+this.rs.deleteRmembership(idRmembership).subscribe();
+
+    }
   }
 
   openNew() {
@@ -73,29 +77,28 @@ deleteSelectedrmemberships() {
     this.deletermembershipsDialog = true;
 }
 
-editrmembership(rmembership: RMembership) {
+preEditrmembership(rmembership: RMembership) {
     this.rmembership = { ...rmembership };
     this.rmembershipDialog = true;
 }
 
-deletermembership(rmembership: RMembership) {
-    this.rmembershipDialog = true;
-    this.rmembership = { ...rmembership };
-}
+
 
 confirmDeleteSelected() {
     this.deletermembershipsDialog = false;
-    this.rmemberships = this.rmemberships.filter(val => !this.selectedRmemberships.includes(val));
+    this.rmemberships = this.rmemberships.filter(val => !this.selectedrmemberships.includes(val));
     this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'rmemberships Deleted', life: 3000 });
-    this.selectedRmemberships = [];
+    this.selectedrmemberships = [];
+
 }
 
-confirmDelete() {
-    this.deletermembershipDialog = false;
-    this.rmemberships = this.rmemberships.filter(val => val.idRMembership !== this.rmembership.idRMembership);
-    this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'rmembership Deleted', life: 3000 });
-    this.rmembership = {};
-}
+// confirmDelete() {
+//     this.deletermembershipDialog = false;
+//     this.rmemberships = this.rmemberships.filter(val => val.idRMembership !== this.rmembership.idRMembership);
+//     this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'rmembership Deleted', life: 3000 });
+//     this.rmembership = {};
+
+// }
 
 hideDialog() {
     this.rmembershipDialog = false;
@@ -178,5 +181,7 @@ createId(): number {
 }
 
 
-
+onGlobalFilter(table: Table, event: Event) {
+  table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
+}
 }

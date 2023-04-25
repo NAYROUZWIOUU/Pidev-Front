@@ -17,6 +17,7 @@ import { UserComponentModule } from './user-component/user-component.module';
 import { RmembershipComponentModule } from './rmembership-component/rmembership.module';
 import { RmembershipService } from './services/Rmembership/rmembership.service';
 import { RestauRoutingModule } from './demo/components/landing/restaurant-Front/restauRoutingModule.module';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
     declarations: [
@@ -27,7 +28,8 @@ import { RestauRoutingModule } from './demo/components/landing/restaurant-Front/
         AppLayoutModule,
         UserComponentModule,
         RmembershipComponentModule,
-        RestauRoutingModule
+        RestauRoutingModule,
+        FormsModule
     ],
     providers: [
         { provide: LocationStrategy, useClass: HashLocationStrategy },
