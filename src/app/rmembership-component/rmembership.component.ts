@@ -23,9 +23,19 @@ export class RmembershipComponent implements OnInit{
 
   rmembershipDialog: boolean = false;
 
+  rmembershipRenewDialog: boolean = false;
+
+  rmembershipUpdateDialog: boolean = false;
+
+  rmembershipVerifDialog: boolean = false;
+
   deletermembershipDialog: boolean = false;
 
   deletermembershipsDialog: boolean = false;
+
+  validatemembershipsDialog: boolean = false;
+
+  unValidatemembershipsDialog: boolean = false;
 
   rmemberships: RMembership[] = [];
 
@@ -50,7 +60,8 @@ export class RmembershipComponent implements OnInit{
       { field: 'typemembership', header: 'TypeMembership' },
       { field: 'duration', header: 'Duration' },
       { field: 'startdate', header: 'Startdate' },
-      { field: 'endDate', header: 'Enddate' }
+      { field: 'endDate', header: 'Enddate' },
+
   ];
     this.rs.getRmemberships().subscribe(rmemberships => {
       this.rmemberships = rmemberships;
@@ -59,10 +70,12 @@ export class RmembershipComponent implements OnInit{
 
   }
 
+
+
   deleteRmembership(idRmembership: number) {
     if (confirm("do you really want to delete this item ?"))
     {
-this.rs.deleteRmembership(idRmembership).subscribe();
+      this.rs.deleteRmembership(idRmembership).subscribe();
 
     }
   }
@@ -77,10 +90,98 @@ deleteSelectedrmemberships() {
     this.deletermembershipsDialog = true;
 }
 
+
+
+
+///////////////
+
 preEditrmembership(rmembership: RMembership) {
     this.rmembership = { ...rmembership };
-    this.rmembershipDialog = true;
+    this.rmembershipUpdateDialog = true;
 }
+
+updateMembership() {
+  const formattedDate = this.datePipe.transform(this.rmembership.startDate, 'yyyy-MM-dd HH:mm:ss');
+
+  const myPayload = {
+    typeMembership: this.rmembership.typeMembership,
+    startDate: formattedDate,
+    duration: this.rmembership.duration,
+    id : this.rmembership.idRMembership
+  };
+
+  if (typeof myPayload.id !== 'undefined' && typeof myPayload.typeMembership !== 'undefined' && typeof myPayload.duration !== 'undefined') {
+  this.rs.updateRmembership(myPayload.id,myPayload.startDate,myPayload.typeMembership,myPayload.duration).subscribe((res) => {
+    console.log(res);
+  });
+}
+}
+
+
+hideRmembershipUpdateDialog() {
+  this.rmembershipUpdateDialog = false;
+  this.submitted = false;
+}
+
+PreRenewMembership(rmembership: RMembership) {
+  this.rmembership = { ...rmembership };
+  this.rmembershipRenewDialog = true;
+}
+
+renewMembership() {
+  if (typeof this.rmembership.idRMembership !== 'undefined') {
+  this.rs.renewRmembership(this.rmembership, this.rmembership.idRMembership).subscribe((res) => {
+    console.log(res);
+  });
+}
+}
+
+hideRmembershipRenewDialog() {
+  this.rmembershipRenewDialog = false;
+  this.submitted = false;
+}
+
+
+
+
+preValidatemembership(rmembership: RMembership) {
+  this.rmembership = { ...rmembership };
+  this.validatemembershipsDialog = true;
+}
+
+validatemembership() {
+  if (typeof this.rmembership.idRMembership !== 'undefined') {
+  this.rs.validateRMembership(this.rmembership.idRMembership).subscribe((res) => {
+    console.log(res);
+  });
+}
+}
+
+hideRmembershipValidateDialog() {
+  this.validatemembershipsDialog = false;
+  this.submitted = false;
+}
+
+
+
+preUnvalidatemembership(rmembership: RMembership) {
+  this.rmembership = { ...rmembership };
+  this.unValidatemembershipsDialog = true;
+}
+
+unValidatemembership() {
+  if (typeof this.rmembership.idRMembership !== 'undefined') {
+  this.rs.unValidateRMembership(this.rmembership.idRMembership).subscribe((res) => {
+    console.log(res);
+  });
+}
+}
+
+hideRmembershipUnvalidateDialog() {
+  this.unValidatemembershipsDialog = false;
+  this.submitted = false;
+}
+
 
 
 

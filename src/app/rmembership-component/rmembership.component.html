@@ -72,6 +72,9 @@
 
                         <td>
                             <div class="flex">
+                                <button pButton pRipple icon="pi pi-check" class="p-button-rounded p-button-raised mr-2" (click)="preValidatemembership(rmembership)"></button>
+                                <button pButton pRipple icon="pi pi-times" class="p-button-rounded p-button-danger mr-2" (click)="preUnvalidatemembership(rmembership)"></button>
+                                <button pButton pRipple icon="pi pi-refresh" class="p-button-rounded p-button-outlined mr-2" (click)="PreRenewMembership(rmembership)"></button>
                                 <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="preEditrmembership(rmembership)"></button>
                                 <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="rmembership.idRMembership && deleteRmembership(rmembership.idRMembership)"></button>
                             </div>
@@ -83,7 +86,7 @@
 
         <p-dialog [(visible)]="rmembershipDialog" [style]="{width: '450px'}" header="Rmembership Details" [modal]="true" class="p-fluid">
 
-          <form #form="ngForm" (ngSubmit)="saveRMembership()">
+          <form #form="ngForm" (ngSubmit)="saveRMembership();hideDialog">
             <div class="field">
               <label for="typeMembership">Type of Membership</label>
               <select  id="typeMembership" pInputText name="typeMembership" [(ngModel)]="rmembership.typeMembership" required>
@@ -113,6 +116,92 @@
       </p-dialog>
 
 
+
+
+      <p-dialog [(visible)]="rmembershipUpdateDialog" [style]="{width: '450px'}" header="Rmembership Details" [modal]="true" class="p-fluid">
+
+        <form #form="ngForm" (ngSubmit)="updateMembership();hideRmembershipUpdateDialog">
+          <div class="field">
+            <label for="typeMembership">Type of Membership</label>
+            <select  id="typeMembership" pInputText name="typeMembership" [(ngModel)]="rmembership.typeMembership" required>
+              <option value="">Select a membership type</option>
+              <option value="HALFPENSION">HALFPENSION</option>
+              <option value="FULLPENSION">FULLPENSION</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="startDate">Start Date</label>
+            <input type="datetime-local" pInputText id="startDate" name="startDate" [(ngModel)]="rmembership.startDate" required>
+          </div>
+         <div class="field">
+            <label for="duration">Duration</label>
+            <select  id="duration" pInputText name="duration" [(ngModel)]="rmembership.duration" required>
+              <option value="">Select the duration</option>
+              <option value="DAY">DAY</option>
+              <option value="MONTH">MONTH</option>
+              <option value="SEMESTER">SEMESTER</option>
+            </select>
+          </div>
+            <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideRmembershipUpdateDialog()"></button>
+            <button pButton type="submit"
+            [disabled]="form.invalid" pRipple label="Save" icon="pi pi-check" class="p-button-text"></button>
+          </form>
+
+    </p-dialog>
+
+
+
+      <p-dialog [(visible)]="rmembershipRenewDialog" [style]="{width: '450px'}" header="Rmembership Rnew" [modal]="true" class="p-fluid">
+
+        <form #form="ngForm" (ngSubmit)="renewMembership();hideRmembershipRenewDialog()">
+          <div class="field">
+            <label for="typeMembership">Type of Membership</label>
+            <select  id="typeMembership" pInputText name="typeMembership" [(ngModel)]="rmembership.typeMembership" required>
+              <option value="">Select a membership type</option>
+              <option value="HALFPENSION">HALFPENSION</option>
+              <option value="FULLPENSION">FULLPENSION</option>
+            </select>
+          </div>
+         <div class="field">
+            <label for="duration">Duration</label>
+            <select  id="duration" pInputText name="duration" [(ngModel)]="rmembership.duration" required>
+              <option value="">Select the duration</option>
+              <option value="DAY">DAY</option>
+              <option value="MONTH">MONTH</option>
+              <option value="SEMESTER">SEMESTER</option>
+            </select>
+          </div>
+            <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideRmembershipRenewDialog()"></button>
+            <button pButton type="submit"
+            [disabled]="form.invalid" pRipple label="Save" icon="pi pi-check" class="p-button-text"></button>
+          </form>
+
+    </p-dialog>
+
+    <p-dialog [(visible)]="validatemembershipsDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
+      <div class="flex align-items-center justify-content-center">
+          <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+          <span>Are you sure you want to validate this Membership ?</span>
+      </div>
+
+      <ng-template pTemplate="footer">
+          <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No" (click)="validatemembershipsDialog = false"></button>
+          <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes" (click)="validatemembership() ; hideRmembershipValidateDialog"></button>
+      </ng-template>
+  </p-dialog>
+
+
+  <p-dialog [(visible)]="unValidatemembershipsDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
+    <div class="flex align-items-center justify-content-center">
+        <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+        <span>Are you sure you want to unvalidate this Membership ?</span>
+    </div>
+
+    <ng-template pTemplate="footer">
+        <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No" (click)="unValidatemembershipsDialog = false"></button>
+        <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes" (click)="unValidatemembership() ; hideRmembershipUnvalidateDialog"></button>
+    </ng-template>
+</p-dialog>
 
 
 

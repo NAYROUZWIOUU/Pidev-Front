@@ -4,6 +4,7 @@ import { NotfoundComponent } from './demo/components/notfound/notfound.component
 import { AppLayoutComponent } from "./layout/app.layout.component";
 import { UserComponentComponent } from './user-component/user-component.component';
 import { RmembershipComponent } from './rmembership-component/rmembership.component';
+import { EmptyDemoComponent } from './demo/components/pages/empty/emptydemo.component';
 
 @NgModule({
     imports: [
@@ -18,7 +19,8 @@ import { RmembershipComponent } from './rmembership-component/rmembership.compon
                     { path: 'blocks', loadChildren: () => import('./demo/components/primeblocks/primeblocks.module').then(m => m.PrimeBlocksModule) },
                     { path: 'pages', loadChildren: () => import('./demo/components/pages/pages.module').then(m => m.PagesModule) },
                     { path: 'users', component: UserComponentComponent},
-                    { path: 'rmemberships', component: RmembershipComponent}
+                    { path: 'rmemberships', component: RmembershipComponent},
+                    { path: 'empty', component: EmptyDemoComponent}
                 ]
             },
             { path: 'auth', loadChildren: () => import('./demo/components/auth/auth.module').then(m => m.AuthModule) },

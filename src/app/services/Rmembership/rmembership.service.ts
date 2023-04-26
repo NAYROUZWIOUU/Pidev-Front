@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { RMembership } from 'src/app/models/rmembership';
+import { TypeMembership } from 'src/app/models/typeMembership';
+import { Duration } from 'src/app/models/duration';
 
 @Injectable({
   providedIn: 'root'
@@ -39,7 +41,15 @@ export class RmembershipService {
     );
   }
 
-  updateRmembership(rmembership: RMembership, idRmembership: number,): Observable<RMembership> {
+  updateRmembership(idRmembership: number,startDate : any,tm : TypeMembership ,d : Duration ): Observable<RMembership> {
+    return this.http.put<RMembership>(
+      this.apiUrl + "/updateRMembership/"+idRmembership+"/"+startDate+"/"+tm+"/"+d,
+      RMembership,
+      this.httpOptions
+    );
+  }
+
+  renewRmembership(rmembership: RMembership, idRmembership: number): Observable<RMembership> {
     return this.http.put<RMembership>(
       this.apiUrl + "/renewMembership/" + idRmembership + "/"+rmembership.duration+"/"+rmembership.typeMembership,
       RMembership,
@@ -51,5 +61,23 @@ export class RmembershipService {
     return this.http.get<RMembership>(this.apiUrl + "/retrieveRMembership/" + idRmembership);
   }
 
+
+  validateRMembership(idRmembership: number): Observable<RMembership> {
+    return this.http.post<RMembership>(
+      this.apiUrl + "/validateRMembership/"+idRmembership,
+      RMembership,
+      this.httpOptions
+    );
+  }
+
+
+
+  unValidateRMembership(idRmembership: number): Observable<RMembership> {
+    return this.http.post<RMembership>(
+      this.apiUrl + "/unValidateRMembership/"+idRmembership,
+      RMembership,
+      this.httpOptions
+    );
+  }
 
 }
