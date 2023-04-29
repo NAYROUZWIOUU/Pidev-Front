@@ -17,6 +17,10 @@ import { Table } from 'primeng/table';
 })
 export class RmembershipComponent implements OnInit{
 
+
+  renewalRate!: number;
+
+
   list!: RMembership[];
   idRmembership!: number;
   cols: any[] = [];
@@ -50,6 +54,10 @@ export class RmembershipComponent implements OnInit{
 
   rowsPerPageOptions = [5, 10, 20];
 
+
+
+  startDate!: any;
+  endDate!: any;
 
   constructor(private rs: RmembershipService,private datePipe: DatePipe) {}
 
@@ -285,4 +293,53 @@ createId(): number {
 onGlobalFilter(table: Table, event: Event) {
   table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
 }
+
+
+/////////
+getGuestMemberships(){
+  this.rs.getGuestMemberships().subscribe(rmemberships => {
+    this.rmemberships = rmemberships;
+  });
+}
+
+getTeacherMemberships(){
+  this.rs.getTeacherMemberships().subscribe(rmemberships => {
+    this.rmemberships = rmemberships;
+  });
+}
+
+getStudentMemberships(){
+  this.rs.getStudentMemberships().subscribe(rmemberships => {
+    this.rmemberships = rmemberships;
+  });
+}
+
+
+
+getValidRMemberships(startDate: any, endDate: any): void {
+const formattedstartDate: string = this.datePipe.transform(startDate,'yyyy-MM-dd HH:mm:ss')!;
+const formattedendDate: string = this.datePipe.transform(endDate,'yyyy-MM-dd HH:mm:ss')!;
+
+this.rs.getValidRMemberships(formattedstartDate, formattedendDate)
+  .subscribe(rmemberships => {
+    this.rmemberships = rmemberships;
+  });
+
+}
+
+
+getRenewalRate(startDate: any, endDate: any): void {
+  const formattedstartDate = this.datePipe.transform(startDate, 'yyyy-MM-dd HH:mm:ss');
+  const formattedendDate = this.datePipe.transform(endDate, 'yyyy-MM-dd HH:mm:ss');
+
+  this.rs.getRenewalRate(formattedstartDate, formattedendDate)
+    .subscribe(response => {
+      this.renewalRate = response['renewalRate'];
+    });
+}
+
+
+
+
+
 }

@@ -5,6 +5,10 @@ import { RMembership } from 'src/app/models/rmembership';
 import { TypeMembership } from 'src/app/models/typeMembership';
 import { Duration } from 'src/app/models/duration';
 
+interface RenewalRateResponse {
+  [key: string]: number;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -79,5 +83,33 @@ export class RmembershipService {
       this.httpOptions
     );
   }
+
+
+
+  ////////////////////////////////
+
+
+getGuestMemberships() : Observable<RMembership[]> {
+  return this.http.get<RMembership[]>(this.apiUrl +"/listeRMembershipsGUESTS/1");
+}
+
+
+getTeacherMemberships()  : Observable<RMembership[]> {
+  return this.http.get<RMembership[]>(this.apiUrl +"/listeRMembershipsTEACHERS/1");
+}
+
+getStudentMemberships()  : Observable<RMembership[]> {
+  return this.http.get<RMembership[]>(this.apiUrl +"/listeRMembershipsSTUDENTS/1");
+}
+
+
+getValidRMemberships(startDate: string, endDate: string): Observable<RMembership[]> {
+  return this.http.get<RMembership[]>(this.apiUrl + "/RMembershipValides/" + startDate + "/" + endDate);
+}
+
+
+getRenewalRate(startDate: any, endDate: any): Observable<RenewalRateResponse> {
+  return this.http.get<RenewalRateResponse>(this.apiUrl + "/getRenewalRate/" + startDate + "/" + endDate);
+}
 
 }
