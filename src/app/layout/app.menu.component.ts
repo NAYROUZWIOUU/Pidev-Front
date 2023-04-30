@@ -34,13 +34,13 @@ export class AppMenuComponent implements OnInit {
             },
             {
                 label: 'Dorm Managment',
-                items: [
-                    { label: 'Dorm Memberships', icon: 'pi pi-fw pi-check-square', routerLink: ['/blocks'], badge: 'NEW' },
-                    { label: 'Dorm', icon: 'pi pi-fw pi-list', routerLink: ['/uikit/invalidstate'] },
-                    { label: 'Blocks', icon: 'pi pi-fw pi-sitemap', url: ['https://www.primefaces.org/primeblocks-ng'], target: '_blank' },
-                    { label: 'Rooms', icon: 'pi pi-fw pi-briefcase', url: ['https://www.primefaces.org/primeblocks-ng'], target: '_blank' },
-                    { label: 'Waiting List', icon: 'pi pi-fw pi-list', routerLink: ['/uikit/invalidstate'] }
-                ]
+                    items: [
+                        { label: 'Dorm Memberships', icon: 'pi pi-fw pi-check-square', routerLink: ['/fmemberships']},
+                        { label: 'Dorm', icon: 'pi pi-fw pi-list', routerLink: ['/uikit/invalidstate'] },
+                        { label: 'Blocks', icon: 'pi pi-fw pi-sitemap', url: ['https://www.primefaces.org/primeblocks-ng'], target: '_blank' },
+                        { label: 'Rooms', icon: 'pi pi-fw pi-briefcase', routerLink: ['/rooms'],},
+                        { label: 'Waiting List', icon: 'pi pi-fw pi-list', routerLink: ['/uikit/invalidstate'] }
+                    ]
             },
             {
                 label: 'Forum Managment',

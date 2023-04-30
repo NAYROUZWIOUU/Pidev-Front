@@ -18,6 +18,10 @@ import { RmembershipComponentModule } from './rmembership-component/rmembership.
 import { RmembershipService } from './services/Rmembership/rmembership.service';
 import { RestauRoutingModule } from './demo/components/landing/restaurant-Front/restauRoutingModule.module';
 import { FormsModule } from '@angular/forms';
+import { FmembershipModule } from './fmembership/fmembership.module';
+import { RoomComponentModule } from './room/room.module';
+import { FmembershipService } from './services/Fmembership/fmembership.service';
+import { RoomService } from './services/rooms/room.service';
 
 @NgModule({
     declarations: [
@@ -29,12 +33,14 @@ import { FormsModule } from '@angular/forms';
         UserComponentModule,
         RmembershipComponentModule,
         RestauRoutingModule,
-        FormsModule
+        FormsModule,
+        FmembershipModule,
+        RoomComponentModule
     ],
     providers: [
         { provide: LocationStrategy, useClass: HashLocationStrategy },
         CountryService, CustomerService, EventService, IconService, NodeService,
-        PhotoService, ProductService,RestaurantService,UsersService,RmembershipService
+        PhotoService, ProductService,RestaurantService,UsersService,RmembershipService,FmembershipService,RoomService
     ],
     bootstrap: [AppComponent]
 })
