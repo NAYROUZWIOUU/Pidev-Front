@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
-import { RmembershipComponent } from './rmembership.component';
 import { FileUploadModule } from 'primeng/fileupload';
 import { TableModule } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
@@ -15,11 +14,14 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { DialogModule } from 'primeng/dialog';
 import { DatePipe } from '@angular/common';
+import { RewardComponent } from './reward.component';
+
 
 
 @NgModule({
-  declarations: [RmembershipComponent],
-  imports: [CommonModule,
+  declarations: [RewardComponent],
+  imports: [
+    CommonModule,
     HttpClientModule,
     FormsModule,
     TableModule,
@@ -32,8 +34,8 @@ import { DatePipe } from '@angular/common';
     RadioButtonModule,
     InputNumberModule,
     DialogModule,
-    DatePipe],
-  exports: [RmembershipComponent]
+    DatePipe
+  ],
+  exports:[RewardComponent]
 })
-export class RmembershipComponentModule {
-}
+export class RewardModule { }

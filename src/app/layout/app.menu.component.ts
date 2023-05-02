@@ -21,10 +21,10 @@ export class AppMenuComponent implements OnInit {
                 ]
             },
             {
-                label: 'Restaurant Managment',
+                label: 'Restaurant Managment',///uikit/floatlabel
                 items: [
                     { label: 'Restaurant Memberships', icon: 'pi pi-fw pi-check-square', routerLink: ['/rmemberships'] },
-                    { label: 'Fidelity Card', icon: 'pi pi-fw pi-id-card', routerLink: ['/uikit/floatlabel'] },
+                    { label: 'Fidelity Card', icon: 'pi pi-fw pi-id-card', routerLink: ['fidelitycard'] },
                     { label: 'Restaurant', icon: 'pi pi-fw pi-file', routerLink: ['/uikit/invalidstate'] },
                     { label: 'Blocks', icon: 'pi pi-fw pi-sitemap', routerLink: ['/uikit/invalidstate'] },
                     { label: 'Menus', icon: 'pi pi-fw pi-file', routerLink: ['/uikit/invalidstate'] },

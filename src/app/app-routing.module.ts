@@ -5,6 +5,7 @@ import { AppLayoutComponent } from "./layout/app.layout.component";
 import { UserComponentComponent } from './user-component/user-component.component';
 import { RmembershipComponent } from './rmembership-component/rmembership.component';
 import { EmptyDemoComponent } from './demo/components/pages/empty/emptydemo.component';
+import { FidelityCardComponent } from './fidelity-card-component/fidelity-card-component.component';
 
 @NgModule({
     imports: [
@@ -20,7 +21,8 @@ import { EmptyDemoComponent } from './demo/components/pages/empty/emptydemo.comp
                     { path: 'pages', loadChildren: () => import('./demo/components/pages/pages.module').then(m => m.PagesModule) },
                     { path: 'users', component: UserComponentComponent},
                     { path: 'rmemberships', component: RmembershipComponent},
-                    { path: 'empty', component: EmptyDemoComponent}
+                    { path: 'empty', component: EmptyDemoComponent},
+                    { path: 'fidelitycard' , component: FidelityCardComponent}
                 ]
             },
             { path: 'auth', loadChildren: () => import('./demo/components/auth/auth.module').then(m => m.AuthModule) },

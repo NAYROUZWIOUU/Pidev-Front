@@ -18,6 +18,11 @@ import { RmembershipComponentModule } from './rmembership-component/rmembership.
 import { RmembershipService } from './services/Rmembership/rmembership.service';
 import { RestauRoutingModule } from './demo/components/landing/restaurant-Front/restauRoutingModule.module';
 import { FormsModule } from '@angular/forms';
+import { FidelityCardComponent } from './fidelity-card-component/fidelity-card-component.component';
+import { FidelityCardModule } from './fidelity-card-component/fidelity-card.module';
+import { FidelityCardService} from './services/FidelityCard/fidelity-card-service.service';
+import { RewardService } from './services/Reward/reward.service';
+import { RewardModule } from './reward/reward.module';
 
 @NgModule({
     declarations: [
@@ -29,12 +34,14 @@ import { FormsModule } from '@angular/forms';
         UserComponentModule,
         RmembershipComponentModule,
         RestauRoutingModule,
-        FormsModule
+        FormsModule,
+        FidelityCardModule,
+        RewardModule
     ],
     providers: [
         { provide: LocationStrategy, useClass: HashLocationStrategy },
         CountryService, CustomerService, EventService, IconService, NodeService,
-        PhotoService, ProductService,RestaurantService,UsersService,RmembershipService
+        PhotoService, ProductService,RestaurantService,UsersService,RmembershipService,FidelityCardService,RewardService
     ],
     bootstrap: [AppComponent]
 })
