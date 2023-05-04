@@ -29,7 +29,7 @@ export class AppMenuComponent implements OnInit {
                     { label: 'Blocks', icon: 'pi pi-fw pi-sitemap', routerLink: ['/uikit/invalidstate'] },
                     { label: 'Menus', icon: 'pi pi-fw pi-file', routerLink: ['/uikit/invalidstate'] },
                     { label: 'Meals', icon: 'pi pi-fw pi-caret-up', routerLink: ['/uikit/invalidstate'] },
-                    { label: 'Rewards', icon: 'pi pi-fw pi-gift', routerLink: ['/uikit/invalidstate'] }
+                    { label: 'Rewards', icon: 'pi pi-fw pi-gift', routerLink: ['/reward'] }
                 ]
             },
             {

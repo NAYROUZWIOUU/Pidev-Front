@@ -26,13 +26,13 @@ export class UsersService {
 
   deleteUser(idUser: number): Observable<User> {
     return this.http.delete<User>(
-      this.apiUrl + "/removeUser/" + idUser
+      this.apiUrl + "removeUser/" + idUser
     );
   }
 
   addUser(User: User): Observable<User> {
     return this.http.post<User>(
-      this.apiUrl + "/addUser",
+      this.apiUrl + "addUser",
       User,
       this.httpOptions
     );
@@ -40,14 +40,14 @@ export class UsersService {
 
   updateUser(User: User, idUser: number): Observable<User> {
     return this.http.put<User>(
-      this.apiUrl + "/updateUser/" + idUser,
+      this.apiUrl + "updateUser/" + idUser,
       User,
       this.httpOptions
     );
   }
 
-  getUserById(idUser: number): Observable<User> {
-    return this.http.get<User>(this.apiUrl + "/User/" + idUser);
+  getUserById(idUser: any): Observable<User> {
+    return this.http.get<User>(this.apiUrl + "User/" + idUser);
   }
 
 

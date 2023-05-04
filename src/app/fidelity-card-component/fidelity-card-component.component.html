@@ -66,10 +66,11 @@
                       </td>
                       <td style="width:14%; min-width:10rem;">
                         <span class="p-column-title">user</span>
-                        {{fidelityCard.user?.firstName}} {{fidelityCard.user?.lastName}}
-                      <td>
+                        {{ fidelityCard?.user?.firstName }} {{ fidelityCard?.user?.lastName }}
+                        <td>
                           <div class="flex">
                               <!-- <button pButton pRipple icon="pi pi-refresh" class="p-button-rounded p-button-outlined mr-2" (click)="PreRenewMembership(fidelityCard)"></button> -->
+                              <button pButton pRipple icon="pi pi-exclamation-triangle" class="p-button-rounded p-button-success mr-2" (click)="onGiveRewardsClicked(fidelityCard.idFidelityCard)"></button>
                               <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="preEditfidelityCard(fidelityCard)"></button>
                               <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="fidelityCard.idfidelityCard && deletefidelityCard(fidelityCard.idfidelityCard)"></button>
                           </div>

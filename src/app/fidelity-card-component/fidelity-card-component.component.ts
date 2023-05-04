@@ -6,6 +6,7 @@ import { FidelityCard } from '../models/fidelity-card';
 import { FidelityCardService } from '../services/FidelityCard/fidelity-card-service.service';
 import { User } from '../models/user';
 import { UsersService } from '../services/Users/users.service';
+import { RewardService } from '../services/Reward/reward.service';
 
 @Component({
 selector: 'app-fidelity-card-component',
@@ -37,44 +38,55 @@ iduser!:number;
 users: User[] = [];
 selectedUser: User | undefined;
 
-constructor(private us: UsersService ,private fs: FidelityCardService, private datePipe: DatePipe, private messageService: MessageService) {}
+constructor(private rs: RewardService,private us: UsersService ,private fs: FidelityCardService, private datePipe: DatePipe, private messageService: MessageService) {}
 
 ngOnInit(): void {
-this.cols = [
-{ field: 'idFidelityCard', header: 'ID' },
-{ field: 'cardNumber', header: 'Card Number' },
-{ field: 'membershipLevel', header: 'Membership Level' },
-{ field: 'totalPoints', header: 'Total Points' },
-{ field: 'expirationDate', header: 'Expiration Date' },
-{ field: 'user', header: 'User' },
-{ field: 'transactions', header: 'Transactions' },
-{ field: 'rewards', header: 'Rewards' }
-];
+  this.cols = [
+    { field: 'idFidelityCard', header: 'ID' },
+    { field: 'cardNumber', header: 'Card Number' },
+    { field: 'membershipLevel', header: 'Membership Level' },
+    { field: 'totalPoints', header: 'Total Points' },
+    { field: 'expirationDate', header: 'Expiration Date' },
+    { field: 'user', header: 'User' },
+    { field: 'transactions', header: 'Transactions' },
+    { field: 'rewards', header: 'Rewards' }
+  ];
 
-this.fs.retrieveAllFidelityCard().subscribe(fidelityCards => {
-  this.fidelityCards = fidelityCards;
-});
-
-this.us.getUsers().subscribe((users) => {
-  this.users = users;
-});
+  this.fs.retrieveAllFidelityCard().subscribe(
+    fidelityCards => this.fidelityCards = fidelityCards,
+    error => console.error(error)
+  );
 }
 
-  ///////////////////
 
-  openNew(): void {
-    this.fidelityCard = new FidelityCard();
-    this.submitted = false;
-    this.fidelityCardDialog = true;
-    }
+
+
+
+
+// this.fs.retrieveAllFidelityCard().subscribe((fidelityCards: FidelityCard[]) => {
+//   const userObservables = fidelityCards.map((fidelityCard) =>
+//     this.fs.getUserFullName(fidelityCard.idFidelityCard)
+//   );
+//   forkJoin(userObservables).subscribe((userFullNames) => {
+//     fidelityCards.forEach((fidelityCard, index) => {
+//       fidelityCard.user = userFullNames[index];
+//     });
+//     this.fidelityCards = fidelityCards;
+//   });
+// });
+
+
+openNew(): void {
+  this.fidelityCard = new FidelityCard();
+  this.submitted = false;
+  this.fidelityCardDialog = true;
+  }
 
 
     savefidelityCard(): void {
 
 
       const formattedDate = this.datePipe.transform(this.fidelityCard.expirationDate, 'yyyy-MM-dd HH:mm:ss');
-      const selectedUserFullName = `${this.selectedUser?.firstName} ${this.selectedUser?.lastName}`;
-
       // Create a new object with the formatted date and the other form values
       const myPayload = {
         cardNumber:this.fidelityCard.cardNumber,
@@ -89,8 +101,8 @@ this.us.getUsers().subscribe((users) => {
         totalPoints: myPayload.totalPoints,
         transactions: [],
         rewards: [],
-        user: new User,
-        idFidelityCard: 0
+        idFidelityCard: 0,
+        user: new User
       };
 
       // Send the new object to the backend API using an HTTP POST request
@@ -182,5 +194,42 @@ onGlobalFilter(table: Table, event: Event) {
   table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
 }
 
+
+
+onGoldMembershipClicked(fidelityCardId: number) {
+  this.rs.addRewardIfGoldMembership(fidelityCardId)
+    .subscribe(() => {
+      console.log('Reward added for gold membership');
+    }, error => {
+      console.error('Failed to add reward for gold membership', error);
+    });
+}
+
+onSilverMembershipClicked(fidelityCardId: number) {
+  this.rs.addRewardIfSILVERMembership(fidelityCardId)
+    .subscribe(() => {
+      console.log('Reward added for silver membership');
+    }, error => {
+      console.error('Failed to add reward for silver membership', error);
+    });
+}
+
+onBronzeMembershipClicked(fidelityCardId: number) {
+  this.rs.addRewardIfBRONZEMembership(fidelityCardId)
+    .subscribe(() => {
+      console.log('Reward added for bronze membership');
+    }, error => {
+      console.error('Failed to add reward for bronze membership', error);
+    });
+}
+
+onGiveRewardsClicked(fidelityCardId: number) {
+  this.rs.giveRewards(fidelityCardId)
+    .subscribe(() => {
+      console.log('Rewards given');
+    }, error => {
+      console.error('Failed to give rewards', error);
+    });
+}
 }
 
