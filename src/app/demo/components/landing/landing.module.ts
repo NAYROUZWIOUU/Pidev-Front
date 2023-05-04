@@ -8,6 +8,8 @@ import { ChartModule } from 'primeng/chart';
 import { PanelModule } from 'primeng/panel';
 import { ButtonModule } from 'primeng/button';
 import { RestaurantFrontComponent } from './restaurant-Front/restaurant-front.component';
+import { CreateMembershipComponent } from './create-membership/create-membership.component';
+import { CreateMembershipModule } from './create-membership/create-membership.module';
 
 @NgModule({
     imports: [
@@ -15,6 +17,7 @@ import { RestaurantFrontComponent } from './restaurant-Front/restaurant-front.co
         LandingRoutingModule,
         DividerModule,
         StyleClassModule,
+        CreateMembershipModule,
         ChartModule,
         PanelModule,
         ButtonModule

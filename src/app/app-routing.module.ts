@@ -7,6 +7,7 @@ import { RmembershipComponent } from './rmembership-component/rmembership.compon
 import { EmptyDemoComponent } from './demo/components/pages/empty/emptydemo.component';
 import { FidelityCardComponent } from './fidelity-card-component/fidelity-card-component.component';
 import { RewardComponent } from './reward/reward.component';
+import { CreateMembershipComponent } from './demo/components/landing/create-membership/create-membership.component';
 
 @NgModule({
     imports: [
@@ -30,6 +31,7 @@ import { RewardComponent } from './reward/reward.component';
             { path: 'auth', loadChildren: () => import('./demo/components/auth/auth.module').then(m => m.AuthModule) },
             { path: 'landing', loadChildren: () => import('./demo/components/landing/landing.module').then(m => m.LandingModule) },
             { path: 'landing/rmembership', loadChildren: () => import('./demo/components/landing/restaurant-Front/restauRoutingModule.module').then(m => m.RestauRoutingModule) },
+            { path: 'landing/rmembership/add',component:CreateMembershipComponent },
             { path: 'notfound', component: NotfoundComponent },
             { path: '**', redirectTo: '/notfound' },
         ], { scrollPositionRestoration: 'enabled', anchorScrolling: 'enabled', onSameUrlNavigation: 'reload' })
