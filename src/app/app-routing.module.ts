@@ -8,6 +8,8 @@ import { EmptyDemoComponent } from './demo/components/pages/empty/emptydemo.comp
 import { FidelityCardComponent } from './fidelity-card-component/fidelity-card-component.component';
 import { RewardComponent } from './reward/reward.component';
 import { CreateMembershipComponent } from './demo/components/landing/create-membership/create-membership.component';
+import { MermbershipsUserComponent } from './demo/components/landing/mermberships-user/mermberships-user.component';
+import { FidelitycarduserComponent } from './demo/components/landing/fidelitycarduser/fidelitycarduser.component';
 
 @NgModule({
     imports: [
@@ -32,6 +34,8 @@ import { CreateMembershipComponent } from './demo/components/landing/create-memb
             { path: 'landing', loadChildren: () => import('./demo/components/landing/landing.module').then(m => m.LandingModule) },
             { path: 'landing/rmembership', loadChildren: () => import('./demo/components/landing/restaurant-Front/restauRoutingModule.module').then(m => m.RestauRoutingModule) },
             { path: 'landing/rmembership/add',component:CreateMembershipComponent },
+            { path: 'landing/rmembership/myMemberships',component:MermbershipsUserComponent},
+            { path: 'landing/rmembership/myfc',component:FidelitycarduserComponent},
             { path: 'notfound', component: NotfoundComponent },
             { path: '**', redirectTo: '/notfound' },
         ], { scrollPositionRestoration: 'enabled', anchorScrolling: 'enabled', onSameUrlNavigation: 'reload' })

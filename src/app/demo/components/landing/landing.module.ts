@@ -10,6 +10,10 @@ import { ButtonModule } from 'primeng/button';
 import { RestaurantFrontComponent } from './restaurant-Front/restaurant-front.component';
 import { CreateMembershipComponent } from './create-membership/create-membership.component';
 import { CreateMembershipModule } from './create-membership/create-membership.module';
+import { MermbershipsUserComponent } from './mermberships-user/mermberships-user.component';
+import { MermbershipsUserModule } from './mermberships-user/mermberships-user.module';
+import { FidelitycarduserComponent } from './fidelitycarduser/fidelitycarduser.component';
+import { FidelitycarduserModule } from './fidelitycarduser/fidelitycarduser.module';
 
 @NgModule({
     imports: [
@@ -20,7 +24,9 @@ import { CreateMembershipModule } from './create-membership/create-membership.mo
         CreateMembershipModule,
         ChartModule,
         PanelModule,
-        ButtonModule
+        ButtonModule,
+        MermbershipsUserModule,
+        FidelitycarduserModule
     ],
     declarations: [LandingComponent,RestaurantFrontComponent]
 })

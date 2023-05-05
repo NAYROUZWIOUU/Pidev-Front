@@ -23,7 +23,6 @@ import { FidelityCardModule } from './fidelity-card-component/fidelity-card.modu
 import { FidelityCardService} from './services/FidelityCard/fidelity-card-service.service';
 import { RewardService } from './services/Reward/reward.service';
 import { RewardModule } from './reward/reward.module';
-import { LandingModule } from './demo/components/landing/landing.module';
 
 @NgModule({
     declarations: [
