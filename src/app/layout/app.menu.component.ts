@@ -45,14 +45,14 @@ export class AppMenuComponent implements OnInit {
             {
                 label: 'Forum Managment',
                 items: [
-                    { label: 'Forum', icon: 'pi pi-fw pi-comments', routerLink: ['/utilities/icons'] },
-                    { label: 'Thread', icon: 'pi pi-fw pi-comment', routerLink: ['/utilities/icons'] }
+                    { label: 'Forum', icon: 'pi pi-fw pi-comments', routerLink: ['/forums'] },
+                    { label: 'Thread', icon: 'pi pi-fw pi-comment', routerLink: ['/threads'] }
                 ]
             },
             {
               label: 'Claim Managment',
               items: [
-                  { label: 'Claim', icon: 'pi pi-fw pi-comment', routerLink: ['/utilities/icons'] }
+                  { label: 'Claim', icon: 'pi pi-fw pi-comment', routerLink: ['/claims'] }
               ]
           },
             {

@@ -18,6 +18,18 @@ import { RmembershipComponentModule } from './rmembership-component/rmembership.
 import { RmembershipService } from './services/Rmembership/rmembership.service';
 import { RestauRoutingModule } from './demo/components/landing/restaurant-Front/restauRoutingModule.module';
 import { FormsModule } from '@angular/forms';
+import { ClaimComponent } from './claim-component/claim.component';
+import {ClaimComponentModule} from "./claim-component/claim.module";
+import {ClaimService} from "./services/Claim/claim.service";
+import {ForumService} from "./services/Forum/forum.service";
+import {ThreadService} from "./services/Thread/thread.service";
+import {ReactionService} from "./services/Reaction/reaction.service";
+import { ForumComponent } from './forum/forum.component';
+import {ForumComponentModule} from "./forum/forum.module";
+import { ThreadComponent } from './thread/thread.component';
+import {ThreadComponentModule} from "./thread/thread.module";
+import {claimRoutingModule} from "./demo/components/landing/claim-front/claimRoutingModule";
+import {ThreadRoutingModule} from "./demo/components/landing/thread-front/threadRoutingModule";
 
 @NgModule({
     declarations: [
@@ -29,12 +41,18 @@ import { FormsModule } from '@angular/forms';
         UserComponentModule,
         RmembershipComponentModule,
         RestauRoutingModule,
-        FormsModule
+        FormsModule,
+        ClaimComponentModule,
+        ForumComponentModule,
+        ThreadComponentModule,
+      claimRoutingModule,
+      ThreadRoutingModule
     ],
     providers: [
         { provide: LocationStrategy, useClass: HashLocationStrategy },
         CountryService, CustomerService, EventService, IconService, NodeService,
-        PhotoService, ProductService,RestaurantService,UsersService,RmembershipService
+        PhotoService, ProductService,RestaurantService,UsersService,RmembershipService,ClaimService,ForumService,
+      ThreadService,ReactionService
     ],
     bootstrap: [AppComponent]
 })
