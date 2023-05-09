@@ -23,7 +23,7 @@ export class RmembershipService {
   b: boolean = false;
   text: string = "";
 
-  apiUrl = "http://localhost:8083/test/RMembership";
+  apiUrl = "http://localhost:8082/test/RMembership";
 
   constructor(private http: HttpClient) {}
 

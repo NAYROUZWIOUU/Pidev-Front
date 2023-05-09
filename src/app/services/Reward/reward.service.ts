@@ -6,7 +6,7 @@ import { Reward } from "src/app/models/reward";
   providedIn: 'root'
 })
 export class RewardService {
-  private baseUrl = 'http://localhost:8083/test';
+  private baseUrl = 'http://localhost:8082/test';
 
   constructor(private http: HttpClient) { }
 

@@ -17,6 +17,7 @@ import { DatePipe } from '@angular/common';
 import { CreateMembershipComponent } from './create-membership.component';
 import { RouterModule } from '@angular/router';
 import { StyleClassModule } from 'primeng/styleclass';
+import { CalendarModule } from 'primeng/calendar';
 
 
 
@@ -38,7 +39,8 @@ import { StyleClassModule } from 'primeng/styleclass';
     DialogModule,
     DatePipe,
     RouterModule,
-    StyleClassModule
+    StyleClassModule,
+    CalendarModule
   ],exports:[CreateMembershipComponent,RouterModule]
 })
 export class CreateMembershipModule { }

@@ -17,6 +17,7 @@ import { DatePipe } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { StyleClassModule } from 'primeng/styleclass';
 import { MermbershipsUserComponent } from './mermberships-user.component';
+import { DividerModule } from 'primeng/divider';
 
 
 
@@ -37,6 +38,7 @@ import { MermbershipsUserComponent } from './mermberships-user.component';
     InputNumberModule,
     DialogModule,
     DatePipe,
+    DividerModule,
     RouterModule,
     StyleClassModule
   ],exports:[RouterModule,MermbershipsUserComponent]

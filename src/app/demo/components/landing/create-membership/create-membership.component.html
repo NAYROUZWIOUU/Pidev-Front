@@ -54,39 +54,40 @@
 
       <div id="highlights" class="py-4 px-4 lg:px-8 mx-0 my-6 lg:mx-8">
 
-      <div id="pricing" class="py-4 px-4 lg:px-8 my-2 md:my-4">
-          <div class="text-center">
-            <div class="mx-4 md:mx-8 mt-0 md:mt-4">
-              <div class="text-center" >
-                <form #form="ngForm" (ngSubmit)="saveRMembership()">
-                  <div class="field">
-                    <label for="typeMembership">Type of Membership</label>
-                    <select  id="typeMembership" pInputText name="typeMembership" [(ngModel)]="rmembership.typeMembership" required>
-                      <option value="">Select a membership type</option>
-                      <option value="HALFPENSION">HALFPENSION</option>
-                      <option value="FULLPENSION">FULLPENSION</option>
-                    </select>
-                  </div>
-                  <div class="field">
-                    <label for="startDate">Start Date</label>
-                    <input type="datetime-local" pInputText id="startDate" name="startDate" [(ngModel)]="rmembership.startDate" required>
-                  </div>
-                 <div class="field">
-                    <label for="duration">Duration</label>
-                    <select  id="duration" pInputText name="duration" [(ngModel)]="rmembership.duration" required>
-                      <option value="">Select the duration</option>
-                      <option value="DAY">DAY</option>
-                      <option value="MONTH">MONTH</option>
-                      <option value="SEMESTER">SEMESTER</option>
-                    </select>
-                  </div>
-                    <button pButton type="submit"
-                    [disabled]="form.invalid" pRipple label="Save" icon="pi pi-check" class="p-button-text"></button>
-                  </form>
+
+
+        <div class="grid p-fluid flex justify-content-center ">
+
+              <div class="col-12 md:col-6">
+                    <form #form="ngForm" (ngSubmit)="saveRMembership()">
+                      <div class="field">
+                        <label for="typeMembership">Type of Membership</label>
+                        <select  id="typeMembership" pInputText name="typeMembership" [(ngModel)]="rmembership.typeMembership" required>
+                          <option value="">Select a membership type</option>
+                          <option value="HALFPENSION">HALFPENSION</option>
+                          <option value="FULLPENSION">FULLPENSION</option>
+                        </select>
+                      </div>
+                      <div class="field">
+                        <label for="startDate">Start Date </label>
+                        <input type="datetime-local" pInputText id="startDate" name="startDate" [(ngModel)]="rmembership.startDate"  class="ng-invalid ng-dirty"  required>
+                    </div>
+                    <div class="field">
+                        <label for="duration">Duration</label>
+                        <select  id="duration" pInputText name="duration" [(ngModel)]="rmembership.duration" required>
+                          <option value="">Select the duration</option>
+                          <option value="DAY">DAY</option>
+                          <option value="MONTH">MONTH</option>
+                          <option value="SEMESTER">SEMESTER</option>
+                        </select>
+                      </div>
+                        <button pButton type="submit"
+                        [disabled]="form.invalid" pRipple label="Save" icon="pi pi-check" class="p-button-text"></button>
+                      </form>
               </div>
+        </div>
 
-            </div>
-          </div>
 
-  </div>
+
+      </div>
 </div>

@@ -1,8 +1,9 @@
 import { DatePipe } from '@angular/common';
-import { Component ,OnInit } from '@angular/core';
+import { Component ,OnInit,OnDestroy  } from '@angular/core';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { Table } from 'primeng/table';
+import { Subscription, interval } from 'rxjs';
 import { LayoutService } from 'src/app/layout/service/app.layout.service';
 import { RMembership } from 'src/app/models/rmembership';
 import { RmembershipService } from 'src/app/services/Rmembership/rmembership.service';
@@ -13,7 +14,10 @@ import { RmembershipService } from 'src/app/services/Rmembership/rmembership.ser
   styleUrls: ['./mermberships-user.component.css'],
   providers:[MessageService,DatePipe]
 })
-export class MermbershipsUserComponent implements OnInit {
+export class MermbershipsUserComponent implements OnInit, OnDestroy {
+
+  private refreshSubscription!: Subscription;
+
 
   rmembershipDialog: boolean = false;
   rmembershipRenewDialog: boolean = false;
@@ -33,6 +37,11 @@ export class MermbershipsUserComponent implements OnInit {
 
 
   constructor(public layoutService: LayoutService, public router: Router,private rs: RmembershipService,private datePipe: DatePipe) { }
+  ngOnDestroy() {
+    if (this.refreshSubscription) {
+      this.refreshSubscription.unsubscribe();
+    }
+  }
 
 
   ngOnInit(): void {
@@ -49,6 +58,10 @@ export class MermbershipsUserComponent implements OnInit {
       this.rmemberships = rmemberships;
     });
 
+    this.refreshSubscription = interval(30000) // 30 seconds
+    .subscribe(() => {
+      location.reload();
+    });
 
   }
   hideDialog() {
