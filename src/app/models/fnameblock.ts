@@ -1,0 +1,9 @@
+export enum FNameBlock {
+  MSTUDENTS = 'MSTUDENTS',
+  FSTUDENTS = 'FSTUDENTS',
+  MTEACHERS = 'MTEACHERS',
+  FTEACHERS = 'FTEACHERS',
+  GUESTS = 'GUESTS'
+
+ 
+}

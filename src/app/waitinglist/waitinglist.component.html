@@ -1,0 +1,116 @@
+<div class="grid">
+  <div class="col-12">
+    <div class="card px-6 py-6">
+      <p-toast></p-toast>
+      <p-toolbar styleClass="mb-4">
+        <ng-template pTemplate="left">
+          <div class="my-2">
+            <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNew()"></button>
+            <button pButton pRipple label="Delete" icon="pi pi-trash" class="p-button-danger" [disabled]="!selectedwaitingLists || !selectedwaitingLists.length"></button>
+          </div>
+        </ng-template>
+
+
+        <ng-template pTemplate="right">
+          <p-fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" label="Import" chooseLabel="Import" class="mr-2 inline-block"></p-fileUpload>
+          <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help" (click)="dt.exportCSV()"></button>
+        </ng-template>
+      </p-toolbar>
+
+      <p-table #dt [value]="waitingLists" [columns]="cols" responsiveLayout="scroll" [rows]="10" [globalFilterFields]="['fNameBlock','priorityLevel']" [rows]="10" [paginator]="true" [rowsPerPageOptions]="[10,20,30]" [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [(selection)]="selectedwaitingLists" selectionMode="multiple" [rowHover]="true" dataKey="idwaitingList">
+        <ng-template pTemplate="caption">
+          <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+            <h5 class="m-0">Manage waitingLists</h5>
+            <span class="block mt-2 md:mt-0 p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Search..."  class="w-full sm:w-auto"/>
+                        </span>
+          </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+          <tr>
+            <th style="width: 3rem">
+              <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+            </th>
+            <th pSortableColumn="code">Code <p-sortIcon field="code"></p-sortIcon></th>
+            <th pSortableColumn="createdDate">Date of creation<p-sortIcon field="type"></p-sortIcon></th>
+            <th pSortableColumn="fNameBlock">Block <p-sortIcon field="fNameBlock"></p-sortIcon></th>
+            <th pSortableColumn="priorityLevel">priorityLevel<p-sortIcon field="priorityLevel"></p-sortIcon></th>
+            <th></th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-waitingList>
+          <tr>
+            <td>
+              <p-tableCheckbox [value]="waitingList"></p-tableCheckbox>
+            </td>
+            <td style="width:14%; min-width:10rem;"><span class="p-column-title">Code</span>
+              {{waitingList.code || waitingList.idFoyer}}
+            </td>
+            <td style="width:14%; min-width:10rem;">
+              <span class="p-column-title">Date of creation</span>
+              {{waitingList.createdDate}}
+            </td>
+            <td style="width:14%; min-width:8rem;">
+              <span class="p-column-title">Block</span>
+              {{waitingList.fNameBlock}}
+            </td>
+            <td style="width:14%; min-width:10rem;">
+              <span class="p-column-title">Priority Level</span>
+              {{waitingList.priorityLevel}}
+            </td>
+
+            <td>
+              <div class="flex">
+                <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="waitingList.id && deletewaitingList(waitingList.id)"></button>
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+
+    <p-dialog [(visible)]="waitingListDialog" [style]="{width: '450px'}" header="WaitingList Details" [modal]="true" class="p-fluid">
+
+      <form #form="ngForm" (ngSubmit)="savewaitingList();hideDialog()">
+        <div class="field">
+          <label for="createdDate">createdDate</label>
+          <input type="datetime-local" pInputText id="createdDate" name="createdDate" [(ngModel)]="waitingList.createdDate" required>
+        </div>
+        <div class="field">
+          <label for="fNameBlock">Block</label>
+          <select  id="fNameBlock" pInputText name="fNameBlock" [(ngModel)]="waitingList.fNameBlock" required>
+            <option value="MSTUDENTS">MSTUDENTS</option>
+            <option value="FSTUDENTS">FSTUDENTS</option>
+            <option value="MTEACHERS">MTEACHERS</option>
+            <option value="FTEACHERS">FTEACHERS</option>
+            <option value="GUESTS">GUESTS</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="priorityLevel">priorityLevel</label>
+          <input id="priorityLevel" pInputText name="priorityLevel" [(ngModel)]="waitingList.priorityLevel" required />
+        </div>
+        <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+        <button pButton type="submit"
+                [disabled]="form.invalid" pRipple label="Save" icon="pi pi-check" class="p-button-text"></button>
+      </form>
+
+    </p-dialog>
+
+
+
+    <p-dialog [(visible)]="deletewaitingListDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
+      <div class="flex align-items-center justify-content-center">
+        <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+        <span>Are you sure you want to delete selected products?</span>
+      </div>
+
+      <ng-template pTemplate="footer">
+        <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No" (click)="deletewaitingListDialog = false"></button>
+        <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes" (click)="confirmDeleteSelected()"></button>
+      </ng-template>
+    </p-dialog>
+
+  </div>
+</div>

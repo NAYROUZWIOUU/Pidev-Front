@@ -18,24 +18,36 @@ import { RmembershipComponentModule } from './rmembership-component/rmembership.
 import { RmembershipService } from './services/Rmembership/rmembership.service';
 import { RestauRoutingModule } from './demo/components/landing/restaurant-Front/restauRoutingModule.module';
 import { FormsModule } from '@angular/forms';
+import { FoyerModule} from "./foyer/foyer.module";
+import {WaitingListService} from "./services/WaitingList/waitinglist.service";
+import { MessageService } from 'primeng/api';
+import {WaitinglistModule} from "./waitinglist/waitinglist.module";
+import { DormfrontComponent } from './demo/components/landing/dormfront/dormfront.component';
+import {StyleClassModule} from "primeng/styleclass";
+import {DividerModule} from "primeng/divider";
+
 
 @NgModule({
-    declarations: [
-        AppComponent, NotfoundComponent
-    ],
-    imports: [
-        AppRoutingModule,
-        AppLayoutModule,
-        UserComponentModule,
-        RmembershipComponentModule,
-        RestauRoutingModule,
-        FormsModule
-    ],
-    providers: [
-        { provide: LocationStrategy, useClass: HashLocationStrategy },
-        CountryService, CustomerService, EventService, IconService, NodeService,
-        PhotoService, ProductService,RestaurantService,UsersService,RmembershipService
-    ],
-    bootstrap: [AppComponent]
+  declarations: [
+    AppComponent, NotfoundComponent, DormfrontComponent
+  ],
+  imports: [
+    AppRoutingModule,
+    AppLayoutModule,
+    UserComponentModule,
+    RmembershipComponentModule,
+    RestauRoutingModule,
+    FormsModule,
+    FoyerModule,
+    WaitinglistModule,
+    StyleClassModule,
+    DividerModule
+  ],
+  providers: [
+    { provide: LocationStrategy, useClass: HashLocationStrategy },
+    CountryService, CustomerService, EventService, IconService, NodeService,
+    PhotoService, ProductService,RestaurantService,UsersService,RmembershipService,WaitingListService,MessageService
+  ],
+  bootstrap: [AppComponent]
 })
 export class AppModule { }
