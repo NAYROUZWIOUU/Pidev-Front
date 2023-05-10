@@ -37,7 +37,7 @@ export class MenusComponent implements OnInit {
         this.tieredItems = [
             {
                 label: 'Customers',
-                icon: 'pi pi-fw pi-table',
+                icon: 'pi pi-fw pi-meal',
                 items: [
                     {
                         label: 'New',
@@ -186,7 +186,7 @@ export class MenusComponent implements OnInit {
         this.slideItems = [
             {
                 label: 'Customers',
-                icon: 'pi pi-fw pi-table',
+                icon: 'pi pi-fw pi-meal',
                 items: [
                     {
                         label: 'New',

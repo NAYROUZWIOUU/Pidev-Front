@@ -1,0 +1,152 @@
+<!-- thread.component.html -->
+
+<div class="container my-3">
+  <h1>{{ forum.title }} - {{ thread.description }}</h1>
+
+  <!-- Affichage des threads -->
+  <div class="card my-3" *ngFor="let thread of threads">
+    <div class="card-body">
+      <h5 class="card-title">{{ thread.description }}</h5>
+      <p class="card-text">Type: {{ thread.type }}</p>
+<!--      <ul>-->
+<!--        <li *ngFor="let reply of threads">-->
+<!--          {{reply.parent.description}}-->
+<!--        </li>-->
+<!--      </ul>-->
+<!--      &lt;!&ndash; Add a select element to display the list of threads &ndash;&gt;-->
+<!--      <select [(ngModel)]="this.thread.id" (change)="onThreadSelect(thread)">-->
+<!--        <option value="">Select a thread</option>-->
+<!--        <option *ngFor="let thread of threads" [value]="thread.id">{{thread.description}}</option>-->
+<!--      </select>-->
+
+<!--      &lt;!&ndash; Display the replies for the selected thread &ndash;&gt;-->
+<!--      <div *ngIf="this.thread.id">-->
+<!--        <h3>Replies:</h3>-->
+<!--        <ul>-->
+<!--          <li *ngFor="let reply of threads">{{reply.description}}</li>-->
+<!--        </ul>-->
+<!--      </div>-->
+
+      <button class="btn btn-primary" (click)="selectThread(thread)">Voir le thread</button>
+
+    </div>
+  </div>
+
+
+  <!-- Formulaire pour ajouter un nouveau thread -->
+  <div class="card my-3">
+    <div class="card-body">
+      <h5 class="card-title">Ajouter un nouveau thread</h5>
+      <form (ngSubmit)="addThread()">
+        <div class="form-group">
+          <label>Description</label>
+          <textarea class="form-control" [(ngModel)]="newThread.description" name="description" required></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Ajouter</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Affichage du thread sélectionné -->
+  <div *ngIf="thread.id">
+    <h2>{{ thread.description }}</h2>
+    <p>Type: {{ thread.type }}</p>
+
+    <!-- Affichage des réponses au thread -->
+    <div *ngIf="thread.id">
+    <div *ngFor="let reply of thread.id">
+      <p>{{ reply.description }}</p>
+    </div>
+
+    <!-- Formulaire pour répondre au thread -->
+    <form (ngSubmit)="replyToThread()" class="my-3">
+      <div class="form-group">
+        <label>Réponse</label>
+        <textarea class="form-control" [(ngModel)]="replyText" name="replyText" required></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Répondre</button>
+    </form>
+  </div>
+</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+<!--<div class="container">-->
+<!--  <div class="row">-->
+<!--    <div class="col-md-8">-->
+<!--      <div class="card mb-4">-->
+<!--        <div class="card-header">-->
+<!--          <h4>{{ thread.description }}</h4>-->
+<!--        </div>-->
+<!--        <div class="card-body">-->
+<!--          <p>{{ thread.type }}</p>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--      <div class="card mb-4">-->
+<!--        <div class="card-header">-->
+<!--          <h4>Replies</h4>-->
+<!--        </div>-->
+<!--        <div class="card-body">-->
+<!--          <ul class="list-group">-->
+<!--            <li class="list-group-item" *ngFor="let reply of thread.id">-->
+<!--              <p>{{ reply.description }}</p>-->
+<!--            </li>-->
+<!--          </ul>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--      <div class="card mb-4">-->
+<!--        <div class="card-header">-->
+<!--          <h4>Reply to Thread</h4>-->
+<!--        </div>-->
+<!--        <div class="card-body">-->
+<!--          <form (submit)="replyToThread()">-->
+<!--            <div class="form-group">-->
+<!--              <textarea class="form-control" [(ngModel)]="replyText"></textarea>-->
+<!--            </div>-->
+<!--            <button type="submit" class="btn btn-primary">Reply</button>-->
+<!--          </form>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--    <div class="col-md-4">-->
+<!--      <div class="card mb-4">-->
+<!--        <div class="card-header">-->
+<!--          <h4>Add Thread</h4>-->
+<!--        </div>-->
+<!--        <div class="card-body">-->
+<!--          <form (submit)="addThread">-->
+<!--            <div class="form-group">-->
+<!--              <input type="text" class="form-control" placeholder="Thread Description" #description required>-->
+<!--            </div>-->
+<!--            <button type="submit" class="btn btn-primary">Add Thread</button>-->
+<!--          </form>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--      <div class="card mb-4">-->
+<!--        <div class="card-header">-->
+<!--          <h4>Update Thread</h4>-->
+<!--        </div>-->
+<!--        <div class="card-body">-->
+<!--          <form (submit)="updateThread(description.value)">-->
+<!--            <div class="form-group">-->
+<!--              <input type="text" class="form-control" [(ngModel)]="thread.description">-->
+<!--            </div>-->
+<!--            </div>-->
+<!--            </div>-->
+<!--            <button type="submit" class="btn btn-primary">Update Thread</button>-->
+<!--          </form>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
