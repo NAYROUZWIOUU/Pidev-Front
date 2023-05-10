@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+import {CommonModule, HashLocationStrategy, LocationStrategy} from '@angular/common';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AppLayoutModule } from './layout/app.layout.module';
@@ -22,14 +22,15 @@ import { FoyerModule} from "./foyer/foyer.module";
 import {WaitingListService} from "./services/WaitingList/waitinglist.service";
 import { MessageService } from 'primeng/api';
 import {WaitinglistModule} from "./waitinglist/waitinglist.module";
-import { DormfrontComponent } from './demo/components/landing/dormfront/dormfront.component';
 import {StyleClassModule} from "primeng/styleclass";
 import {DividerModule} from "primeng/divider";
-
+import {TableModule} from "primeng/table";
+import {DormRoutingModuleModule} from "./demo/components/landing/dorm-Front/dormRoutingModule.module";
+import {DormFrontComponent} from "./demo/components/landing/dorm-Front/dorm-front.component";
 
 @NgModule({
   declarations: [
-    AppComponent, NotfoundComponent, DormfrontComponent
+    AppComponent, NotfoundComponent,DormFrontComponent
   ],
   imports: [
     AppRoutingModule,
@@ -41,7 +42,10 @@ import {DividerModule} from "primeng/divider";
     FoyerModule,
     WaitinglistModule,
     StyleClassModule,
-    DividerModule
+    DividerModule,
+    CommonModule,
+    DormRoutingModuleModule,
+    TableModule
   ],
   providers: [
     { provide: LocationStrategy, useClass: HashLocationStrategy },

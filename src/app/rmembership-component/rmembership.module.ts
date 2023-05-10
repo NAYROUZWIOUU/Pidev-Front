@@ -32,8 +32,8 @@ import { DatePipe } from '@angular/common';
     DropdownModule,
     RadioButtonModule,
     InputNumberModule,
-    DialogModule,
-    DatePipe],
+    DialogModule
+  ],
   exports: [RmembershipComponent]
 })
 export class RmembershipComponentModule {

@@ -6,10 +6,15 @@
         <ng-template pTemplate="left">
           <div class="my-2">
             <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNew()"></button>
-            <button pButton pRipple label="Delete" icon="pi pi-trash" class="p-button-danger" [disabled]="!selectedwaitingLists || !selectedwaitingLists.length"></button>
+            <button pButton pRipple label="Delete" icon="pi pi-trash"  class="p-button-danger" [disabled]="!selectedwaitingLists || !selectedwaitingLists.length"></button>
+            <div class="my-3">
+            <button pButton pRipple label="First" icon="pi pi" class="p-button-success mr-2" (click)="getFirstOfWaitingList()"></button>
+            <button pButton pRipple label="All" icon="pi pi" class="p-button-success mr-2" (click)="getFirstOfWaitingList1()"></button>
+              <button pButton pRipple label="Notify first" icon="pi pi" class="p-button-success mr-2" (click)="notifyFirstUserOnWaitingList()"></button>
+              <button pButton pRipple label="Count" icon="pi pi" class="p-button-success mr-2" (click)="countWaitingList()"></button>
+            </div>
           </div>
         </ng-template>
-
 
         <ng-template pTemplate="right">
           <p-fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" label="Import" chooseLabel="Import" class="mr-2 inline-block"></p-fileUpload>
@@ -17,14 +22,14 @@
         </ng-template>
       </p-toolbar>
 
-      <p-table #dt [value]="waitingLists" [columns]="cols" responsiveLayout="scroll" [rows]="10" [globalFilterFields]="['fNameBlock','priorityLevel']" [rows]="10" [paginator]="true" [rowsPerPageOptions]="[10,20,30]" [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [(selection)]="selectedwaitingLists" selectionMode="multiple" [rowHover]="true" dataKey="idwaitingList">
+      <p-table #dt [value]="waitingLists" [columns]="cols" responsiveLayout="scroll" [globalFilterFields]="['fNameBlock','priorityLevel']" [rows]="10" [paginator]="true" [rowsPerPageOptions]="[10,20,30]" [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [(selection)]="selectedwaitingLists" selectionMode="multiple" [rowHover]="true" dataKey="idwaitingList">
         <ng-template pTemplate="caption">
           <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
             <h5 class="m-0">Manage waitingLists</h5>
             <span class="block mt-2 md:mt-0 p-input-icon-left">
-                            <i class="pi pi-search"></i>
-                            <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Search..."  class="w-full sm:w-auto"/>
-                        </span>
+              <i class="pi pi-search"></i>
+              <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Search..."  class="w-full sm:w-auto"/>
+            </span>
           </div>
         </ng-template>
         <ng-template pTemplate="header">
@@ -45,14 +50,14 @@
               <p-tableCheckbox [value]="waitingList"></p-tableCheckbox>
             </td>
             <td style="width:14%; min-width:10rem;"><span class="p-column-title">Code</span>
-              {{waitingList.code || waitingList.idFoyer}}
+              {{waitingList.code || waitingList.id}}
             </td>
             <td style="width:14%; min-width:10rem;">
               <span class="p-column-title">Date of creation</span>
               {{waitingList.createdDate}}
             </td>
             <td style="width:14%; min-width:8rem;">
-              <span class="p-column-title">Block</span>
+              <span class="p-column-title">fNameBlock</span>
               {{waitingList.fNameBlock}}
             </td>
             <td style="width:14%; min-width:10rem;">
@@ -72,24 +77,21 @@
 
     <p-dialog [(visible)]="waitingListDialog" [style]="{width: '450px'}" header="WaitingList Details" [modal]="true" class="p-fluid">
 
-      <form #form="ngForm" (ngSubmit)="savewaitingList();hideDialog()">
+      <form #form="ngForm" (ngSubmit)="savewaitingList()">
         <div class="field">
           <label for="createdDate">createdDate</label>
           <input type="datetime-local" pInputText id="createdDate" name="createdDate" [(ngModel)]="waitingList.createdDate" required>
         </div>
         <div class="field">
-          <label for="fNameBlock">Block</label>
+          <label for="fNameBlock">Block name</label>
           <select  id="fNameBlock" pInputText name="fNameBlock" [(ngModel)]="waitingList.fNameBlock" required>
+            <option value="">Select a block name</option>
             <option value="MSTUDENTS">MSTUDENTS</option>
             <option value="FSTUDENTS">FSTUDENTS</option>
             <option value="MTEACHERS">MTEACHERS</option>
             <option value="FTEACHERS">FTEACHERS</option>
             <option value="GUESTS">GUESTS</option>
           </select>
-        </div>
-        <div class="field">
-          <label for="priorityLevel">priorityLevel</label>
-          <input id="priorityLevel" pInputText name="priorityLevel" [(ngModel)]="waitingList.priorityLevel" required />
         </div>
         <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
         <button pButton type="submit"

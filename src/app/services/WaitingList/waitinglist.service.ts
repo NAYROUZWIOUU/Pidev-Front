@@ -8,56 +8,39 @@ import { WaitingList } from '../../models/waitinglist';
 })
 export class WaitingListService {
 
-  private baseUrl = 'http://localhost:8082/waitinglist';
+  private baseUrl = 'http://localhost:8082/test/waiting-list';
 
   constructor(private http: HttpClient) { }
 
-  addToWaitingList(waitingList: WaitingList, userId: number): Observable<WaitingList> {
-    return this.http.post<WaitingList>(`${this.baseUrl}/${userId}`, waitingList);
+  addToWaitingList(waitingList: WaitingList): Observable<WaitingList> {
+    return this.http.post<WaitingList>(`${this.baseUrl}/addToWaitingList/`+1, waitingList);
   }
 
-  removeFromWaitingList(waitingListId: number): Observable<any> {
-    return this.http.delete(`${this.baseUrl}/${waitingListId}`);
-  }
-
-  getWaitingListByFoyerAndBlock(idFoyer: number, idBlock: number): Observable<WaitingList[]> {
-    return this.http.get<WaitingList[]>(`${this.baseUrl}/foyer/${idFoyer}/block/${idBlock}`);
-  }
-
-  getAllWaitingList(): Observable<WaitingList[]> {
-    return this.http.get<WaitingList[]>(`${this.baseUrl}/all`);
+  removeFromWaitingList(waitingListId: number): Observable<void> {
+    return this.http.delete<void>(`${this.baseUrl}/removeFromWaitingList/${waitingListId}`);
   }
 
   getFirstOfWaitingList(): Observable<WaitingList> {
-    return this.http.get<WaitingList>(`${this.baseUrl}/first`);
+    return this.http.get<WaitingList>(`${this.baseUrl}/getFirstOfWaitingList`);
   }
 
-  sendFreePlaceEmail(email: string): Observable<any> {
-    return this.http.post<any>(`${this.baseUrl}/email/${email}`, null);
-  }
-
-  notifyFirstUserOnWaitingList(): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl}/notify`);
+  notifyFirstUserOnWaitingList(): Observable<void> {
+    return this.http.post<void>(`${this.baseUrl}/notifyFirstUserOnWaitingList`, null);
   }
 
   countWaitingList(): Observable<number> {
-    return this.http.get<number>(`${this.baseUrl}/count`);
+    return this.http.get<number>(`${this.baseUrl}/countWaitingList`);
   }
 
-  estimateWaitTimes(): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl}/estimate`);
-  }
-  createWaitingList(waitingList: WaitingList): Observable<WaitingList> {
-    return this.http.post<WaitingList>(`${this.baseUrl}`, waitingList);
-  }
-  updateWaitingList(id: number, waitingList: WaitingList): Observable<WaitingList> {
-    return this.http.put<WaitingList>(`${this.baseUrl}/${id}`, waitingList);
+  getWaitingListByFoyerAndBlock(idFoyer: number, idBlock: number): Observable<WaitingList[]> {
+    return this.http.get<WaitingList[]>(`${this.baseUrl}/getWaitingListByFoyerAndBlock/${idFoyer}/${idBlock}`);
   }
 
-  deleteWaitingList(id: number): Observable<WaitingList> {
-    return this.http.delete<WaitingList>(`${this.baseUrl}/${id}`);
+  getAllWaitingList(): Observable<WaitingList[]> {
+    return this.http.get<WaitingList[]>(`${this.baseUrl}/getAllWaitingList`);
   }
-  getWaitingListById(id: number): Observable<WaitingList> {
-    return this.http.get<WaitingList>(`${this.baseUrl}/${id}`);
+
+  estimateWaitTimes(): Observable<void> {
+    return this.http.get<void>(`${this.baseUrl}/estimateWaitTimes`);
   }
 }

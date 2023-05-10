@@ -4,6 +4,4 @@ export enum FNameBlock {
   MTEACHERS = 'MTEACHERS',
   FTEACHERS = 'FTEACHERS',
   GUESTS = 'GUESTS'
-
- 
 }

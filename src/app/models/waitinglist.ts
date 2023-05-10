@@ -1,9 +1,10 @@
 import { User } from './user';
+import {FNameBlock} from "./fnameblock";
 
 export class WaitingList {
   id?: number;
   createdDate?: Date;
-  fNameBlock?: string;
+  fNameBlock?: FNameBlock;
   priorityLevel?: number;
   user?: User;
 }

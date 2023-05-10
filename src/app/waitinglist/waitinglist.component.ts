@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {WaitingListService} from "../services/WaitingList/waitinglist.service";
 import {WaitingList} from "../models/waitinglist";
 import {Table} from "primeng/table";
-
+import {MessageService} from "primeng/api";
 @Component({
   selector: 'app-waitinglist',
   templateUrl: './waitinglist.component.html',
@@ -30,10 +30,13 @@ export class WaitinglistComponent implements OnInit {
 
   waitingList: WaitingList = {};
 
+  waitingList1: any[] = [];
+
+  firstOfWaitingList!: WaitingList;
+
   selectedwaitingLists: WaitingList[] = [];
 
   submitted: boolean = false;
-  messageService: any;
 
   iduser!:number;
 
@@ -41,24 +44,26 @@ export class WaitinglistComponent implements OnInit {
   rowsPerPageOptions = [5, 10, 20];
 
 
-  constructor(private fs: WaitingListService) {}
+  constructor(private fs: WaitingListService, private messageService: MessageService) {}
 
-  ngOnInit(): void {
-
+  ngOnInit() {
     this.cols = [
-      { field: 'waitingList', header: 'waitingList' },
-      { field: 'createdDate', header: 'createdDate' },
-      { field: 'fNameBlock', header: 'fNameBlock' },
-      { field: 'priorityLevel', header: 'priorityLevel' }
-
+      { field: 'waitingList', header: 'Waiting List' },
+      { field: 'createdDate', header: 'Created Date' },
+      { field: 'fNameBlock', header: 'First Name Block' },
+      { field: 'priorityLevel', header: 'Priority Level' }
     ];
-    this.fs.getAllWaitingList().subscribe(waitingLists => {
-      this.waitingLists = waitingLists;
+
+    this.fs.getAllWaitingList().subscribe((allItems: WaitingList[]) => {
+      this.waitingLists = allItems;
     });
-
-
   }
 
+  getFirstOfWaitingList1() {
+    this.fs.getAllWaitingList().subscribe((allItems: WaitingList[]) => {
+      this.waitingLists = allItems;
+    });
+  }
 
 
   deletewaitingList(idwaitingList: number) {
@@ -80,30 +85,6 @@ export class WaitinglistComponent implements OnInit {
   }
 
 
-
-
-///////////////
-
-  // preEditwaitingList(waitingList: waitingList) {
-  //   this.waitingList = { ...waitingList };
-  //   this.waitingListUpdateDialog = true;
-  // }
-  //
-  // updatewaitingList() {
-  //   if (typeof this.waitingList.idwaitingList !== 'undefined'){
-  //     this.fs.(this.waitingList,this.waitingList.idwaitingList).subscribe((res) => {
-  //       console.log(res);
-  //     });}
-  // }
-  //
-  //
-  // hidewaitingListUpdateDialog() {
-  //   this.waitingListUpdateDialog = false;
-  //   this.submitted = false;
-  // }
-
-
-
   confirmDeleteSelected() {
     this.deletewaitingListsDialog = false;
     this.waitingLists = this.waitingLists.filter(val => !this.selectedwaitingLists.includes(val));
@@ -112,13 +93,6 @@ export class WaitinglistComponent implements OnInit {
 
   }
 
-// confirmDelete() {
-//     this.deletewaitingListDialog = false;
-//     this.waitingLists = this.waitingLists.filter(val => val.idwaitingList !== this.waitingList.idwaitingList);
-//     this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'waitingList Deleted', life: 3000 });
-//     this.waitingList = {};
-
-// }
 
   hideDialog() {
     this.waitingListDialog = false;
@@ -126,7 +100,7 @@ export class WaitinglistComponent implements OnInit {
   }
 
   savewaitingList() {
-    this.fs.addToWaitingList(this.waitingList,this.iduser).subscribe((res) => {
+    this.fs.addToWaitingList(this.waitingList).subscribe((res) => {
       console.log(res);
     });}
 
@@ -154,6 +128,58 @@ export class WaitinglistComponent implements OnInit {
 
   onGlobalFilter(table: Table, event: Event) {
     table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
+  }
+
+
+  addToWaitingList(waitingList: WaitingList): void {
+    this.fs.addToWaitingList(waitingList).subscribe(() => {
+      this.getAllWaitingList();
+    });
+  }
+
+  removeFromWaitingList(waitingListId: number): void {
+    this.fs.removeFromWaitingList(waitingListId).subscribe(() => {
+      this.getAllWaitingList();
+    });
+  }
+
+  getFirstOfWaitingList() {
+    this.fs.getFirstOfWaitingList().subscribe((firstItem: WaitingList) => {
+      this.waitingLists = [firstItem];
+    });
+  }
+
+
+  notifyFirstUserOnWaitingList(): void {
+    this.fs.notifyFirstUserOnWaitingList().subscribe(() => {
+      this.getAllWaitingList();
+      this.messageService.add({ severity: 'success', summary: 'Notification Sent', detail: 'Notification has been sent to the first user on the waiting list.' });
+    });
+  }
+
+  countWaitingList() {
+    this.fs.countWaitingList().subscribe((count: number) => {
+      this.messageService.add({ severity: 'info', summary: 'Waiting List Count', detail: `The waiting list currently has ${count} items.` });
+      this.getAllWaitingList();
+    });
+  }
+
+  getWaitingListByFoyerAndBlock(idFoyer: number, idBlock: number): void {
+    this.fs.getWaitingListByFoyerAndBlock(idFoyer, idBlock).subscribe(() => {
+      this.getAllWaitingList();
+    });
+  }
+
+  getAllWaitingList(): void {
+    this.fs.getAllWaitingList().subscribe(data => {
+      this.waitingList1 = data;
+    });
+  }
+
+  estimateWaitTimes(): void {
+    this.fs.estimateWaitTimes().subscribe(() => {
+      this.getAllWaitingList();
+    });
   }
 
 }

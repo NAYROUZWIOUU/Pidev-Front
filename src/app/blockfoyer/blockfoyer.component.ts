@@ -39,7 +39,13 @@ export class BlockfoyerComponent implements OnInit{
 
   submitted: boolean = false;
   messageService: any;
-  nameBlockOptions = Object.values(FNameBlock);
+  nameBlockOptions = [
+    {label: 'MSTUDENTS', value: 'MSTUDENTS'},
+    {label: 'FSTUDENTS', value: 'FSTUDENTS'},
+    {label: 'MTEACHERS', value: 'MTEACHERS'},
+    {label: 'FTEACHERS', value: 'FTEACHERS'},
+    {label: 'GUESTS', value: 'GUESTS'}
+  ];
 
 
 
@@ -47,6 +53,8 @@ export class BlockfoyerComponent implements OnInit{
 
 
   constructor(private bf: BlockfoyerService) {
+    console.log(this.blockfoyers);
+
     this.blockfoyer.foyer = {}; // initialize the foyer property to an empty object
 
   }
@@ -55,7 +63,7 @@ export class BlockfoyerComponent implements OnInit{
 
     this.cols = [
       { field: 'blockfoyer', header: 'blockfoyer' },
-      { field: 'nameblock', header: 'nameblock' },
+      { field: 'nameBlock', header: 'nameblock' },
       { field: 'roomnbr', header: 'roomnbr' },
       { field: 'placement', header: 'placement' }
 

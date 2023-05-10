@@ -7,7 +7,6 @@ import { RmembershipComponent } from './rmembership-component/rmembership.compon
 import {FoyerComponent} from "./foyer/foyer.component";
 import {BlockfoyerComponent} from "./blockfoyer/blockfoyer.component";
 import {WaitinglistComponent} from "./waitinglist/waitinglist.component";
-import {DormfrontComponent} from "./demo/components/landing/dormfront/dormfront.component";
 
 @NgModule({
     imports: [
@@ -35,7 +34,7 @@ import {DormfrontComponent} from "./demo/components/landing/dormfront/dormfront.
             { path: 'auth', loadChildren: () => import('./demo/components/auth/auth.module').then(m => m.AuthModule) },
             { path: 'landing', loadChildren: () => import('./demo/components/landing/landing.module').then(m => m.LandingModule) },
             { path: 'landing/rmembership', loadChildren: () => import('./demo/components/landing/restaurant-Front/restauRoutingModule.module').then(m => m.RestauRoutingModule) },
-          { path: 'landing/dorm', loadChildren: () => import('./demo/components/landing/dormfront/dormfrontrouting.module').then(m => m.DormfrontroutingModule) },
+          { path: 'landing/dormfront', loadChildren: () => import('./demo/components/landing/dorm-Front/dormRoutingModule.module').then(m => m.DormRoutingModuleModule) },
 
           { path: 'notfound', component: NotfoundComponent },
             { path: '**', redirectTo: '/notfound' },
