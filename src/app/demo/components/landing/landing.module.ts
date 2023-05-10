@@ -14,6 +14,13 @@ import { MermbershipsUserComponent } from './mermberships-user/mermberships-user
 import { MermbershipsUserModule } from './mermberships-user/mermberships-user.module';
 import { FidelitycarduserComponent } from './fidelitycarduser/fidelitycarduser.component';
 import { FidelitycarduserModule } from './fidelitycarduser/fidelitycarduser.module';
+import {MenubarModule} from "primeng/menubar";
+import { ForumFrontComponent } from './forum-front/forum-front.component';
+import {ClaimFrontComponent} from "./claim-front/claim-front.component";
+import {ReactiveFormsModule} from "@angular/forms";
+import {PaginatorModule} from "primeng/paginator";
+import { ThreadFrontComponent } from './thread-front/thread-front.component';
+import {FieldsetModule} from "primeng/fieldset";
 
 @NgModule({
     imports: [
@@ -26,8 +33,12 @@ import { FidelitycarduserModule } from './fidelitycarduser/fidelitycarduser.modu
         PanelModule,
         ButtonModule,
         MermbershipsUserModule,
-        FidelitycarduserModule
+        FidelitycarduserModule,
+        ReactiveFormsModule,
+        PaginatorModule,
+        FieldsetModule,
+      MenubarModule
     ],
-    declarations: [LandingComponent,RestaurantFrontComponent]
+    declarations: [LandingComponent,RestaurantFrontComponent,ClaimFrontComponent, ForumFrontComponent, ThreadFrontComponent]
 })
 export class LandingModule { }

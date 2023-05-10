@@ -1,0 +1,90 @@
+<div class="col-12">
+  <div class="card">
+    <h5>Menu</h5>
+    <p-toast></p-toast>
+    <p-toolbar styleClass="mb-4">
+      <ng-template pTemplate="left">
+        <div class="my-2">
+          <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNew()"></button>
+        </div>
+      </ng-template>
+    </p-toolbar>
+    <p-table #dt [value]="menus" dataKey="id">
+      <ng-template pTemplate="header">
+        <tr>
+          <th style="width: 3rem"></th>
+          <th pSortableColumn="idMenu">idMenu <p-sortIcon field="idMenu"></p-sortIcon></th>
+          <th pSortableColumn="dateMenu">dateMenu <p-sortIcon field="dateMenu"></p-sortIcon></th>
+          <th pSortableColumn="priceMenu">priceMenu <p-sortIcon field="priceMenu"></p-sortIcon></th>
+          <th pSortableColumn="typeMenu">typeMenu <p-sortIcon field="typeMenu"></p-sortIcon></th>
+          <th >action <p-sortIcon field="action"></p-sortIcon></th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-menu let-rowIndex="rowIndex" >
+        <tr *ngIf="!rowVisibility[menu.idMenu]">
+          <td></td>
+          <td style="min-width: 12rem;">{{menu.idMenu }}</td>
+          <td style="min-width: 12rem;">{{menu.dateMenu }}</td>
+          <td style="min-width: 12rem;">{{menu.priceMenu}}</td>
+          <td style="min-width: 12rem;">{{menu.typeMenu }}</td>
+          <td style="min-width: 12rem; display:flex; "><button pButton pRipple label="Edit" icon="pi pi-fw pi-pencil" class="p-button-rounded p-button-primary mr-2 btn-sm " (click)="selectMenu(menu)"></button>
+            <button pButton pRipple label="Delete" icon="pi pi-trash" class="p-button-rounded p-button-danger mr-2 btn-sm " (click)="hideRow(menu.idMenu)"></button></td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+
+  <p-dialog [(visible)]="menuDialog" [style]="{width: '450px'}" header="Menu Details" [modal]="true" class="p-fluid">
+
+    <form #form="ngForm">
+      <div class="field">
+        <label for="typeMenu">Type of Menu</label>
+        <select  id="typeMenu" pInputText name="typeMenu" [(ngModel)]="rmenu.typeMenu" required>
+          <option value="">Select a MenuType</option>
+          <option value="FULL">FULL</option>
+          <option value="DEMI">DEMI</option>
+          <option value="ONLYONE">ONLYONE</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="dateMenu">Menu Date</label>
+        <input type="date" pInputText id="dateMenu" name="dateMenu" [(ngModel)]="rmenu.dateMenu" required>
+      </div>
+      <div class="field">
+        <label for="priceMenu">Price</label>
+        <input type="number"  id="priceMenu" pInputText name="priceMenu" [(ngModel)]="rmenu.priceMenu" required>
+      </div>
+      <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+      <button pButton type="submit"
+              [disabled]="form.invalid" pRipple label="Save" icon="pi pi-check" class="p-button-text"(click)="saveMenu()"></button>
+    </form>
+
+  </p-dialog>
+
+  <p-dialog [(visible)]="emenuDialog" [style]="{width: '450px'}" header="Edit Menu Details" [modal]="true" class="p-fluid">
+
+    <form #form="ngForm">
+      <div class="field">
+        <label for="etypeMenu">Type of Menu</label>
+        <select  id="etypeMenu" pInputText name="etypeMenu" [(ngModel)]="selectedmenu.typeMenu" required>
+          <option value="">Select a MenuType</option>
+          <option value="FULL">FULL</option>
+          <option value="DEMI">DEMI</option>
+          <option value="ONLYONE">ONLYONE</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="edateMenu">Menu Date</label>
+        <input type="date" pInputText id="edateMenu" name="edateMenu" [(ngModel)]="selectedmenu.dateMenu" required>
+      </div>
+      <div class="field">
+        <label for="epriceMenu">Price</label>
+        <input type="number"  id="epriceMenu" pInputText name="epriceMenu" [(ngModel)]="selectedmenu.priceMenu" required>
+      </div>
+      <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideeditDialog()"></button>
+      <button pButton type="submit"
+               pRipple label="Save" icon="pi pi-check" class="p-button-text"(click)="editMenu()"></button>
+    </form>
+
+  </p-dialog>
+</div>

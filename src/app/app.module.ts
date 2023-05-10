@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+import {CommonModule, HashLocationStrategy, LocationStrategy} from '@angular/common';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AppLayoutModule } from './layout/app.layout.module';
@@ -23,25 +23,62 @@ import { FidelityCardModule } from './fidelity-card-component/fidelity-card.modu
 import { FidelityCardService} from './services/FidelityCard/fidelity-card-service.service';
 import { RewardService } from './services/Reward/reward.service';
 import { RewardModule } from './reward/reward.module';
+import {MenuService} from "./services/menu/menu.service";
+import { FoyerModule} from "./foyer/foyer.module";
+import {WaitingListService} from "./services/WaitingList/waitinglist.service";
+import { MessageService } from 'primeng/api';
+import {WaitinglistModule} from "./waitinglist/waitinglist.module";
+import {StyleClassModule} from "primeng/styleclass";
+import {DividerModule} from "primeng/divider";
+import {TableModule} from "primeng/table";
+import {DormRoutingModuleModule} from "./demo/components/landing/dorm-Front/dormRoutingModule.module";
+import {DormFrontComponent} from "./demo/components/landing/dorm-Front/dorm-front.component";
+import { ClaimComponent } from './claim-component/claim.component';
+import {ClaimComponentModule} from "./claim-component/claim.module";
+import {ClaimService} from "./services/Claim/claim.service";
+import {ForumService} from "./services/Forum/forum.service";
+import {ThreadService} from "./services/Thread/thread.service";
+import {ReactionService} from "./services/Reaction/reaction.service";
+import { ForumComponent } from './forum/forum.component';
+import {ForumComponentModule} from "./forum/forum.module";
+import { ThreadComponent } from './thread/thread.component';
+import {ThreadComponentModule} from "./thread/thread.module";
+import {claimRoutingModule} from "./demo/components/landing/claim-front/claimRoutingModule";
+import {ThreadRoutingModule} from "./demo/components/landing/thread-front/threadRoutingModule";
 
 @NgModule({
-    declarations: [
-        AppComponent, NotfoundComponent
-    ],
-    imports: [
-        AppRoutingModule,
-        AppLayoutModule,
-        UserComponentModule,
-        RmembershipComponentModule,
-        FormsModule,
-        FidelityCardModule,
-        RewardModule
-    ],
-    providers: [
-        { provide: LocationStrategy, useClass: HashLocationStrategy },
-        CountryService, CustomerService, EventService, IconService, NodeService,
-        PhotoService, ProductService,RestaurantService,UsersService,RmembershipService,FidelityCardService,RewardService
-    ],
-    bootstrap: [AppComponent]
+  declarations: [
+    AppComponent, NotfoundComponent,DormFrontComponent
+  ],
+  imports: [
+    AppRoutingModule,
+    AppLayoutModule,
+    UserComponentModule,
+    RmembershipComponentModule,
+    RestauRoutingModule,
+    FidelityCardModule,
+    RewardModule,
+    FormsModule,
+    FoyerModule,
+    WaitinglistModule,
+    StyleClassModule,
+    DividerModule,
+    CommonModule,
+    DormRoutingModuleModule,
+    TableModule,
+    ClaimComponentModule,
+    ForumComponentModule,
+    ThreadComponentModule,
+    claimRoutingModule,
+    ThreadRoutingModule
+  ],
+  providers: [
+    { provide: LocationStrategy, useClass: HashLocationStrategy },
+    CountryService, CustomerService, EventService, IconService, NodeService,
+    PhotoService, ProductService,RestaurantService,UsersService,RmembershipService,WaitingListService,MessageService,MenuService,
+    ClaimService,ForumService,ThreadService,ReactionService,FidelityCardService,RewardService
+  ],
+  bootstrap: [AppComponent]
+
 })
 export class AppModule { }
