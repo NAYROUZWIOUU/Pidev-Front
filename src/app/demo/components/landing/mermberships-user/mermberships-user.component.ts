@@ -35,6 +35,11 @@ export class MermbershipsUserComponent implements OnInit, OnDestroy {
   messageService: any;
 
 
+images: string[] = ['background front 02.png', 'card 01.png', 'card 02.png', 'card 03.png'];
+currentIndex = 0;
+
+
+
 
   constructor(public layoutService: LayoutService, public router: Router,private rs: RmembershipService,private datePipe: DatePipe) { }
   ngOnDestroy() {
@@ -62,6 +67,10 @@ export class MermbershipsUserComponent implements OnInit, OnDestroy {
     .subscribe(() => {
       location.reload();
     });
+
+    setInterval(() => {
+      this.currentIndex = (this.currentIndex + 1) % this.images.length;
+    }, 5000); // change image every 5 seconds
 
   }
   hideDialog() {
