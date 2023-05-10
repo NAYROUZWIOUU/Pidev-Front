@@ -4,6 +4,7 @@ import { Observable } from "rxjs";
 import { RMembership } from 'src/app/models/rmembership';
 import { TypeMembership } from 'src/app/models/typeMembership';
 import { Duration } from 'src/app/models/duration';
+import { MessageService } from 'primeng/api';
 
 interface RenewalRateResponse {
   [key: string]: number;
@@ -110,6 +111,20 @@ getValidRMemberships(startDate: string, endDate: string): Observable<RMembership
 
 getRenewalRate(startDate: any, endDate: any): Observable<RenewalRateResponse> {
   return this.http.get<RenewalRateResponse>(this.apiUrl + "/getRenewalRate/" + startDate + "/" + endDate);
+}
+
+
+getNbRMembershipValides(startDate: string, endDate: string): Observable<number> {
+  return this.http.get<number>(this.apiUrl + "/nbRMembershipValides/" + startDate + "/" + endDate);
+}
+
+
+
+
+
+getStatsAboutUsersMemberships(): Observable<any> {
+  const url = `${this.apiUrl}/statsAboutUsersMemberships`;
+  return this.http.get<any>(url);
 }
 
 }

@@ -13,6 +13,7 @@
                         <button pButton pRipple label="Guest" icon="pi pi-search" class="p-button-text mr-2" (click)="getGuestMemberships()"></button>
                         <button pButton pRipple label="Teacher" icon="pi pi-search" class="p-button-text mr-2" (click)="getTeacherMemberships()"></button>
                         <button pButton pRipple label="Student" icon="pi pi-search" class="p-button-text mr-2" (click)="getStudentMemberships()"></button>
+                        <button pButton pRipple label="All" icon="pi pi-search" class="p-button-text mr-2" (click)="getALLMemberships()"></button>
                       </div>
                 </ng-template>
 
@@ -21,7 +22,7 @@
                     <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help" (click)="dt.exportCSV()"></button>
                 </ng-template>
             </p-toolbar>
-            <p-toolbar>
+            <p-toolbar styleClass="mb-4">
               <div class="field">
                 <label for="start-date">Start Date :ㅤ</label>
                 <input  type="datetime-local" pInputText id="start-date" [(ngModel)]="startDate">
@@ -30,12 +31,14 @@
                 <label for="end-date">End Date :ㅤ</label>
                 <input  type="datetime-local" pInputText id="end-date" [(ngModel)]="endDate">
               </div>
+            </p-toolbar>
+              <p-toolbar styleClass="mb-4">
               <div class="field">
                 <div class="field">
                 <button pButton pRipple label="Get Renewal Rate" icon="pi pi-search" type="submit" (click)="getRenewalRate(startDate,endDate)"></button>
-                <div class="field">{{ renewalRate }}</div>
                 </div>
               <button  pButton pRipple label="Validated Memberships" icon="pi pi-search"  (click)="getValidRMemberships(startDate,endDate)"></button>
+              <button  pButton pRipple label="Nb Validated" icon="pi pi-search"  (click)="getValidRMemberships(startDate,endDate)"></button>
             </div>
             </p-toolbar>
 
