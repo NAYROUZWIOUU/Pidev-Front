@@ -32,15 +32,22 @@
                     <li>
                       <a [routerLink]="'/landing/clientblockrestau'" pRipple class="flex m-0 md:ml-5 px-0 py-3 text-900 font-medium line-height-3">
                           <span>Restaurant Blocks</span>
+                        <a [routerLink]="'/landing/rmembership'" pRipple class="flex m-0 md:ml-5 px-0 py-3 text-900 font-medium line-height-3">
+                            <span>Menu</span>
+                        </a>
+                    </li>
+                    <li>
+                      <a [routerLink]="'/landing/dormfront'" pRipple class="flex m-0 md:ml-5 px-0 py-3 text-900 font-medium line-height-3">
+                          <span>Dorm</span>
                       </a>
                   </li>
                   <li>
-                    <a [routerLink]="'/landing/rmembership'" pRipple class="flex m-0 md:ml-5 px-0 py-3 text-900 font-medium line-height-3">
+                    <a (click)="router.navigate(['/landing/forum'], {fragment: 'pricing'})" pRipple class="flex m-0 md:ml-5 px-0 py-3 text-900 font-medium line-height-3">
                         <span>Forum</span>
                     </a>
                 </li>
                 <li>
-                  <a (click)="router.navigate(['/landing'], {fragment: 'pricing'})" pRipple class="flex m-0 md:ml-5 px-0 py-3 text-900 font-medium line-height-3">
+                  <a (click)="router.navigate(['/landing/claim'], {fragment: 'pricing'})" pRipple class="flex m-0 md:ml-5 px-0 py-3 text-900 font-medium line-height-3">
                       <span>Claim</span>
                   </a>
               </li>
