@@ -13,7 +13,7 @@ export class ReactionService {
 
   constructor(private http: HttpClient) { }
 
-  addReactionToForum(reaction: Reaction, forumId: number): Observable<Reaction> {
+    addReactionToForum(reaction: Reaction, forumId: number): Observable<Reaction> {
     return this.http.post<Reaction>(`${this.apiUrl}/forum/${forumId}`, reaction);
   }
 

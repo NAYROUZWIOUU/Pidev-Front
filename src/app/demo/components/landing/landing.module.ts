@@ -13,6 +13,7 @@ import {ClaimFrontComponent} from "./claim-front/claim-front.component";
 import {ReactiveFormsModule} from "@angular/forms";
 import {PaginatorModule} from "primeng/paginator";
 import { ThreadFrontComponent } from './thread-front/thread-front.component';
+import {FieldsetModule} from "primeng/fieldset";
 
 @NgModule({
     imports: [
@@ -24,7 +25,8 @@ import { ThreadFrontComponent } from './thread-front/thread-front.component';
         PanelModule,
         ButtonModule,
         ReactiveFormsModule,
-        PaginatorModule
+        PaginatorModule,
+        FieldsetModule
     ],
     declarations: [LandingComponent,RestaurantFrontComponent,ClaimFrontComponent, ForumFrontComponent, ThreadFrontComponent]
 })

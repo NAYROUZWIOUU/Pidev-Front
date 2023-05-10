@@ -4,9 +4,10 @@ import {ReactionType} from "./ReactionType";
 import {ReactionEntity} from "./ReactionEntity";
 
 export class Reaction {
-  id?: number;
+  id?: any;
   reactionType?: ReactionType;
   forum?: Forum;
   thread?: Thread;
   entity?: ReactionEntity;
 }
+

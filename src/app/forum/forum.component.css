@@ -1,107 +1,235 @@
-/* Forum list styles */
-ul {
-  list-style-type: none;
+/* Style for the container of the forums list */
+.forum-list {
+  margin: 20px 0;
+}
+
+/* Style for the search bar */
+.search-bar {
+  margin-bottom: 20px;
+}
+
+/* Style for the search input */
+.search-bar input[type="text"] {
+  border-radius: 25px;
+  padding: 10px 20px;
+  width: 100%;
+  max-width: 500px;
+  border: none;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.2s ease-in-out;
+}
+
+/* Style for the search input when focused */
+.search-bar input[type="text"]:focus {
+  outline: none;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Style for the search button */
+.search-bar .fa-search {
+  font-size: 20px;
+}
+
+/* Style for the forum item */
+.forum-item {
+  margin-bottom: 20px;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Style for the forum title */
+.forum-item h3 {
   margin: 0;
-  padding: 0;
-}
-
-li {
-  background-color: #fff;
-  border-radius: 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  margin-bottom: 20px;
-  padding: 20px;
-}
-
-h3 {
   font-size: 24px;
-  margin-top: 0;
+  font-weight: bold;
 }
 
-p {
+/* Style for the forum topic */
+.forum-item p {
+  margin: 10px 0;
   font-size: 16px;
+  line-height: 1.4;
+}
+
+/* Style for the forum buttons */
+.forum-item button {
+  border: none;
+  background-color: #fff;
+  color: #007bff;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+}
+
+/* Style for the forum buttons on hover */
+.forum-item button:hover {
+  background-color: #007bff;
+  color: #fff;
+}
+
+/* Style for the new forum form */
+.new-forum-form {
+  margin-top: 50px;
+}
+
+/* Style for the form labels */
+.new-forum-form label {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+/* Style for the form inputs */
+.new-forum-form input[type="text"],
+.new-forum-form textarea {
+  border-radius: 5px;
+  padding: 10px 20px;
+  width: 100%;
+  max-width: 500px;
+  border: none;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.2s ease-in-out;
+}
+
+/* Style for the form inputs when focused */
+.new-forum-form input[type="text"]:focus,
+.new-forum-form textarea:focus {
+  outline: none;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+/* Style for the form buttons */
+button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #4CAF50;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #3e8e41;
+}
+
+button:disabled {
+  background-color: grey;
+  cursor: not-allowed;
+}
+
+/* Style for the new thread button */
+a {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 10px 20px;
+  border-radius: 5px;
+  background-color: #2196F3;
+  color: white;
+  text-decoration: none;
+  font-size: 16px;
+}
+
+a:hover {
+  background-color: #0b7dda;
+}
+
+/* Style for the search bar */
+.input-group {
   margin-bottom: 20px;
 }
 
-img {
-  border-radius: 5px;
-  max-width: 100%;
-}
-
-button {
-  background-color: #428bca;
+.input-group-addon {
+  background-color: #f5f5f5;
   border: none;
-  border-radius: 5px;
-  color: #fff;
-  cursor: pointer;
-  font-size: 16px;
-  margin-right: 10px;
-  padding: 10px 20px;
 }
 
-a {
-  background-color: #428bca;
-  border: none;
-  border-radius: 5px;
-  color: #fff;
-  cursor: pointer;
-  font-size: 16px;
-  padding: 10px 20px;
-  text-decoration: none;
+.fa-search {
+  color: #ccc;
 }
 
-a:hover,
-button:hover {
-  opacity: 0.8;
-}
-
-/* Forum form styles */
-form {
-  background-color: #fff;
-  border-radius: 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+/* Style for the forum cards */
+.forum-container {
   display: flex;
-  flex-direction: column;
-  margin-top: 20px;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.forum-card {
+  background-color: #f5f5f5;
+  border-radius: 20px;
+  cursor: pointer;
+  margin-bottom: 20px;
+  width: 100%;
+  max-width: 600px;
   padding: 20px;
-  width: 80%;
+  position: relative;
+}
+
+.forum-card:hover {
+  box-shadow: 0px 0px 5px 2px rgba(0,0,0,0.2);
+}
+
+.forum-card .title {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.forum-card .topic {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.forum-card .buttons {
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+}
+
+.forum-card .buttons button {
+  margin-left: 10px;
+}
+
+/* Style for the form */
+form {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+form div {
+  margin-bottom: 20px;
 }
 
 label {
+  display: block;
   font-size: 16px;
-  font-weight: bold;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
 }
 
-input[type="text"],
-textarea {
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  font-size: 16px;
-  margin-bottom: 20px;
+input[type="text"], textarea {
+  display: block;
+  width: 100%;
   padding: 10px;
-}
-
-button {
-  background-color: #428bca;
-  border: none;
+  border: 1px solid #ccc;
   border-radius: 5px;
-  color: #fff;
-  cursor: pointer;
   font-size: 16px;
-  margin-top: 10px;
-  padding: 10px 20px;
 }
 
-button:hover {
-  opacity: 0.8;
+input[type="text"]:focus, textarea:focus {
+  outline: none;
+  border-color: #2196F3;
 }
 
-.error {
-  color: red;
-  font-size: 14px;
-  margin-bottom: 10px;
+input[type="submit"] {
+  margin-top: 20px;
 }
+

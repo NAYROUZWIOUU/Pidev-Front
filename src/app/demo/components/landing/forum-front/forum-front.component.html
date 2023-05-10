@@ -54,37 +54,56 @@
       </div>
     </div>
 
-    <!-- search bar -->
-    <div class="form-group">
-      <div class="input-group">
-        <input type="text" class="form-control" placeholder="Search Forums" [(ngModel)]="query" (input)="searchForums()">
-        <div class="input-group-addon">
-          <i class="fa fa-search"></i>
-        </div>
-      </div>
-    </div>
-
-    <!-- forum list -->
-    <div class="forum-container">
-      <div class="forum-row">
-        <div class="forum-col" *ngFor="let forum of forums">
-          <div class="forum-card" [ngClass]="{ 'active': forum.id === selectedForum?.id}" (click)="selectForum(forum)">
-            <div class="forum-card-body">
-              <h5 class="forum-card-title">{{ forum.title }}</h5>
-              <p class="forum-card-text">{{ forum.topic }}</p>
-              <a [routerLink]="['/landing/thread/'+forum.id]">New Thread</a>
-            </div>
+    <p-fieldset legend="Forum">
+      <!-- search bar -->
+      <div class="form-group">
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="Search Forums" [(ngModel)]="query" (input)="searchForums()">
+          <div class="input-group-addon">
+            <i class="fa fa-search"></i>
           </div>
         </div>
       </div>
-      <div class="forum-pagination">
-        <a class="forum-page" href="#">1</a>
-        <a class="forum-page" href="#">2</a>
-        <a class="forum-page" href="#">3</a>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+
+      <div class="forum-container">
+        <div class="forum-row">
+          <div class="forum-col" *ngFor="let forum of forums">
+            <div class="forum-card" [ngClass]="{ 'active': forum.id === selectedForum.id}" (click)="selectForum(forum)">
+              <div class="forum-card-body">
+                <h5 class="forum-card-title">{{ forum.title }}</h5>
+                <p class="forum-card-text">{{ forum.topic }}</p>
+
+
+                <i class="far fa-thumbs-up" (click)="addReaction(forum, 'LIKE')" style="font-size: 20px; color: rgb(0, 0, 128);"></i>
+                <i class="far fa-thumbs-down" (click)="addReaction(forum, 'DISLIKE')" style="font-size: 20px; color: rgb(0, 0, 128);"></i>
+                <i class="far fa-heart" (click)="addReaction(forum, 'LOVE')" style="font-size: 20px; color: rgb(255, 0, 0); -webkit-text-stroke-width: 0.8px;" ></i>
+                <i class="far fa-laugh" (click)="addReaction(forum, 'HAHA')"  style="font-size: 20px; color: rgb(255, 210, 48);"></i>
+                <i class="far fa-surprise" (click)="addReaction(forum, 'WOW')" style="font-size: 20px; color: rgb(255, 210, 48);"></i>
+                <i class="far fa-sad-tear" (click)="addReaction(forum, 'SAD')" style="font-size: 20px; color: rgb(255, 210, 48);"></i>
+                <i class="far fa-angry" (click)="addReaction(forum, 'ANGRY')" style="font-size: 20px; color: rgb(255, 0, 0);"></i>
+                <!-- Ajoutez des boutons pour les autres types de réactions ici -->
+                <ul>
+                  <li *ngFor="let reaction of forum.reactions">
+                    {{ reaction.reactionType }}
+
+                  </li>
+                </ul>
+
+
+                <a [routerLink]="['/landing/thread/'+forum.id]">Comments</a>
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="forum-pagination">
+          <a class="forum-page" *ngFor="let page of pagesToShow" [class.active]="page === currentPage" (click)="setCurrentPage(page)">{{ page }}</a>
+
+        </div>
       </div>
-    </div>
-
-
+    </p-fieldset>
     <!-- selected forum details -->
     <div *ngIf="selectedForum">
       <h3>{{ selectedForum.title }}</h3>
@@ -102,32 +121,49 @@
         </div>
       </div>
 
+      <!-- Bouton pour ajouter un forum -->
+      <button type="button" class="btn btn-primary" (click)="toggleAddForm()">Ajouter un forum</button>
+
+      <!-- Bouton pour mettre à jour un forum -->
+      <button *ngIf="selectedForum" type="button" class="btn btn-primary" (click)="toggleUpdateForm(selectedForum)">Mettre à jour</button>
 
       <!-- Formulaire pour ajouter un forum -->
-      <form #addForumForm="ngForm" (ngSubmit)="addForum(addForumForm.value)">
-        <div class="form-group">
-          <label for="addForumTitle">Titre</label>
-          <input type="text" class="form-control" id="addForumTitle" name="title" ngModel required>
-        </div>
-        <div class="form-group">
-          <label for="addForumDescription">Description</label>
-          <textarea class="form-control" id="addForumDescription" name="topic" ngModel required></textarea>
-        </div>
-        <button type="submit" class="btn btn-primary">Ajouter</button>
-      </form>
+      <form *ngIf="showAddForm" #addForumForm="ngForm" (ngSubmit)="addForum(addForumForm.value)">
+        <!-- contenu du formulaire -->
+        <!-- Formulaire pour ajouter un forum -->
+<!--        <form #addForumForm="ngForm" (ngSubmit)="addForum(addForumForm.value)">-->
+          <div class="form-group">
+            <label for="addForumTitle">Titre</label>
+            <input type="text" class="form-control" id="addForumTitle" name="title" ngModel required>
+          </div>
+          <div class="form-group">
+            <label for="addForumDescription">Description</label>
+            <textarea class="form-control" id="addForumDescription" name="topic" ngModel required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary">Ajouter</button>
+        </form>
+
+
 
       <!-- Formulaire pour mettre à jour un forum -->
-      <form *ngIf="selectedForum" #updateForumForm="ngForm" (ngSubmit)="updateForum(updateForumForm.value)">
-        <div class="form-group">
-          <label for="updateForumTitle">Titre</label>
-          <input type="text" class="form-control" id="updateForumTitle" name="title" [(ngModel)]="selectedForum.title" required>
-        </div>
-        <div class="form-group">
-          <label for="updateForumDescription">Description</label>
-          <textarea class="form-control" id="updateForumDescription" name="topic" [(ngModel)]="selectedForum.topic" required></textarea>
-        </div>
-        <button type="submit" class="btn btn-primary">Mettre à jour</button>
+      <form *ngIf="showUpdateForm" #updateForumForm="ngForm" (ngSubmit)="updateForum(updateForumForm.value)">
+        <!-- contenu du formulaire -->
+        <!-- Formulaire pour mettre à jour un forum -->
+        <form *ngIf="selectedForum" #updateForumForm="ngForm" (ngSubmit)="updateForum(updateForumForm.value)">
+          <div class="form-group">
+            <label for="updateForumTitle">Titre</label>
+            <input type="text" class="form-control" id="updateForumTitle" name="title" [(ngModel)]="selectedForum.title" required>
+          </div>
+          <div class="form-group">
+            <label for="updateForumDescription">Description</label>
+            <textarea class="form-control" id="updateForumDescription" name="topic" [(ngModel)]="selectedForum.topic" required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary">Mettre à jour</button>
+        </form>
       </form>
+
+
+
 
     <div class="py-4 px-4 mx-0 mt-8 lg:mx-8">
   <div class="grid justify-content-between">
@@ -176,6 +212,7 @@
       </div>
     </div>
   </div>
+</div>
 </div>
 </div>
 </div>

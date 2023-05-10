@@ -8,9 +8,30 @@
     <div class="card-body">
       <h5 class="card-title">{{ thread.description }}</h5>
       <p class="card-text">Type: {{ thread.type }}</p>
+<!--      <ul>-->
+<!--        <li *ngFor="let reply of threads">-->
+<!--          {{reply.parent.description}}-->
+<!--        </li>-->
+<!--      </ul>-->
+<!--      &lt;!&ndash; Add a select element to display the list of threads &ndash;&gt;-->
+<!--      <select [(ngModel)]="this.thread.id" (change)="onThreadSelect(thread)">-->
+<!--        <option value="">Select a thread</option>-->
+<!--        <option *ngFor="let thread of threads" [value]="thread.id">{{thread.description}}</option>-->
+<!--      </select>-->
+
+<!--      &lt;!&ndash; Display the replies for the selected thread &ndash;&gt;-->
+<!--      <div *ngIf="this.thread.id">-->
+<!--        <h3>Replies:</h3>-->
+<!--        <ul>-->
+<!--          <li *ngFor="let reply of threads">{{reply.description}}</li>-->
+<!--        </ul>-->
+<!--      </div>-->
+
       <button class="btn btn-primary" (click)="selectThread(thread)">Voir le thread</button>
+
     </div>
   </div>
+
 
   <!-- Formulaire pour ajouter un nouveau thread -->
   <div class="card my-3">
@@ -21,36 +42,7 @@
           <label>Description</label>
           <textarea class="form-control" [(ngModel)]="newThread.description" name="description" required></textarea>
         </div>
-        <div class="form-group">
-          <label for="type">Type de fil :</label>
-          <select class="form-control" id="type" name="type" [(ngModel)]="newThread.type">
-            <option value="">Choisir un type</option>
-            <option value="REPLY">Réponse</option>
-            <option value="COMMENT">Commentaire</option>
-          </select>
-        </div>
 
-<!--        <div class="form-group">-->
-<!--          <label for="type">Type</label>-->
-<!--          <select class="form-control" id="type" name="type" [(ngModel)]="newThread.type">-->
-<!--            <option *ngFor="let type of CommentTypeValues()" [value]="type">{{type}}</option>-->
-<!--          </select>-->
-<!--        </div>-->
-
-        <!--        <div class="form-group">-->
-<!--          <label for="type">Type</label>-->
-<!--          <select class="form-control" id="type" name="type" [(ngModel)]="thread.type" required>-->
-<!--            <option value="COMMENT">COMMENT</option>-->
-<!--            <option value="REPLY">REPLY</option>-->
-
-<!--          </select>-->
-<!--        </div>-->
-<!--        <div class="form-group">-->
-<!--          <label>Type</label>-->
-<!--          <select class="form-control" [(ngModel)]="newThread.type" name="type" required>-->
-<!--            <option *ngFor="let type of CommentTypeValues()">{{ type }}</option>-->
-<!--          </select>-->
-<!--        </div>-->
         <button type="submit" class="btn btn-primary">Ajouter</button>
       </form>
     </div>
@@ -62,6 +54,7 @@
     <p>Type: {{ thread.type }}</p>
 
     <!-- Affichage des réponses au thread -->
+    <div *ngIf="thread.id">
     <div *ngFor="let reply of thread.id">
       <p>{{ reply.description }}</p>
     </div>
@@ -75,6 +68,7 @@
       <button type="submit" class="btn btn-primary">Répondre</button>
     </form>
   </div>
+</div>
 </div>
 
 
@@ -146,6 +140,8 @@
 <!--          <form (submit)="updateThread(description.value)">-->
 <!--            <div class="form-group">-->
 <!--              <input type="text" class="form-control" [(ngModel)]="thread.description">-->
+<!--            </div>-->
+<!--            </div>-->
 <!--            </div>-->
 <!--            <button type="submit" class="btn btn-primary">Update Thread</button>-->
 <!--          </form>-->

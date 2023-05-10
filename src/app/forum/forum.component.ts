@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Forum } from '../models/Forum';
 import { ForumService } from '../services/Forum/forum.service';
+import {ReactionService} from "../services/Reaction/reaction.service";
+import {Reaction} from "../models/Reaction";
+import {HttpClient} from "@angular/common/http";
+import {ReactionType} from "../models/ReactionType";
 
 
 @Component({
@@ -11,19 +15,17 @@ import { ForumService } from '../services/Forum/forum.service';
 })
 export class ForumComponent implements OnInit {
   query: string='';
-  firstFormGroup = this.fb.group({
-    firstCtrl: ['', Validators.required],
-  });
-  secondFormGroup = this.fb.group({
-    secondCtrl: ['', Validators.required],
-  });
-  isLinear = false;
-
   forumForm: FormGroup;
   forums: Forum[];
-  selectedForum: Forum = new Forum();
+  selectedForum: Forum ={};
+  isLoading: boolean = false;
 
-  constructor(private forumService: ForumService, private fb: FormBuilder) {
+  reactions: Reaction[]=[];
+  reaction: Reaction={};
+
+
+
+  constructor(private forumService: ForumService,private reactionService :ReactionService, private fb: FormBuilder,private http: HttpClient) {
     this.forumForm = this.fb.group({
       title: ['', Validators.required],
       topic: ['', Validators.required],
@@ -97,4 +99,21 @@ export class ForumComponent implements OnInit {
       });
     }
   }
+  getPostReactions(): void {
+    this.isLoading = true;
+    this.reactionService.getAllReactionsByPost(this.selectedForum.id).subscribe(reactions => {
+      this.reactions = reactions;
+      this.isLoading = false;
+    });
+  }
+
+  getNbrOfReactionsByForumAndType(): void {
+    const forumId = this.selectedForum.id; // replace with the actual forum ID
+    const reactionType = ReactionType.LIKE;// replace with the desired reaction type
+    this.reactionService.getNbrOfReactionsByForumAndType(forumId,reactionType )
+      .subscribe(count => {
+        console.log(`Number of reactions of type ${reactionType} in forum ${forumId}: ${count}`);
+      });
+  }
+
 }

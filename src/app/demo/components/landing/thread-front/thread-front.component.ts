@@ -21,7 +21,7 @@ export class ThreadFrontComponent implements OnInit {
   forum: Forum=new Forum();
   replyText: any;
 
-
+  id:any;
 
   newThread: Thread = {
     description: "",
@@ -33,9 +33,21 @@ export class ThreadFrontComponent implements OnInit {
 
     const forumId = this.route.snapshot.paramMap.get('id');
     this.three = this.route.snapshot.paramMap.get('three');
+    // this.getAllThreadsByForum(this.forum.id);
+    this.getAllThreadsByForum();
+    // this.getAllRepliesByThread();
+  }
+  getAllThreadsByForum(): void {
     this.threadService.getAllThreadsByForum(this.three).subscribe(threads=>{
       this.threads=threads;
     })
+
+  }
+  getAllRepliesByThread(threadId: any): void {
+    const id=this.selecReplies(this.thread.parent?.id)
+    this.threadService.getAllRepliesByThread(id).subscribe(replies => {
+      this.threads=replies;
+    });
   }
   addThread() {
     this.newThread.forum = this.three;
@@ -53,11 +65,11 @@ export class ThreadFrontComponent implements OnInit {
       });
   }
 
-  updateThread(description: string): void {
+  updateThread(): void {
     const updatedThread: Thread = {
-      id: this.thread.id,
-      description: description,
-      type: this.thread.type,
+
+      description: this.thread.description,
+
 
     };
     this.threadService.updateThread(updatedThread, this.three).subscribe(updatedThread => {
@@ -78,7 +90,11 @@ export class ThreadFrontComponent implements OnInit {
   selectThread(thread: Thread) {
     this.thread = thread;
   }
-
+  selecReplies(thread: Thread){
+    if (this.thread.type=='REPLY'){
+      this.thread=thread;
+    }
+  }
 
 
 }

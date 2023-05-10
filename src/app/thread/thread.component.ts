@@ -1,3 +1,4 @@
+
 import {Component, OnInit} from '@angular/core';
 import {Thread} from "../models/Thread";
 import {ThreadService} from "../services/Thread/thread.service";
@@ -17,6 +18,7 @@ export class ThreadComponent implements OnInit {
   forum: Forum=new Forum();
   threads: Thread[] = [];
   thre :any;
+  id:any;
   newThread: Thread = {
     description: "",
     type: undefined}; // Modèle pour ajouter un nouveau thread
@@ -31,32 +33,35 @@ export class ThreadComponent implements OnInit {
     const forumId = this.route.snapshot.paramMap.get('id');
     this.thre = this.route.snapshot.paramMap.get('thre');
     // this.getAllThreadsByForum(this.forum.id);
+    this.getAllThreadsByForum();
+   // this.getAllRepliesByThread();
+
+  }
+  getAllThreadsByForum(): void {
     this.threadService.getAllThreadsByForum(this.thre).subscribe(threads=>{
       this.threads=threads;
     })
+
   }
-  // addThread(description: string, ): void {
-  //   this.newThread = this.forum.id;
-  //   this.threadService.addThreadtoForum(this.newThread, this.forum.id).subscribe(thread)
-  // =>
-  //   {
-  //     if (this.thread === null) {
-  //       this.thread = [thread]
-  //     } else {
-  //       this.thread.push(thread);
-  //     }
-  //   }
-  // ,
-  //   error =>
-  //     console.log(error);
-  //
-  // }
+
+  getAllRepliesByThread(threadId: any): void {
+    const id=this.selecReplies(this.thread.parent?.id)
+    this.threadService.getAllRepliesByThread(id).subscribe(replies => {
+      this.threads=replies;
+    });
+  }
+  onThreadSelect(thread :Thread) {
+    this.thread = thread;
+      // Load the replies for the selected thread
+      this.getAllRepliesByThread(this.thread.id);
+
+  }
 
   addThread() {
     this.newThread.forum = this.thre;
 
 
-    this.threadService.addThreadtoForum(this.newThread, this.thre).subscribe(thread => {
+    this.threadService.addThread(this.newThread, this.thre).subscribe(thread => {
         if (this.threads === null) {
           this.threads = [thread];
         } else {
@@ -68,16 +73,6 @@ export class ThreadComponent implements OnInit {
       });
   }
 
-
-  addThreadToForum(description: string): void {
-    const thread: Thread = {
-      description: description
-    };
-    this.threadService.addThreadtoForum(thread, this.forum.id).subscribe(newThread => {
-      this.thread = newThread;
-    });
-  }
-
   updateThread(description: string): void {
     const updatedThread: Thread = {
       id: this.thread.id,
@@ -85,22 +80,13 @@ export class ThreadComponent implements OnInit {
       type: this.thread.type,
 
     };
+
     this.threadService.updateThread(updatedThread, updatedThread.id).subscribe(updatedThread => {
       this.thread = updatedThread;
     });
   }
 
-  getAllThreadsByForum(forumId: number): void {
-    this.threadService.getAllThreadsByForum(forumId).subscribe(threads => {
-      // traitement des threads récupérés
-    });
-  }
 
-  getAllRepliesByThread(threadId: number): void {
-    this.threadService.getAllRepliesByThread(threadId).subscribe(replies => {
-      // traitement des réponses récupérées
-    });
-  }
 
   replyToThread(): void {
     const replyThread: Thread = {
@@ -113,6 +99,11 @@ export class ThreadComponent implements OnInit {
   }
   selectThread(thread: Thread) {
     this.thread = thread;
+  }
+  selecReplies(thread: Thread){
+    if (this.thread.type=='REPLY'){
+      this.thread=thread;
+    }
   }
   CommentTypeValues(): string[] {
     return Object.values(CommentType);

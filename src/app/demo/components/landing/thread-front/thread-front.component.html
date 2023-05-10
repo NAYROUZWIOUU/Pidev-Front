@@ -94,76 +94,215 @@
 <!--    </div>-->
 
 
+    <!-- thread.component.html -->
+
+    <div class="container my-3">
+      <h1>{{ forum.title }} - {{ thread.description }}</h1>
+
+      <!-- Affichage des threads -->
+      <div class="card my-3" *ngFor="let thread of threads">
+        <div class="card-body">
+          <h5 class="card-title">{{ thread.description }}</h5>
+          <p class="card-text">Type: {{ thread.type }}</p>
+          <!--      <ul>-->
+          <!--        <li *ngFor="let reply of threads">-->
+          <!--          {{reply.parent.description}}-->
+          <!--        </li>-->
+          <!--      </ul>-->
+          <!--      &lt;!&ndash; Add a select element to display the list of threads &ndash;&gt;-->
+          <!--      <select [(ngModel)]="this.thread.id" (change)="onThreadSelect(thread)">-->
+          <!--        <option value="">Select a thread</option>-->
+          <!--        <option *ngFor="let thread of threads" [value]="thread.id">{{thread.description}}</option>-->
+          <!--      </select>-->
+
+          <!--      &lt;!&ndash; Display the replies for the selected thread &ndash;&gt;-->
+          <!--      <div *ngIf="this.thread.id">-->
+          <!--        <h3>Replies:</h3>-->
+          <!--        <ul>-->
+          <!--          <li *ngFor="let reply of threads">{{reply.description}}</li>-->
+          <!--        </ul>-->
+          <!--      </div>-->
+
+          <button class="btn btn-primary" (click)="selectThread(thread)">Voir le thread</button>
+
+        </div>
+      </div>
 
 
-
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12">
-          <div class="card border-0 shadow my-5">
-            <div class="card-body p-5">
-              <h1 class="font-weight-light">Threads</h1>
-              <hr>
-              <div *ngIf="threads.length > 0">
-                <div *ngFor="let thread of threads" class="mb-4">
-                  <div class="row">
-                    <div class="col-md-10">
-                      <h5><a [routerLink]="['/thread', thread.id]">{{thread.description}}</a></h5>
-
-                      <p><small class="text-muted">Type : {{thread.type}}</small></p>
-                      <h5>{{thread.description}}</h5>
-
-                    </div>
-                    <div class="col-md-2">
-                      <button (click)="selectThread(thread)" class="btn btn-primary btn-sm">Modifier</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <hr>
-
-              <div *ngIf="!thread.id">
-                <h3 class="font-weight-light">Ajouter un thread</h3>
-                <form>
-                  <div class="form-group">
-                    <label>Description :</label>
-                    <textarea [(ngModel)]="newThread.description" class="form-control"></textarea>
-                  </div>
-                  <div class="form-group">
-                    <label>Type :</label>
-                    <select [(ngModel)]="newThread.type" class="form-control">
-                      <option value="REPLY">REPLY</option>
-                      <option value="COMMENT">COMMENT</option>
-                    </select>
-                  </div>
-                  <button type="button" (click)="addThread()" class="btn btn-primary">Ajouter</button>
-                </form>
-              </div>
-
-              <div *ngIf="thread.id">
-                <h3 class="font-weight-light">Modifier un thread</h3>
-                <form>
-                  <div class="form-group">
-                    <label>Description :</label>
-                    <textarea [(ngModel)]="thread.description" class="form-control"></textarea>
-                  </div>
-                  <div class="form-group">
-                    <label>Type :</label>
-                    <select [(ngModel)]="thread.type" class="form-control">
-                      <option value="REPLY">REPLY</option>
-                      <option value="COMMENT">COMMENT</option>
-                    </select>
-                  </div>
-                  <button type="button" (click)="updateThread(three)" class="btn btn-primary">Modifier</button>
-                </form>
-              </div>
-
+      <!-- Formulaire pour ajouter un nouveau thread -->
+      <div class="card my-3">
+        <div class="card-body">
+          <h5 class="card-title">Ajouter un nouveau thread</h5>
+          <form (ngSubmit)="addThread()">
+            <div class="form-group">
+              <label>Description</label>
+              <textarea class="form-control" [(ngModel)]="newThread.description" name="description" required></textarea>
             </div>
+
+            <button type="submit" class="btn btn-primary">Ajouter</button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Affichage du thread sélectionné -->
+      <div *ngIf="thread.id">
+        <h2>{{ thread.description }}</h2>
+        <p>Type: {{ thread.type }}</p>
+
+        <!-- Affichage des réponses au thread -->
+        <div *ngIf="thread.id">
+          <div *ngFor="let reply of thread.id">
+            <p>{{ reply.description }}</p>
           </div>
+
+          <!-- Formulaire pour répondre au thread -->
+          <form (ngSubmit)="replyToThread()" class="my-3">
+            <div class="form-group">
+              <label>Réponse</label>
+              <textarea class="form-control" [(ngModel)]="replyText" name="replyText" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Répondre</button>
+          </form>
         </div>
       </div>
     </div>
+
+
+
+
+
+
+
+
+
+
+
+    <!--<div class="container">-->
+    <!--  <div class="row">-->
+    <!--    <div class="col-md-8">-->
+    <!--      <div class="card mb-4">-->
+    <!--        <div class="card-header">-->
+    <!--          <h4>{{ thread.description }}</h4>-->
+    <!--        </div>-->
+    <!--        <div class="card-body">-->
+    <!--          <p>{{ thread.type }}</p>-->
+    <!--        </div>-->
+    <!--      </div>-->
+    <!--      <div class="card mb-4">-->
+    <!--        <div class="card-header">-->
+    <!--          <h4>Replies</h4>-->
+    <!--        </div>-->
+    <!--        <div class="card-body">-->
+    <!--          <ul class="list-group">-->
+    <!--            <li class="list-group-item" *ngFor="let reply of thread.id">-->
+    <!--              <p>{{ reply.description }}</p>-->
+    <!--            </li>-->
+    <!--          </ul>-->
+    <!--        </div>-->
+    <!--      </div>-->
+    <!--      <div class="card mb-4">-->
+    <!--        <div class="card-header">-->
+    <!--          <h4>Reply to Thread</h4>-->
+    <!--        </div>-->
+    <!--        <div class="card-body">-->
+    <!--          <form (submit)="replyToThread()">-->
+    <!--            <div class="form-group">-->
+    <!--              <textarea class="form-control" [(ngModel)]="replyText"></textarea>-->
+    <!--            </div>-->
+    <!--            <button type="submit" class="btn btn-primary">Reply</button>-->
+    <!--          </form>-->
+    <!--        </div>-->
+    <!--      </div>-->
+    <!--    </div>-->
+    <!--    <div class="col-md-4">-->
+    <!--      <div class="card mb-4">-->
+    <!--        <div class="card-header">-->
+    <!--          <h4>Add Thread</h4>-->
+    <!--        </div>-->
+    <!--        <div class="card-body">-->
+    <!--          <form (submit)="addThread">-->
+    <!--            <div class="form-group">-->
+    <!--              <input type="text" class="form-control" placeholder="Thread Description" #description required>-->
+    <!--            </div>-->
+    <!--            <button type="submit" class="btn btn-primary">Add Thread</button>-->
+    <!--          </form>-->
+    <!--        </div>-->
+    <!--      </div>-->
+    <!--      <div class="card mb-4">-->
+    <!--        <div class="card-header">-->
+    <!--          <h4>Update Thread</h4>-->
+    <!--        </div>-->
+    <!--        <div class="card-body">-->
+    <!--          <form (submit)="updateThread(description.value)">-->
+    <!--            <div class="form-group">-->
+    <!--              <input type="text" class="form-control" [(ngModel)]="thread.description">-->
+    <!--            </div>-->
+    <!--            </div>-->
+    <!--            </div>-->
+    <!--            <button type="submit" class="btn btn-primary">Update Thread</button>-->
+    <!--          </form>-->
+    <!--        </div>-->
+    <!--      </div>-->
+    <!--    </div>-->
+    <!--  </div>-->
+    <!--</div>-->
+
+
+
+<!--    <div class="container">-->
+<!--      <div class="row">-->
+<!--        <div class="col-md-12">-->
+<!--          <div class="card border-0 shadow my-5">-->
+<!--            <div class="card-body p-5">-->
+<!--              <h1 class="font-weight-light">Threads</h1>-->
+<!--              <hr>-->
+<!--              <div *ngIf="threads.length > 0">-->
+<!--                <div *ngFor="let thread of threads" class="mb-4">-->
+<!--                  <div class="row">-->
+<!--                    <div class="col-md-10">-->
+<!--&lt;!&ndash;                      <h5><a [routerLink]="['/thread', thread.id]">{{thread.description}}</a></h5>&ndash;&gt;-->
+
+<!--                      <h5 class="card-title">{{ thread.description }}</h5>-->
+<!--                      <p class="card-text">Type: {{ thread.type }}</p>-->
+
+<!--                    </div>-->
+<!--                    <div class="col-md-2">-->
+<!--                      <button (click)="selectThread(thread)" class="btn btn-primary btn-sm">Modifier</button>-->
+<!--                    </div>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--              </div>-->
+
+<!--              <hr>-->
+
+<!--              <div *ngIf="!thread.id">-->
+<!--                <h3 class="font-weight-light">Ajouter un thread</h3>-->
+<!--                <form>-->
+<!--                  <div class="form-group">-->
+<!--                    <label>Description :</label>-->
+<!--                    <textarea class="form-control" [(ngModel)]="newThread.description" name="description" required></textarea>-->
+<!--                  </div>-->
+<!--                  <button type="button" (click)="addThread()" class="btn btn-primary">Ajouter</button>-->
+<!--                </form>-->
+<!--              </div>-->
+
+<!--              <div *ngIf="thread.id">-->
+<!--                <h3 class="font-weight-light">Modifier un thread</h3>-->
+<!--                <form>-->
+<!--                  <div class="form-group">-->
+<!--                    <label>Description :</label>-->
+<!--                    <textarea class="form-control" [(ngModel)]="newThread.description" name="description" required></textarea>-->
+<!--                  </div>-->
+
+<!--                  <button type="button" (click)="updateThread()" class="btn btn-primary">Modifier</button>-->
+<!--                </form>-->
+<!--              </div>-->
+
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
 
 
 

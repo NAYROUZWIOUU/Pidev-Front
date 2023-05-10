@@ -24,10 +24,7 @@ export class ThreadService {
   addThread(thread: Thread, forumId: number): Observable<Thread> {
     return this.http.post<Thread>(`${this.baseUrl}/addThread/${forumId}`, thread);
   }
-  addThreadtoForum(thread: any, forumId: number): Observable<Thread> {
-    console.log(forumId)
-    return this.http.post<Thread>(`${this.baseUrl1}/${forumId}/threads`, thread);
-  }
+
 
   updateThread(thread: Thread, threadId: number): Observable<Thread> {
     return this.http.put<Thread>(`${this.baseUrl}/updateThread/${threadId}`, thread);
@@ -46,7 +43,7 @@ export class ThreadService {
     return this.http.get<Thread[]>(`${this.baseUrl}/forum/${forumId}/owner/${userId}`);
   }
 
-  getAllRepliesByThread(id: number): Observable<Thread[]> {
+  getAllRepliesByThread(id: any): Observable<Thread[]> {
     return this.http.get<Thread[]>(`${this.baseUrl}/comment/${id}`);
   }
 

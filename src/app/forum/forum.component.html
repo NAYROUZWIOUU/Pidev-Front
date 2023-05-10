@@ -12,10 +12,12 @@
   <li *ngFor="let forum of forums">
     <h3>{{forum.title}}</h3>
     <p>{{forum.topic}}</p>
-    <img [src]="forum.image" alt="Image du forum">
     <button (click)="onSelectForum(forum)">Editer</button>
     <button (click)="onDeleteForum(forum)">Supprimer</button>
+
     <a [routerLink]="['/threads/'+forum.id]">new Thread</a>
+
+
   </li>
 </ul>
 
@@ -29,10 +31,7 @@
     <label for="topic">Sujet:</label>
     <textarea formControlName="topic" id="topic"></textarea>
   </div>
-  <div>
-    <label for="image">Image:</label>
-    <input type="text" formControlName="image" id="image">
-  </div>
+
   <button *ngIf="!selectedForum.id" (click)="onAddForum()">Ajouter</button>
   <button *ngIf="selectedForum.id" (click)="onUpdateForum()">Enregistrer</button>
 
