@@ -1,0 +1,124 @@
+<div class="col-12">
+  <div class="card">
+    <h5>Blocks</h5>
+    <p-toast></p-toast>
+    <p-toolbar styleClass="mb-4">
+      <ng-template pTemplate="left">
+        <div class="my-2">
+          <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2"(click)="openNew()"></button>
+        </div>
+      </ng-template>
+    </p-toolbar>
+    <ng-container *ngIf="blockrestau$ | async as blocks">
+    <p-table #dt [value]="blocks" dataKey="id">
+      <ng-template pTemplate="header">
+        <tr>
+          <th style="width: 3rem"></th>
+          <th pSortableColumn="name">idBlock <p-sortIcon field="name"></p-sortIcon></th>
+          <th pSortableColumn="name">nameBlock <p-sortIcon field="name"></p-sortIcon></th>
+          <th pSortableColumn="price">tableNbr <p-sortIcon field="price"></p-sortIcon></th>
+          <th pSortableColumn="category">placement<p-sortIcon field="category"></p-sortIcon></th>
+          <th pSortableColumn="rating">archived <p-sortIcon field="rating"></p-sortIcon></th>
+          <th >action <p-sortIcon field="action"></p-sortIcon></th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-blocks let-rowIndex="rowIndex" >
+        <tr>
+          <td></td>
+          <td style="min-width: 12rem;">{{ blocks.idBlock }}</td>
+          <td style="min-width: 12rem;">{{ blocks.nameBlock }}</td>
+          <td style="min-width: 8rem;">{{ blocks.tableNbr}}</td>
+          <td style="min-width: 10rem;">{{ blocks.placement }}</td>
+          <td style="min-width: 10rem;"><ng-container *ngIf="!blocks.archived">
+            <button pButton pRipple type="button" icon="pi pi-check" class="p-button-rounded p-button-success"></button>
+          </ng-container>
+            <ng-container *ngIf="blocks.archived">
+              false
+            </ng-container></td>
+          <td style="min-width: 12rem; display:flex; "><button pButton pRipple label="Edit" icon="pi pi-fw pi-pencil" class="p-button-rounded p-button-primary mr-2 btn-sm " (click)="selectblock(blocks)"></button>
+            <button pButton pRipple label="Assigne" icon="pi pi-plus-circle" class="p-button-rounded p-button-secondary mr-2 btn-sm " (click)="openassigne()"></button></td>
+        </tr>
+      </ng-template>
+    </p-table>
+    </ng-container>
+  </div>
+  <p-dialog [(visible)]="blockDialog" [style]="{width: '450px'}" header="Block Details" [modal]="true" class="p-fluid">
+  <form #form="ngForm">
+    <div class="field">
+      <label for="blockname">Block name</label>
+      <select  id="blockname" pInputText name="blockname" [(ngModel)]="rblocks.nameBlock" required>
+        <option value="">Select a Name</option>
+        <option value="STUDENTS">STUDENTS</option>
+        <option value="TEACHERS">TEACHERS</option>
+        <option value="GUESTS">GUESTS</option>
+      </select>
+    </div>
+    <div class="field">
+      <label for="tbleNbr">Table number</label>
+      <input type="number"  id="tbleNbr" pInputText name="tbleNbr" [(ngModel)]="rblocks.tableNbr" required>
+    </div>
+    <div class="field">
+      <label for="placement">Placements</label>
+      <input type="text"  id="placement" pInputText name="placement" [(ngModel)]="rblocks.placement" required>
+    </div>
+    <div class="field">
+      <label for="archived">Archived</label>
+      <p-dropdown id="archived" name="archived" [(ngModel)]="rblocks.archived" [options]="[{label: 'True', value: true}, {label: 'False', value: false}]" ></p-dropdown>
+    </div>
+    <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+    <button pButton type="submit"
+            [disabled]="form.invalid" pRipple label="Save" icon="pi pi-check" class="p-button-text"(click)="saveblock()" ></button>
+  </form>
+
+  </p-dialog>
+
+  <p-dialog [(visible)]="eblockDialog" [style]="{width: '450px'}" header="Block Details" [modal]="true" class="p-fluid">
+    <form #form="ngForm">
+      <div class="field">
+        <label for="eblockname">Block name</label>
+        <select  id="eblockname" pInputText name="eblockname" [(ngModel)]="selectedblock.nameBlock" required>
+          <option value="">Select a Name</option>
+          <option value="STUDENTS">STUDENTS</option>
+          <option value="TEACHERS">TEACHERS</option>
+          <option value="GUESTS">GUESTS</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="etbleNbr">Table number</label>
+        <input type="number"  id="etbleNbr" pInputText name="etbleNbr" [(ngModel)]="selectedblock.tableNbr" required>
+      </div>
+      <div class="field">
+        <label for="eplacement">Placements</label>
+        <input type="text"  id="eplacement" pInputText name="eplacement" [(ngModel)]="selectedblock.placement" required>
+      </div>
+      <div class="field">
+        <label for="earchived">Archived</label>
+        <p-dropdown id="earchived" name="earchived" [(ngModel)]="selectedblock.archived" [options]="[{label: 'True', value: true}, {label: 'False', value: false}]" ></p-dropdown>
+      </div>
+      <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideeditDialog()"></button>
+      <button pButton type="submit"
+               pRipple label="Save" icon="pi pi-check" class="p-button-text"(click)="editblock()" ></button>
+    </form>
+
+  </p-dialog>
+  <p-dialog [(visible)]="assigneDialog" [style]="{width: '450px'}" header="Edit Restaurant Block Details" [modal]="true" class="p-fluid">
+
+    <form #form="ngForm">
+      <div class="field">
+        <label for="idblock">Id Block</label>
+        <input type="text"  id="idblock" pInputText name="idblock" [(ngModel)]="selectedblock.idBlock" required>
+      </div>
+      <div class="field">
+        <label for="idrestau">Id Restau</label>
+        <input type="text"  id="idrestau" pInputText name="idrestau" [(ngModel)]="restaurant.idRestau" required>
+      </div>
+      <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+      <button pButton type="submit"
+              pRipple label="Save" icon="pi pi-check" class="p-button-text"(click)="assignBlockToRestau()"></button>
+    </form>
+
+  </p-dialog>
+
+
+
+</div>
