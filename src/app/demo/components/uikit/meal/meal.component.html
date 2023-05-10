@@ -1,0 +1,123 @@
+<div class="col-12">
+  <div class="card">
+    <h5>Meals</h5>
+    <p-toast></p-toast>
+    <p-toolbar styleClass="mb-4">
+      <ng-template pTemplate="left">
+        <div class="my-2">
+          <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2"(click)="openNew()"></button>
+        </div>
+      </ng-template>
+    </p-toolbar>
+    <p-table #dt [value]="meals" dataKey="id">
+      <ng-template pTemplate="header">
+        <tr>
+          <th style="width: 3rem"></th>
+          <th pSortableColumn="name">Id <p-sortIcon field="name"></p-sortIcon></th>
+          <th pSortableColumn="name">Name <p-sortIcon field="name"></p-sortIcon></th>
+          <th pSortableColumn="price">Discription <p-sortIcon field="price"></p-sortIcon></th>
+          <th pSortableColumn="rating">Calories <p-sortIcon field="rating"></p-sortIcon></th>
+          <th pSortableColumn="inventoryStatus">Carb <p-sortIcon field="inventoryStatus"></p-sortIcon></th>
+          <th pSortableColumn="inventoryStatus">Protein <p-sortIcon field="inventoryStatus"></p-sortIcon></th>
+          <th pSortableColumn="inventoryStatus">Fat <p-sortIcon field="inventoryStatus"></p-sortIcon></th>
+          <th >action <p-sortIcon field="action"></p-sortIcon></th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-meal >
+        <tr *ngIf="!rowVisibility[meal.idMeal]">
+          <td></td>
+          <td style="min-width: 12rem;">{{ meal.idMeal }}</td>
+          <td style="min-width: 12rem;">{{ meal.nameMeal }}</td>
+          <td style="min-width: 8rem;">{{meal.description}}</td>
+          <td style="min-width: 10rem;">{{meal.nutritionInformation?.calories}}</td>
+          <td style="min-width: 10rem;">{{meal.nutritionInformation?.carbohydrates}}</td>
+          <td style="min-width: 10rem;">{{meal.nutritionInformation?.protein}}</td>
+          <td style="min-width: 10rem;">{{meal.nutritionInformation?.fat}}</td>
+          <td style="min-width: 12rem; display:flex; "><button pButton pRipple label="Edit" icon="pi pi-fw pi-pencil" class="p-button-rounded mr-2 btn-sm " (click)="selectMeal(meal)"></button>
+            <button pButton pRipple label="Assigne" icon="pi pi-plus-circle" class="p-button-rounded p-button-secondary mr-2 btn-sm " (click)="openassigne()"></button>
+          <button pButton pRipple label="Delete" icon="pi pi-trash" class="p-button-rounded p-button-danger mr-2 btn-sm " (click)="hideRow(meal.idMeal)"></button></td>
+
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+  <p-dialog [(visible)]="mealDialog" [style]="{width: '450px'}" header="Meal Details" [modal]="true" class="p-fluid">
+
+  <form #form="ngForm">
+    <div class="field">
+      <label for="mealname">Meal name</label>
+      <input type="text"  id="mealname" pInputText name="mealname" [(ngModel)]="rmeal.nameMeal" required>
+    </div>
+    <div class="field">
+      <label for="Discription">Discription</label>
+      <input type="text"  id="Discription" pInputText name="Discription" [(ngModel)]="rmeal.description" required>
+    </div>
+    <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+    <button pButton type="submit"
+            [disabled]="form.invalid" pRipple label="Save" icon="pi pi-check" class="p-button-text"(click)="saveMeal()" ></button>
+  </form>
+
+  </p-dialog>
+
+  <p-dialog [(visible)]="emealDialog" [style]="{width: '450px'}" header="Edit Meal Details" [modal]="true" class="p-fluid">
+
+    <form #form="ngForm">
+      <div class="field">
+        <label for="emealname">Meal name</label>
+        <input type="text"  id="emealname" pInputText name="emealname" [(ngModel)]="selectedmeal.nameMeal" required>
+      </div>
+      <div class="field">
+        <label for="eDiscription">Discription</label>
+        <input type="text"  id="eDiscription" pInputText name="eDiscription" [(ngModel)]="selectedmeal.description" required>
+      </div>
+      <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+      <button pButton type="submit"
+              pRipple label="Save" icon="pi pi-check" class="p-button-text"(click)="editMeal()"></button>
+    </form>
+
+  </p-dialog>
+  <p-dialog [(visible)]="nutDialog" [style]="{width: '450px'}" header="Edit Meal Details" [modal]="true" class="p-fluid">
+
+    <form #form="ngForm">
+      <div class="field">
+        <label for="calories">Calories</label>
+        <input type="text"  id="calories" pInputText name="calories" [(ngModel)]="nutinf.calories" required>
+      </div>
+      <div class="field">
+        <label for="carb">Carb</label>
+        <input type="number"  id="carb" pInputText name="carb" [(ngModel)]="nutinf.carbohydrates" required>
+      </div>
+      <div class="field">
+        <label for="proteine">Proteine</label>
+        <input type="text"  id="proteine" pInputText name="proteine" [(ngModel)]="nutinf.protein" required>
+      </div>
+      <div class="field">
+        <label for="fat">Fat</label>
+        <input type="text"  id="fat" pInputText name="fat" [(ngModel)]="nutinf.fat" required>
+      </div>
+
+      <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+      <button pButton type="submit"
+              pRipple label="Save" icon="pi pi-check" class="p-button-text"(click)="createNutrition()"></button>
+    </form>
+
+  </p-dialog>
+  <p-dialog [(visible)]="assigneDialog" [style]="{width: '450px'}" header="Edit Meal Details" [modal]="true" class="p-fluid">
+
+    <form #form="ngForm">
+      <div class="field">
+        <label for="idmeal">Id Meal</label>
+        <input type="text"  id="idmeal" pInputText name="idmeal" [(ngModel)]="selectedmeal.idMeal" required>
+      </div>
+      <div class="field">
+        <label for="idmenu">Id Menu</label>
+        <input type="text"  id="idmenu" pInputText name="idmenu" [(ngModel)]="menu.idMenu" required>
+      </div>
+      <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+      <button pButton type="submit"
+              pRipple label="Save" icon="pi pi-check" class="p-button-text"(click)="assignMealToMenu()"></button>
+    </form>
+
+  </p-dialog>
+
+</div>

@@ -25,10 +25,10 @@ export class AppMenuComponent implements OnInit {
                 items: [
                     { label: 'Restaurant Memberships', icon: 'pi pi-fw pi-check-square', routerLink: ['/rmemberships'] },
                     { label: 'Fidelity Card', icon: 'pi pi-fw pi-id-card', routerLink: ['/uikit/floatlabel'] },
-                    { label: 'Restaurant', icon: 'pi pi-fw pi-file', routerLink: ['/uikit/invalidstate'] },
-                    { label: 'Blocks', icon: 'pi pi-fw pi-sitemap', routerLink: ['/uikit/invalidstate'] },
-                    { label: 'Menus', icon: 'pi pi-fw pi-file', routerLink: ['/uikit/invalidstate'] },
-                    { label: 'Meals', icon: 'pi pi-fw pi-caret-up', routerLink: ['/uikit/invalidstate'] },
+                    { label: 'Restaurant', icon: 'pi pi-fw pi-home', routerLink: ['/uikit/restaurant'] },
+                    { label: 'Blocks', icon: 'pi pi-fw pi-sitemap', routerLink: ['/uikit/blockrestau'] },
+                    { label: 'Menus', icon: 'pi pi-fw pi-file', routerLink: ['/uikit/rmenu'] },
+                    { label: 'Meals', icon: 'pi pi-fw pi-caret-up', routerLink: ['/uikit/meal'] },
                     { label: 'Rewards', icon: 'pi pi-fw pi-gift', routerLink: ['/uikit/invalidstate'] }
                 ]
             },
