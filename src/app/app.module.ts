@@ -57,7 +57,7 @@ import {ThreadRoutingModule} from "./demo/components/landing/thread-front/thread
     RmembershipComponentModule,
     RestauRoutingModule,
     FidelityCardModule,
-    RewardModule
+    RewardModule,
     FormsModule,
     FoyerModule,
     WaitinglistModule,

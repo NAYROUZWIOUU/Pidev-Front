@@ -33,7 +33,7 @@ import {FieldsetModule} from "primeng/fieldset";
         PanelModule,
         ButtonModule,
         MermbershipsUserModule,
-        FidelitycarduserModule
+        FidelitycarduserModule,
         ReactiveFormsModule,
         PaginatorModule,
         FieldsetModule,
