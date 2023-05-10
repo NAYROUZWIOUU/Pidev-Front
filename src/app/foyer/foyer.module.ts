@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
-import { RmembershipComponent } from './rmembership.component';
 import { CrudComponent } from '../demo/components/pages/crud/crud.component';
 import { FileUploadModule } from 'primeng/fileupload';
 import { TableModule } from 'primeng/table';
@@ -15,11 +14,13 @@ import { DropdownModule } from 'primeng/dropdown';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { DialogModule } from 'primeng/dialog';
-import { DatePipe } from '@angular/common';
+import {FoyerComponent} from "./foyer.component";
+import {BlockfoyerModule} from "../blockfoyer/blockfoyer.module";
+
 
 
 @NgModule({
-  declarations: [RmembershipComponent],
+  declarations: [FoyerComponent],
   imports: [CommonModule,
     HttpClientModule,
     FormsModule,
@@ -32,9 +33,9 @@ import { DatePipe } from '@angular/common';
     DropdownModule,
     RadioButtonModule,
     InputNumberModule,
-    DialogModule
-  ],
-  exports: [RmembershipComponent]
+    BlockfoyerModule,
+    DialogModule],
+  exports: [FoyerComponent]
 })
-export class RmembershipComponentModule {
+export class FoyerModule {
 }

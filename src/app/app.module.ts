@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+import {CommonModule, HashLocationStrategy, LocationStrategy} from '@angular/common';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AppLayoutModule } from './layout/app.layout.module';
@@ -18,6 +18,15 @@ import { RmembershipComponentModule } from './rmembership-component/rmembership.
 import { RmembershipService } from './services/Rmembership/rmembership.service';
 import { RestauRoutingModule } from './demo/components/landing/restaurant-Front/restauRoutingModule.module';
 import { FormsModule } from '@angular/forms';
+import { FoyerModule} from "./foyer/foyer.module";
+import {WaitingListService} from "./services/WaitingList/waitinglist.service";
+import { MessageService } from 'primeng/api';
+import {WaitinglistModule} from "./waitinglist/waitinglist.module";
+import {StyleClassModule} from "primeng/styleclass";
+import {DividerModule} from "primeng/divider";
+import {TableModule} from "primeng/table";
+import {DormRoutingModuleModule} from "./demo/components/landing/dorm-Front/dormRoutingModule.module";
+import {DormFrontComponent} from "./demo/components/landing/dorm-Front/dorm-front.component";
 import { ClaimComponent } from './claim-component/claim.component';
 import {ClaimComponentModule} from "./claim-component/claim.module";
 import {ClaimService} from "./services/Claim/claim.service";
@@ -32,28 +41,36 @@ import {claimRoutingModule} from "./demo/components/landing/claim-front/claimRou
 import {ThreadRoutingModule} from "./demo/components/landing/thread-front/threadRoutingModule";
 
 @NgModule({
-    declarations: [
-        AppComponent, NotfoundComponent
-    ],
-    imports: [
-        AppRoutingModule,
-        AppLayoutModule,
-        UserComponentModule,
-        RmembershipComponentModule,
-        RestauRoutingModule,
-        FormsModule,
+  declarations: [
+    AppComponent, NotfoundComponent,DormFrontComponent
+  ],
+  imports: [
+    AppRoutingModule,
+    AppLayoutModule,
+    UserComponentModule,
+    RmembershipComponentModule,
+    RestauRoutingModule,
+    FormsModule,
+    FoyerModule,
+    WaitinglistModule,
+    StyleClassModule,
+    DividerModule,
+    CommonModule,
+    DormRoutingModuleModule,
+    TableModule,
         ClaimComponentModule,
         ForumComponentModule,
         ThreadComponentModule,
       claimRoutingModule,
       ThreadRoutingModule
-    ],
-    providers: [
-        { provide: LocationStrategy, useClass: HashLocationStrategy },
-        CountryService, CustomerService, EventService, IconService, NodeService,
-        PhotoService, ProductService,RestaurantService,UsersService,RmembershipService,ClaimService,ForumService,
+  ],
+  providers: [
+    { provide: LocationStrategy, useClass: HashLocationStrategy },
+    CountryService, CustomerService, EventService, IconService, NodeService,
+    PhotoService, ProductService,RestaurantService,UsersService,RmembershipService,WaitingListService,MessageService,
+    ClaimService,ForumService,
       ThreadService,ReactionService
-    ],
-    bootstrap: [AppComponent]
+  ],
+  bootstrap: [AppComponent]
 })
 export class AppModule { }
