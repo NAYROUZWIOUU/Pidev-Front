@@ -27,6 +27,18 @@ import {DividerModule} from "primeng/divider";
 import {TableModule} from "primeng/table";
 import {DormRoutingModuleModule} from "./demo/components/landing/dorm-Front/dormRoutingModule.module";
 import {DormFrontComponent} from "./demo/components/landing/dorm-Front/dorm-front.component";
+import { ClaimComponent } from './claim-component/claim.component';
+import {ClaimComponentModule} from "./claim-component/claim.module";
+import {ClaimService} from "./services/Claim/claim.service";
+import {ForumService} from "./services/Forum/forum.service";
+import {ThreadService} from "./services/Thread/thread.service";
+import {ReactionService} from "./services/Reaction/reaction.service";
+import { ForumComponent } from './forum/forum.component';
+import {ForumComponentModule} from "./forum/forum.module";
+import { ThreadComponent } from './thread/thread.component';
+import {ThreadComponentModule} from "./thread/thread.module";
+import {claimRoutingModule} from "./demo/components/landing/claim-front/claimRoutingModule";
+import {ThreadRoutingModule} from "./demo/components/landing/thread-front/threadRoutingModule";
 
 @NgModule({
   declarations: [
@@ -45,12 +57,19 @@ import {DormFrontComponent} from "./demo/components/landing/dorm-Front/dorm-fron
     DividerModule,
     CommonModule,
     DormRoutingModuleModule,
-    TableModule
+    TableModule,
+        ClaimComponentModule,
+        ForumComponentModule,
+        ThreadComponentModule,
+      claimRoutingModule,
+      ThreadRoutingModule
   ],
   providers: [
     { provide: LocationStrategy, useClass: HashLocationStrategy },
     CountryService, CustomerService, EventService, IconService, NodeService,
-    PhotoService, ProductService,RestaurantService,UsersService,RmembershipService,WaitingListService,MessageService
+    PhotoService, ProductService,RestaurantService,UsersService,RmembershipService,WaitingListService,MessageService,
+    ClaimService,ForumService,
+      ThreadService,ReactionService
   ],
   bootstrap: [AppComponent]
 })

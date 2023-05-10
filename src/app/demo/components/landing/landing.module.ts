@@ -8,6 +8,12 @@ import { ChartModule } from 'primeng/chart';
 import { PanelModule } from 'primeng/panel';
 import { ButtonModule } from 'primeng/button';
 import { RestaurantFrontComponent } from './restaurant-Front/restaurant-front.component';
+import { ForumFrontComponent } from './forum-front/forum-front.component';
+import {ClaimFrontComponent} from "./claim-front/claim-front.component";
+import {ReactiveFormsModule} from "@angular/forms";
+import {PaginatorModule} from "primeng/paginator";
+import { ThreadFrontComponent } from './thread-front/thread-front.component';
+import {FieldsetModule} from "primeng/fieldset";
 
 @NgModule({
     imports: [
@@ -17,8 +23,11 @@ import { RestaurantFrontComponent } from './restaurant-Front/restaurant-front.co
         StyleClassModule,
         ChartModule,
         PanelModule,
-        ButtonModule
+        ButtonModule,
+        ReactiveFormsModule,
+        PaginatorModule,
+        FieldsetModule
     ],
-    declarations: [LandingComponent,RestaurantFrontComponent]
+    declarations: [LandingComponent,RestaurantFrontComponent,ClaimFrontComponent, ForumFrontComponent, ThreadFrontComponent]
 })
 export class LandingModule { }
