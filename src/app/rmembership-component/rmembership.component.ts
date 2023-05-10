@@ -17,15 +17,31 @@ import { Table } from 'primeng/table';
 })
 export class RmembershipComponent implements OnInit{
 
+  nbvalides!: number;
+  renewalRate!: number;
+
+
+  stats: any;
+
   list!: RMembership[];
   idRmembership!: number;
   cols: any[] = [];
 
   rmembershipDialog: boolean = false;
 
+  rmembershipRenewDialog: boolean = false;
+
+  rmembershipUpdateDialog: boolean = false;
+
+  rmembershipVerifDialog: boolean = false;
+
   deletermembershipDialog: boolean = false;
 
   deletermembershipsDialog: boolean = false;
+
+  validatemembershipsDialog: boolean = false;
+
+  unValidatemembershipsDialog: boolean = false;
 
   rmemberships: RMembership[] = [];
 
@@ -34,14 +50,18 @@ export class RmembershipComponent implements OnInit{
   selectedrmemberships: RMembership[] = [];
 
   submitted: boolean = false;
-  messageService: any;
+
 
 
 
   rowsPerPageOptions = [5, 10, 20];
 
 
-  constructor(private rs: RmembershipService,private datePipe: DatePipe) {}
+
+  startDate!: any;
+  endDate!: any;
+
+  constructor(private rs: RmembershipService,private datePipe: DatePipe, private messageService: MessageService) {}
 
   ngOnInit(): void {
 
@@ -50,19 +70,23 @@ export class RmembershipComponent implements OnInit{
       { field: 'typemembership', header: 'TypeMembership' },
       { field: 'duration', header: 'Duration' },
       { field: 'startdate', header: 'Startdate' },
-      { field: 'endDate', header: 'Enddate' }
+      { field: 'endDate', header: 'Enddate' },
+
   ];
     this.rs.getRmemberships().subscribe(rmemberships => {
       this.rmemberships = rmemberships;
     });
 
+    this.getStats();
 
   }
+
+
 
   deleteRmembership(idRmembership: number) {
     if (confirm("do you really want to delete this item ?"))
     {
-this.rs.deleteRmembership(idRmembership).subscribe();
+      this.rs.deleteRmembership(idRmembership).subscribe();
 
     }
   }
@@ -77,10 +101,98 @@ deleteSelectedrmemberships() {
     this.deletermembershipsDialog = true;
 }
 
+
+
+
+///////////////
+
 preEditrmembership(rmembership: RMembership) {
     this.rmembership = { ...rmembership };
-    this.rmembershipDialog = true;
+    this.rmembershipUpdateDialog = true;
 }
+
+updateMembership() {
+  const formattedDate = this.datePipe.transform(this.rmembership.startDate, 'yyyy-MM-dd HH:mm:ss');
+
+  const myPayload = {
+    typeMembership: this.rmembership.typeMembership,
+    startDate: formattedDate,
+    duration: this.rmembership.duration,
+    id : this.rmembership.idRMembership
+  };
+
+  if (typeof myPayload.id !== 'undefined' && typeof myPayload.typeMembership !== 'undefined' && typeof myPayload.duration !== 'undefined') {
+  this.rs.updateRmembership(myPayload.id,myPayload.startDate,myPayload.typeMembership,myPayload.duration).subscribe((res) => {
+    console.log(res);
+  });
+}
+}
+
+
+hideRmembershipUpdateDialog() {
+  this.rmembershipUpdateDialog = false;
+  this.submitted = false;
+}
+
+PreRenewMembership(rmembership: RMembership) {
+  this.rmembership = { ...rmembership };
+  this.rmembershipRenewDialog = true;
+}
+
+renewMembership() {
+  if (typeof this.rmembership.idRMembership !== 'undefined') {
+  this.rs.renewRmembership(this.rmembership, this.rmembership.idRMembership).subscribe((res) => {
+    console.log(res);
+  });
+}
+}
+
+hideRmembershipRenewDialog() {
+  this.rmembershipRenewDialog = false;
+  this.submitted = false;
+}
+
+
+
+
+preValidatemembership(rmembership: RMembership) {
+  this.rmembership = { ...rmembership };
+  this.validatemembershipsDialog = true;
+}
+
+validatemembership() {
+  if (typeof this.rmembership.idRMembership !== 'undefined') {
+  this.rs.validateRMembership(this.rmembership.idRMembership).subscribe((res) => {
+    console.log(res);
+  });
+}
+}
+
+hideRmembershipValidateDialog() {
+  this.validatemembershipsDialog = false;
+  this.submitted = false;
+}
+
+
+
+preUnvalidatemembership(rmembership: RMembership) {
+  this.rmembership = { ...rmembership };
+  this.unValidatemembershipsDialog = true;
+}
+
+unValidatemembership() {
+  if (typeof this.rmembership.idRMembership !== 'undefined') {
+  this.rs.unValidateRMembership(this.rmembership.idRMembership).subscribe((res) => {
+    console.log(res);
+  });
+}
+}
+
+hideRmembershipUnvalidateDialog() {
+  this.unValidatemembershipsDialog = false;
+  this.submitted = false;
+}
+
 
 
 
@@ -92,13 +204,6 @@ confirmDeleteSelected() {
 
 }
 
-// confirmDelete() {
-//     this.deletermembershipDialog = false;
-//     this.rmemberships = this.rmemberships.filter(val => val.idRMembership !== this.rmembership.idRMembership);
-//     this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'rmembership Deleted', life: 3000 });
-//     this.rmembership = {};
-
-// }
 
 hideDialog() {
     this.rmembershipDialog = false;
@@ -120,44 +225,6 @@ saveRMembership() {
   this.rs.addRmembership(myPayload).subscribe((res) => {
     console.log(res);
   });
-
-
-
-  // this.rmembership.idRMembership = this.createId();
-  // this.rmemberships.push(this.rmembership);
-  // this.messageService.add({
-  //   severity: 'success',
-  //   summary: 'Successful',
-  //   detail: 'rmembership Created',
-  //   life: 3000
-  // });
-
-  // this.submitted = true;
-
-  // if (this.rmembership.typeMembership?.trim()) {
-  //   if (this.rmembership.idRMembership) {
-  //     this.rmemberships[this.findIndexById(this.rmembership.idRMembership)] = this.rmembership;
-  //     this.messageService.add({
-  //       severity: 'success',
-  //       summary: 'Successful',
-  //       detail: 'rmembership Updated',
-  //       life: 3000
-  //     });
-  //   } else {
-  //     this.rmembership.idRMembership = this.createId();
-  //     this.rmemberships.push(this.rmembership);
-  //     this.messageService.add({
-  //       severity: 'success',
-  //       summary: 'Successful',
-  //       detail: 'rmembership Created',
-  //       life: 3000
-  //     });
-  //   }
-
-  //   this.rmemberships = [...this.rmemberships];
-  //   this.rmembershipDialog = false;
-  //   this.rmembership = new RMembership();
-  // }
 }
 
 
@@ -184,4 +251,110 @@ createId(): number {
 onGlobalFilter(table: Table, event: Event) {
   table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
 }
+
+
+/////////
+getGuestMemberships(){
+  this.rs.getGuestMemberships().subscribe(rmemberships => {
+    this.rmemberships = rmemberships;
+  });
 }
+
+getTeacherMemberships(){
+  this.rs.getTeacherMemberships().subscribe(rmemberships => {
+    this.rmemberships = rmemberships;
+  });
+}
+
+getStudentMemberships(){
+  this.rs.getStudentMemberships().subscribe(rmemberships => {
+    this.rmemberships = rmemberships;
+  });
+}
+
+getALLMemberships(){
+  this.rs.getRmemberships().subscribe(rmemberships => {
+    this.rmemberships = rmemberships;
+  });
+}
+
+
+
+getValidRMemberships(startDate: any, endDate: any): void {
+  const formattedstartDate: string = this.datePipe.transform(startDate,'yyyy-MM-dd HH:mm:ss')!;
+  const formattedendDate: string = this.datePipe.transform(endDate,'yyyy-MM-dd HH:mm:ss')!;
+
+  this.rs.getValidRMemberships(formattedstartDate, formattedendDate)
+    .subscribe(rmemberships => {
+      this.rmemberships = rmemberships;
+      if (this.rmemberships.length === 0) {
+        this.messageService.add({
+          severity: 'warn',
+          summary: 'Warning',
+          detail: 'No valid memberships found.'
+        });
+      }
+    });
+}
+
+
+
+getRenewalRate(startDate: any, endDate: any) {
+  const formattedstartDate = this.datePipe.transform(startDate, 'yyyy-MM-dd HH:mm:ss');
+  const formattedendDate = this.datePipe.transform(endDate, 'yyyy-MM-dd HH:mm:ss');
+
+  this.rs.getRenewalRate(formattedstartDate, formattedendDate)
+    .subscribe(response => {
+      this.renewalRate = response['renewalRate'];
+      this.messageService.add({
+        severity: 'success',
+        summary: 'Success',
+        detail: `Renewal rate : ${this.renewalRate}`
+      });
+    });
+}
+
+
+
+nbRMembershipValides(startDate: any, endDate: any) {
+  const formattedstartDate = this.datePipe.transform(startDate, 'yyyy-MM-dd HH:mm:ss');
+  const formattedendDate = this.datePipe.transform(endDate, 'yyyy-MM-dd HH:mm:ss');
+
+  if (formattedstartDate && formattedendDate) {
+    this.rs.getNbRMembershipValides(formattedstartDate, formattedendDate)
+      .subscribe(response => {
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Success',
+          detail: `Number of RMembership Valides: ${response}`,
+        });
+      });
+  } else {
+    this.messageService.add({
+      severity: 'error',
+      summary: 'Error',
+      detail: 'Invalid dates'
+    });
+  }
+}
+
+
+
+
+getStats(): void {
+  this.rs.getStatsAboutUsersMemberships().subscribe(
+    response => {
+      this.stats = response;
+      console.log(this.stats);
+    },
+    error => {
+      console.log(error);
+    }
+  );
+}
+
+
+
+
+}
+

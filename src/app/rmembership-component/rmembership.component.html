@@ -7,14 +7,39 @@
                     <div class="my-2">
                         <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNew()"></button>
                         <button pButton pRipple label="Delete" icon="pi pi-trash" class="p-button-danger" (click)="deleteSelectedrmemberships()" [disabled]="!selectedrmemberships || !selectedrmemberships.length"></button>
+                        <label>ㅤ</label>
                     </div>
+                    <div class="my-2">
+                        <button pButton pRipple label="Guest" icon="pi pi-search" class="p-button-text mr-2" (click)="getGuestMemberships()"></button>
+                        <button pButton pRipple label="Teacher" icon="pi pi-search" class="p-button-text mr-2" (click)="getTeacherMemberships()"></button>
+                        <button pButton pRipple label="Student" icon="pi pi-search" class="p-button-text mr-2" (click)="getStudentMemberships()"></button>
+                        <button pButton pRipple label="All" icon="pi pi-search" class="p-button-text mr-2" (click)="getALLMemberships()"></button>
+                      </div>
                 </ng-template>
-
 
                 <ng-template pTemplate="right">
                     <p-fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" label="Import" chooseLabel="Import" class="mr-2 inline-block"></p-fileUpload>
                     <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help" (click)="dt.exportCSV()"></button>
                 </ng-template>
+            </p-toolbar>
+            <p-toolbar styleClass="mb-4">
+              <div class="field">
+                <label for="start-date">Start Date :ㅤ</label>
+                <input  type="datetime-local" pInputText id="start-date" [(ngModel)]="startDate">
+              </div>
+              <div class="field">
+                <label for="end-date">End Date :ㅤ</label>
+                <input  type="datetime-local" pInputText id="end-date" [(ngModel)]="endDate">
+              </div>
+            </p-toolbar>
+              <p-toolbar styleClass="mb-4">
+              <div class="field">
+                <div class="field">
+                <button pButton pRipple label="Get Renewal Rate" icon="pi pi-search" type="submit" (click)="getRenewalRate(startDate,endDate)"></button>
+                </div>
+              <button  pButton pRipple label="Validated Memberships" icon="pi pi-search"  (click)="getValidRMemberships(startDate,endDate)"></button>
+              <button  pButton pRipple label="Nb Validated" icon="pi pi-search"  (click)="getValidRMemberships(startDate,endDate)"></button>
+            </div>
             </p-toolbar>
 
             <p-table #dt [value]="rmemberships" [columns]="cols" responsiveLayout="scroll" [rows]="10" [globalFilterFields]="['typeMembership','duration']" [rows]="10" [paginator]="true" [rowsPerPageOptions]="[10,20,30]" [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [(selection)]="selectedrmemberships" selectionMode="multiple" [rowHover]="true" dataKey="idRMembership">
@@ -72,6 +97,9 @@
 
                         <td>
                             <div class="flex">
+                                <button pButton pRipple icon="pi pi-check" class="p-button-rounded p-button-raised mr-2" (click)="preValidatemembership(rmembership)"></button>
+                                <button pButton pRipple icon="pi pi-times" class="p-button-rounded p-button-danger mr-2" (click)="preUnvalidatemembership(rmembership)"></button>
+                                <button pButton pRipple icon="pi pi-refresh" class="p-button-rounded p-button-outlined mr-2" (click)="PreRenewMembership(rmembership)"></button>
                                 <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="preEditrmembership(rmembership)"></button>
                                 <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="rmembership.idRMembership && deleteRmembership(rmembership.idRMembership)"></button>
                             </div>
@@ -83,7 +111,7 @@
 
         <p-dialog [(visible)]="rmembershipDialog" [style]="{width: '450px'}" header="Rmembership Details" [modal]="true" class="p-fluid">
 
-          <form #form="ngForm" (ngSubmit)="saveRMembership()">
+          <form #form="ngForm" (ngSubmit)="saveRMembership();hideDialog">
             <div class="field">
               <label for="typeMembership">Type of Membership</label>
               <select  id="typeMembership" pInputText name="typeMembership" [(ngModel)]="rmembership.typeMembership" required>
@@ -115,6 +143,92 @@
 
 
 
+      <p-dialog [(visible)]="rmembershipUpdateDialog" [style]="{width: '450px'}" header="Rmembership Details" [modal]="true" class="p-fluid">
+
+        <form #form="ngForm" (ngSubmit)="updateMembership();hideRmembershipUpdateDialog">
+          <div class="field">
+            <label for="typeMembership">Type of Membership</label>
+            <select  id="typeMembership" pInputText name="typeMembership" [(ngModel)]="rmembership.typeMembership" required>
+              <option value="">Select a membership type</option>
+              <option value="HALFPENSION">HALFPENSION</option>
+              <option value="FULLPENSION">FULLPENSION</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="startDate">Start Date</label>
+            <input type="datetime-local" pInputText id="startDate" name="startDate" [(ngModel)]="rmembership.startDate" required>
+          </div>
+         <div class="field">
+            <label for="duration">Duration</label>
+            <select  id="duration" pInputText name="duration" [(ngModel)]="rmembership.duration" required>
+              <option value="">Select the duration</option>
+              <option value="DAY">DAY</option>
+              <option value="MONTH">MONTH</option>
+              <option value="SEMESTER">SEMESTER</option>
+            </select>
+          </div>
+            <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideRmembershipUpdateDialog()"></button>
+            <button pButton type="submit"
+            [disabled]="form.invalid" pRipple label="Save" icon="pi pi-check" class="p-button-text"></button>
+          </form>
+
+    </p-dialog>
+
+
+
+      <p-dialog [(visible)]="rmembershipRenewDialog" [style]="{width: '450px'}" header="Rmembership Rnew" [modal]="true" class="p-fluid">
+
+        <form #form="ngForm" (ngSubmit)="renewMembership();hideRmembershipRenewDialog()">
+          <div class="field">
+            <label for="typeMembership">Type of Membership</label>
+            <select  id="typeMembership" pInputText name="typeMembership" [(ngModel)]="rmembership.typeMembership" required>
+              <option value="">Select a membership type</option>
+              <option value="HALFPENSION">HALFPENSION</option>
+              <option value="FULLPENSION">FULLPENSION</option>
+            </select>
+          </div>
+         <div class="field">
+            <label for="duration">Duration</label>
+            <select  id="duration" pInputText name="duration" [(ngModel)]="rmembership.duration" required>
+              <option value="">Select the duration</option>
+              <option value="DAY">DAY</option>
+              <option value="MONTH">MONTH</option>
+              <option value="SEMESTER">SEMESTER</option>
+            </select>
+          </div>
+            <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideRmembershipRenewDialog()"></button>
+            <button pButton type="submit"
+            [disabled]="form.invalid" pRipple label="Save" icon="pi pi-check" class="p-button-text"></button>
+          </form>
+
+    </p-dialog>
+
+    <p-dialog [(visible)]="validatemembershipsDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
+      <div class="flex align-items-center justify-content-center">
+          <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+          <span>Are you sure you want to validate this Membership ?</span>
+      </div>
+
+      <ng-template pTemplate="footer">
+          <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No" (click)="validatemembershipsDialog = false"></button>
+          <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes" (click)="validatemembership() ; hideRmembershipValidateDialog"></button>
+      </ng-template>
+  </p-dialog>
+
+
+  <p-dialog [(visible)]="unValidatemembershipsDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
+    <div class="flex align-items-center justify-content-center">
+        <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+        <span>Are you sure you want to unvalidate this Membership ?</span>
+    </div>
+
+    <ng-template pTemplate="footer">
+        <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No" (click)="unValidatemembershipsDialog = false"></button>
+        <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes" (click)="unValidatemembership() ; hideRmembershipUnvalidateDialog"></button>
+    </ng-template>
+</p-dialog>
+
+
 
 
       <!-- <p-dialog [(visible)]="deletermembershipDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
@@ -134,7 +248,7 @@
       <p-dialog [(visible)]="deletermembershipsDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
         <div class="flex align-items-center justify-content-center">
             <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
-            <span>Are you sure you want to delete selected products?</span>
+            <span>Are you sure you want to delete selected Memberships?</span>
         </div>
 
         <ng-template pTemplate="footer">

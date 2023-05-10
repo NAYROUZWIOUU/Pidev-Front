@@ -4,6 +4,12 @@ import { NotfoundComponent } from './demo/components/notfound/notfound.component
 import { AppLayoutComponent } from "./layout/app.layout.component";
 import { UserComponentComponent } from './user-component/user-component.component';
 import { RmembershipComponent } from './rmembership-component/rmembership.component';
+import { EmptyDemoComponent } from './demo/components/pages/empty/emptydemo.component';
+import { FidelityCardComponent } from './fidelity-card-component/fidelity-card-component.component';
+import { RewardComponent } from './reward/reward.component';
+import { CreateMembershipComponent } from './demo/components/landing/create-membership/create-membership.component';
+import { MermbershipsUserComponent } from './demo/components/landing/mermberships-user/mermberships-user.component';
+import { FidelitycarduserComponent } from './demo/components/landing/fidelitycarduser/fidelitycarduser.component';
 import {UIkitRoutingModule} from "./demo/components/uikit/uikit-routing.module";
 import {ClientmealRoutingModule} from "./demo/components/uikit/clientmeal/clientmeal-routing.module";
 import {ClientmealModule} from "./demo/components/uikit/clientmeal/clientmeal.module";
@@ -23,7 +29,6 @@ import {ForumRoutingModule} from "./demo/components/landing/forum-front/forumRou
 import {ThreadRoutingModule} from "./demo/components/landing/thread-front/threadRoutingModule";
 import {ThreadFrontComponent} from "./demo/components/landing/thread-front/thread-front.component";
 
-
 @NgModule({
     imports: [
         RouterModule.forRoot([
@@ -42,6 +47,9 @@ import {ThreadFrontComponent} from "./demo/components/landing/thread-front/threa
                     { path: 'clientblockrestau', loadChildren: () => import('./demo/components/uikit/clientblockrestau/clientblockrestau.module').then(m => m.ClientblockrestauModule) },
                     { path: 'users', component: UserComponentComponent},
                     { path: 'rmemberships', component: RmembershipComponent},
+                    { path: 'empty', component: EmptyDemoComponent},
+                    { path: 'fidelitycard' , component: FidelityCardComponent},
+                    { path: 'reward' , component: RewardComponent},
                     { path: 'foyer', component: FoyerComponent},
                     { path: 'blockfoyer', component:BlockfoyerComponent},
                     { path: 'waiting-list', component:WaitinglistComponent},
@@ -54,13 +62,14 @@ import {ThreadFrontComponent} from "./demo/components/landing/thread-front/threa
             { path: 'auth', loadChildren: () => import('./demo/components/auth/auth.module').then(m => m.AuthModule) },
             { path: 'landing', loadChildren: () => import('./demo/components/landing/landing.module').then(m => m.LandingModule) },
             { path: 'landing/rmembership', loadChildren: () => import('./demo/components/landing/restaurant-Front/restauRoutingModule.module').then(m => m.RestauRoutingModule) },
+            { path: 'landing/rmembership/add',component:CreateMembershipComponent },
+            { path: 'landing/rmembership/myMemberships',component:MermbershipsUserComponent},
+            { path: 'landing/rmembership/myfc',component:FidelitycarduserComponent},
             { path: 'landing/clientmeal', loadChildren: () => import('./demo/components/uikit/clientmeal/clientmeal-routing.module').then(m => m.ClientmealRoutingModule) },
             { path: 'landing/clientmenu', loadChildren: () => import('./demo/components/uikit/clientmenu/clientmenu-routing.module').then(m => m.ClientmenuRoutingModule) },
-          { path: 'landing/clientrestaurant', loadChildren: () => import('./demo/components/uikit/clientrestaurant/clientrestaurant-routing.module').then(m => m.ClientrestaurantRoutingModule) },
-          { path: 'landing/clientblockrestau', loadChildren: () => import('./demo/components/uikit/clientblockrestau/clientblockrestau-routing.module').then(m => m.ClientblockrestauRoutingModule) },
-          { path: 'notfound', component: NotfoundComponent },
-          { path: 'landing/dormfront', loadChildren: () => import('./demo/components/landing/dorm-Front/dormRoutingModule.module').then(m => m.DormRoutingModuleModule) },
-          { path: 'notfound', component: NotfoundComponent },
+            { path: 'landing/clientrestaurant', loadChildren: () => import('./demo/components/uikit/clientrestaurant/clientrestaurant-routing.module').then(m => m.ClientrestaurantRoutingModule) },
+            { path: 'landing/clientblockrestau', loadChildren: () => import('./demo/components/uikit/clientblockrestau/clientblockrestau-routing.module').then(m => m.ClientblockrestauRoutingModule) },
+            { path: 'landing/dormfront', loadChildren: () => import('./demo/components/landing/dorm-Front/dormRoutingModule.module').then(m => m.DormRoutingModuleModule) },
             {path:  'landing/claim',       loadChildren: () => import('./demo/components/landing/claim-front/claimRoutingModule').then(m=>m.claimRoutingModule)},
             {path:  'landing/forum',       loadChildren: () => import('./demo/components/landing/forum-front/forumRoutingModule').then(m=>m.ForumRoutingModule)},
             {path:  'landing/thread/:three',       loadChildren: () => import('./demo/components/landing/thread-front/threadRoutingModule').then(m=>m.ThreadRoutingModule)},

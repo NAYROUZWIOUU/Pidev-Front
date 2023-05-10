@@ -1,0 +1,218 @@
+<div class="grid">
+  <div class="col-12">
+      <div class="card px-6 py-6">
+          <p-toast></p-toast>
+          <p-toolbar styleClass="mb-4">
+              <ng-template pTemplate="left">
+                  <div class="my-2">
+                      <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNew()"></button>
+                      <button pButton pRipple label="Delete" icon="pi pi-trash" class="p-button-danger" (click)="deleteSelectedfidelityCards()" [disabled]="!selectedfidelityCards || !selectedfidelityCards.length"></button>
+                  </div>
+              </ng-template>
+
+              <ng-template pTemplate="right">
+                  <p-fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" label="Import" chooseLabel="Import" class="mr-2 inline-block"></p-fileUpload>
+                  <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help" (click)="dt.exportCSV()"></button>
+              </ng-template>
+          </p-toolbar>
+
+          <p-table #dt [value]="fidelityCards" [columns]="cols" responsiveLayout="scroll" [rows]="10" [globalFilterFields]="['cardNumber','membershipLevel']" [rows]="10" [paginator]="true" [rowsPerPageOptions]="[10,20,30]" [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [(selection)]="selectedfidelityCards" selectionMode="multiple" [rowHover]="true" dataKey="idfidelityCard">
+              <ng-template pTemplate="caption">
+                  <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+                      <h5 class="m-0">Manage fidelityCards</h5>
+                      <span class="block mt-2 md:mt-0 p-input-icon-left">
+                          <i class="pi pi-search"></i>
+                          <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Search..."  class="w-full sm:w-auto"/>
+                      </span>
+                  </div>
+              </ng-template>
+              <ng-template pTemplate="header">
+                  <tr>
+                      <th style="width: 3rem">
+                          <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                      </th>
+                      <th pSortableColumn="code">Code <p-sortIcon field="code"></p-sortIcon></th>
+                      <th pSortableColumn="cardNumber">cardNumber <p-sortIcon field="cardNumber"></p-sortIcon></th>
+                      <th pSortableColumn="membershipLevel">MembershipLevel <p-sortIcon field="membershipLevel"></p-sortIcon></th>
+                      <th pSortableColumn="totalPoints">Total Points <p-sortIcon field="totalPoints"></p-sortIcon></th>
+                      <th pSortableColumn="expirationDate">Expiration Date <p-sortIcon field="expirationDate"></p-sortIcon></th>
+                      <th pSortableColumn="user">user <p-sortIcon field="user"></p-sortIcon></th>
+                      <th></th>
+                  </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-fidelityCard>
+                  <tr>
+                      <td>
+                          <p-tableCheckbox [value]="fidelityCard"></p-tableCheckbox>
+                      </td>
+                      <td style="width:14%; min-width:10rem;"><span class="p-column-title">Code</span>
+                          {{fidelityCard.code || fidelityCard.idFidelityCard}}
+                      </td>
+                    <td style="width:14%; min-width:10rem;">
+                      <span class="p-column-title">cardNumber</span>
+                      {{fidelityCard.cardNumber}}
+                    </td>
+                      <td style="width:14%; min-width:10rem;">
+                          <span class="p-column-title">membershipLevel</span>
+                          {{fidelityCard.membershipLevel}}
+                      </td>
+                      <td style="width:14%; min-width:8rem;">
+                          <span class="p-column-title">totalPoints</span>
+                          {{fidelityCard.totalPoints}}
+                      </td>
+                      <td style="width:14%; min-width:10rem;">
+                          <span class="p-column-title">expirationDate</span>
+                          {{fidelityCard.expirationDate}}
+                      </td>
+                      <td style="width:14%; min-width:10rem;">
+                        <span class="p-column-title">user</span>
+                        {{ fidelityCard?.user?.firstName }} {{ fidelityCard?.user?.lastName }}
+                        <td>
+                          <div class="flex">
+                              <!-- <button pButton pRipple icon="pi pi-refresh" class="p-button-rounded p-button-outlined mr-2" (click)="PreRenewMembership(fidelityCard)"></button> -->
+                              <button pButton pRipple icon="pi pi-exclamation-triangle" class="p-button-rounded p-button-success mr-2" (click)="onGiveRewardsClicked(fidelityCard.idFidelityCard)"></button>
+                              <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="preEditfidelityCard(fidelityCard)"></button>
+                              <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="fidelityCard.idfidelityCard && deletefidelityCard(fidelityCard.idfidelityCard)"></button>
+                          </div>
+                      </td>
+                  </tr>
+              </ng-template>
+          </p-table>
+      </div>
+
+      <p-dialog [(visible)]="fidelityCardDialog" [style]="{width: '450px'}" header="fidelityCard Details" [modal]="true" class="p-fluid">
+
+        <form #form="ngForm" (ngSubmit)="savefidelityCard();hideDialog">
+          <div class="field">
+            <label for="cardNumber">CardNumber</label>
+            <input type="text" pInputText id="cardNumber" name="cardNumber" [(ngModel)]="fidelityCard.cardNumber" required>
+          </div>
+          <div class="field">
+            <label for="cardNumber">Membership Level</label>
+            <select  id="membershipLevel" pInputText name="membershipLevel" [(ngModel)]="fidelityCard.membershipLevel" required>
+              <option value="">Select a membership Level</option>
+              <option value="HALFPENSION">NONE</option>
+              <option value="FULLPENSION">BRONZE</option>
+              <option value="FULLPENSION">SILVER</option>
+              <option value="FULLPENSION">GOLD</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="totalPoints">totalPoints</label>
+            <input type="text" pInputText id="totalPoints" name="totalPoints" [(ngModel)]="fidelityCard.totalPoints" required>
+          </div>
+          <div class="field">
+            <label for="expirationDate">expirationDate</label>
+            <input type="datetime-local" pInputText id="expirationDate" name="expirationDate" [(ngModel)]="fidelityCard.expirationDate" required>
+          </div>
+          <div class="field">
+            <label for="user">user</label>
+            <input type="text" pInputText id="user" name="user" [(ngModel)]="iduser" required>
+          </div>
+            <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+            <button pButton type="submit"
+            [disabled]="form.invalid" pRipple label="Save" icon="pi pi-check" class="p-button-text"></button>
+          </form>
+
+    </p-dialog>
+
+
+
+
+    <p-dialog [(visible)]="fidelityCardUpdateDialog" [style]="{width: '450px'}" header="fidelityCard Details" [modal]="true" class="p-fluid">
+
+      <form #form="ngForm" (ngSubmit)="updateMembership();hidefidelityCardUpdateDialog">
+        <div class="field">
+          <label for="cardNumber">CardNumber</label>
+          <input type="text" pInputText id="cardNumber" name="cardNumber" [(ngModel)]="fidelityCard.cardNumber" required>
+        </div>
+        <div class="field">
+          <label for="cardNumber">cardNumber</label>
+          <select  id="membershipLevel" pInputText name="membershipLevel" [(ngModel)]="fidelityCard.membershipLevel" required>
+            <option value="">Select a membership Level</option>
+            <option value="HALFPENSION">NONE</option>
+            <option value="FULLPENSION">BRONZE</option>
+            <option value="FULLPENSION">SILVER</option>
+            <option value="FULLPENSION">GOLD</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="totalPoints">totalPoints</label>
+          <input type="text" pInputText id="totalPoints" name="totalPoints" [(ngModel)]="fidelityCard.totalPoints" required>
+        </div>
+        <div class="field">
+          <label for="expirationDate">expirationDate</label>
+          <input type="datetime-local" pInputText id="expirationDate" name="expirationDate" [(ngModel)]="fidelityCard.expirationDate" required>
+        </div>
+        <div class="field">
+          <label for="user">user</label>
+          <input type="text" pInputText id="user" name="user" [(ngModel)]="iduser" required>
+        </div>
+          <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hidefidelityCardUpdateDialog()"></button>
+          <button pButton type="submit"
+          [disabled]="form.invalid" pRipple label="Save" icon="pi pi-check" class="p-button-text"></button>
+        </form>
+
+  </p-dialog>
+
+
+
+    <!-- <p-dialog [(visible)]="fidelityCardRenewDialog" [style]="{width: '450px'}" header="fidelityCard Rnew" [modal]="true" class="p-fluid">
+
+      <form #form="ngForm" (ngSubmit)="renewMembership();hidefidelityCardRenewDialog()">
+        <div class="field">
+          <label for="typeMembership">Type of Membership</label>
+          <select  id="typeMembership" pInputText name="typeMembership" [(ngModel)]="fidelityCard.typeMembership" required>
+            <option value="">Select a membership type</option>
+            <option value="HALFPENSION">HALFPENSION</option>
+            <option value="FULLPENSION">FULLPENSION</option>
+          </select>
+        </div>
+       <div class="field">
+          <label for="duration">Duration</label>
+          <select  id="duration" pInputText name="duration" [(ngModel)]="fidelityCard.duration" required>
+            <option value="">Select the duration</option>
+            <option value="DAY">DAY</option>
+            <option value="MONTH">MONTH</option>
+            <option value="SEMESTER">SEMESTER</option>
+          </select>
+        </div>
+          <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hidefidelityCardRenewDialog()"></button>
+          <button pButton type="submit"
+          [disabled]="form.invalid" pRipple label="Save" icon="pi pi-check" class="p-button-text"></button>
+        </form>
+
+  </p-dialog> -->
+
+
+
+
+
+    <!-- <p-dialog [(visible)]="deletefidelityCardDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
+      <div class="flex align-items-center justify-content-center">
+          <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+          <span *ngIf="fidelityCard">Are you sure you want to delete <b>{{fidelityCard.idfidelityCard}}</b>?</span>
+      </div>
+      <ng-template pTemplate="footer">
+          <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No" (click)="deletefidelityCardDialog = false"></button>
+          <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes" (click)="confirmDelete()"></button>
+      </ng-template>
+  </p-dialog> -->
+
+
+
+
+    <p-dialog [(visible)]="deletefidelityCardsDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
+      <div class="flex align-items-center justify-content-center">
+          <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+          <span>Are you sure you want to delete selected FidelityCards?</span>
+      </div>
+
+      <ng-template pTemplate="footer">
+          <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No" (click)="deletefidelityCardsDialog = false"></button>
+          <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes" (click)="confirmDeleteSelected()"></button>
+      </ng-template>
+  </p-dialog>
+
+         </div>
+</div>

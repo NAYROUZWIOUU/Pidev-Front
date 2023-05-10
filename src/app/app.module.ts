@@ -18,6 +18,11 @@ import { RmembershipComponentModule } from './rmembership-component/rmembership.
 import { RmembershipService } from './services/Rmembership/rmembership.service';
 import { RestauRoutingModule } from './demo/components/landing/restaurant-Front/restauRoutingModule.module';
 import { FormsModule } from '@angular/forms';
+import { FidelityCardComponent } from './fidelity-card-component/fidelity-card-component.component';
+import { FidelityCardModule } from './fidelity-card-component/fidelity-card.module';
+import { FidelityCardService} from './services/FidelityCard/fidelity-card-service.service';
+import { RewardService } from './services/Reward/reward.service';
+import { RewardModule } from './reward/reward.module';
 import {MenuService} from "./services/menu/menu.service";
 import { FoyerModule} from "./foyer/foyer.module";
 import {WaitingListService} from "./services/WaitingList/waitinglist.service";
@@ -51,6 +56,8 @@ import {ThreadRoutingModule} from "./demo/components/landing/thread-front/thread
     UserComponentModule,
     RmembershipComponentModule,
     RestauRoutingModule,
+    FidelityCardModule,
+    RewardModule
     FormsModule,
     FoyerModule,
     WaitinglistModule,
@@ -59,19 +66,19 @@ import {ThreadRoutingModule} from "./demo/components/landing/thread-front/thread
     CommonModule,
     DormRoutingModuleModule,
     TableModule,
-        ClaimComponentModule,
-        ForumComponentModule,
-        ThreadComponentModule,
-      claimRoutingModule,
-      ThreadRoutingModule
+    ClaimComponentModule,
+    ForumComponentModule,
+    ThreadComponentModule,
+    claimRoutingModule,
+    ThreadRoutingModule
   ],
   providers: [
     { provide: LocationStrategy, useClass: HashLocationStrategy },
     CountryService, CustomerService, EventService, IconService, NodeService,
     PhotoService, ProductService,RestaurantService,UsersService,RmembershipService,WaitingListService,MessageService,MenuService,
-    ClaimService,ForumService,
-      ThreadService,ReactionService
+    ClaimService,ForumService,ThreadService,ReactionService,FidelityCardService,RewardService
   ],
   bootstrap: [AppComponent]
+
 })
 export class AppModule { }

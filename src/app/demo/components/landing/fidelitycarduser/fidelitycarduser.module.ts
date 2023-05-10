@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
-import { RmembershipComponent } from './rmembership.component';
 import { FileUploadModule } from 'primeng/fileupload';
 import { TableModule } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
@@ -15,11 +14,17 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { DialogModule } from 'primeng/dialog';
 import { DatePipe } from '@angular/common';
+import { RouterModule } from '@angular/router';
+import { StyleClassModule } from 'primeng/styleclass';
+import { FidelityCardComponent } from 'src/app/fidelity-card-component/fidelity-card-component.component';
+import { FidelitycarduserComponent } from './fidelitycarduser.component';
+
 
 
 @NgModule({
-  declarations: [RmembershipComponent],
-  imports: [CommonModule,
+  declarations: [FidelitycarduserComponent],
+  imports: [
+    CommonModule,
     HttpClientModule,
     FormsModule,
     TableModule,
@@ -31,9 +36,10 @@ import { DatePipe } from '@angular/common';
     DropdownModule,
     RadioButtonModule,
     InputNumberModule,
-    DialogModule
-  ],
-  exports: [RmembershipComponent]
+    DialogModule,
+    DatePipe,
+    RouterModule,
+    StyleClassModule
+  ],exports:[FidelitycarduserComponent,RouterModule]
 })
-export class RmembershipComponentModule {
-}
+export class FidelitycarduserModule { }
