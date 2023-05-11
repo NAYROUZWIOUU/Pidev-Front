@@ -3,7 +3,7 @@ import { BlockFoyer } from './blockfoyer';
 export class Room {
   idRoom?: number;
   bedNbr?: number;
-  archived?: boolean;
-  fMemberships?: Fmembership[];
+  roomNbr?: number;
+  archived?: string;
   blockFoyer?: BlockFoyer;
 }

@@ -34,6 +34,9 @@ import { ResetComponent } from './reset/reset.component';
 import { AuthenticationGuard } from './guard/authentication.guard';
 import { ProfileComponent } from './demo/components/profile/profile.component';
 import { DashboardComponent } from './demo/components/dashboard/dashboard.component';
+import { FmembershipComponent } from './fmembership/fmembership.component';
+import { DormComponent } from './demo/components/landing/dorm/dorm.component';
+import { RoomComponent } from './room/room.component';
 
 @NgModule({
     imports: [
@@ -63,7 +66,9 @@ import { DashboardComponent } from './demo/components/dashboard/dashboard.compon
                     { path: 'waiting-list', component:WaitinglistComponent},
                     { path: 'claims', component: ClaimComponent},
                     {path: 'forums', component: ForumComponent},
-                    {path: 'threads/:thre', component: ThreadComponent}
+                    {path: 'threads/:thre', component: ThreadComponent},
+                    { path: 'fmemberships', component: FmembershipComponent },
+                    { path: 'rooms', component: RoomComponent },
 
                 ]
             },
@@ -83,9 +88,11 @@ import { DashboardComponent } from './demo/components/dashboard/dashboard.compon
             { path: 'landing/clientrestaurant', loadChildren: () => import('./demo/components/uikit/clientrestaurant/clientrestaurant-routing.module').then(m => m.ClientrestaurantRoutingModule) },
             { path: 'landing/clientblockrestau', loadChildren: () => import('./demo/components/uikit/clientblockrestau/clientblockrestau-routing.module').then(m => m.ClientblockrestauRoutingModule) },
             { path: 'landing/dormfront', loadChildren: () => import('./demo/components/landing/dorm-Front/dormRoutingModule.module').then(m => m.DormRoutingModuleModule) },
-            {path:  'landing/claim',       loadChildren: () => import('./demo/components/landing/claim-front/claimRoutingModule').then(m=>m.claimRoutingModule)},
-            {path:  'landing/forum',       loadChildren: () => import('./demo/components/landing/forum-front/forumRoutingModule').then(m=>m.ForumRoutingModule)},
-            {path:  'landing/thread/:three',       loadChildren: () => import('./demo/components/landing/thread-front/threadRoutingModule').then(m=>m.ThreadRoutingModule)},
+            {path:  'landing/claim', loadChildren: () => import('./demo/components/landing/claim-front/claimRoutingModule').then(m=>m.claimRoutingModule)},
+            {path:  'landing/forum', loadChildren: () => import('./demo/components/landing/forum-front/forumRoutingModule').then(m=>m.ForumRoutingModule)},
+            {path:  'landing/thread/:three', loadChildren: () => import('./demo/components/landing/thread-front/threadRoutingModule').then(m=>m.ThreadRoutingModule)},
+            {path: 'landing/fmembership',loadChildren: () =>import( './demo/components/landing/fmembership/fmembership.module').then((m) => m.FmembershipModule)},
+            {path: 'landing/dorm',loadChildren: () =>import('./demo/components/landing/dorm/dorm.module').then((m) => m.DormModule)},
             { path: 'notfound', component: NotfoundComponent },
             { path: '**', redirectTo: '/notfound' },
         ], { scrollPositionRestoration: 'enabled', anchorScrolling: 'enabled', onSameUrlNavigation: 'reload' })
