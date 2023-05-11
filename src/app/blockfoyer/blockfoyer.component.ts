@@ -33,7 +33,7 @@ export class BlockfoyerComponent implements OnInit{
   blockfoyers: BlockFoyer[] = [];
 
   //blockfoyer: BlockFoyer = {};
- // blockFoyer: any = { foyer: { idFoyer: null } };
+  // blockFoyer: any = { foyer: { idFoyer: null } };
 
   selectedblockfoyers: BlockFoyer[] = [];
 
@@ -191,4 +191,5 @@ export class BlockfoyerComponent implements OnInit{
   onGlobalFilter(table: Table, event: Event) {
     table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
   }
+
 }

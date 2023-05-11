@@ -68,5 +68,38 @@ export class DormFrontComponent {
       this.list = data;
     });
   }
+  getBlockFoyerImage(blockfoyer: BlockFoyer) {
+    if (blockfoyer.nameBlock === 'MSTUDENTS') {
+      return '/assets/demo/images/landing/icons8-student-male-96.png';
+    } else if (blockfoyer.nameBlock === 'FSTUDENTS') {
+      return '/assets/demo/images/landing/icons8-graduate-48.png';
+    } else if (blockfoyer.nameBlock === 'MTEACHERS') {
+      return '/assets/demo/images/landing/icons8-teacher-60 (1).png';
+    } else if (blockfoyer.nameBlock === 'FTEACHERS') {
+      return '/assets/demo/images/landing/icons8-teacher-60.png';
+    } else if (blockfoyer.nameBlock === 'GUESTS') {
+      return '/assets/demo/images/landing/icons8-guests-64.png';
+    } else {
+      return '/assets/demo/images/landing/free.svg';
+    }
+  }
+
+  getBlockFoyerText(blockfoyer: BlockFoyer) {
+    switch(blockfoyer.nameBlock) {
+      case 'MSTUDENTS':
+        return 'Male students block';
+      case 'FSTUDENTS':
+        return 'Female students block';
+      case 'MTEACHERS':
+        return 'Male teachers block';
+      case 'FTEACHERS':
+        return 'Female teachers block';
+      case 'GUESTS':
+        return 'Guests block';
+      default:
+        return '';
+    }
+  }
+
 
 }

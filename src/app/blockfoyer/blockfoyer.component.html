@@ -75,22 +75,24 @@
     <p-dialog [(visible)]="blockfoyerDialog" [style]="{width: '450px'}" header="block Details" [modal]="true" class="p-fluid">
 
       <form #form="ngForm" (ngSubmit)="saveblockfoyer();hideDialog">
-<!--        <div class="field">-->
-<!--          <label for="nameBlock" class="form-label">Name Block</label>-->
-<!--          <p-dropdown [options]="nameBlockOptions" [(ngModel)]="blockfoyer.nameBlock" optionLabel="label" id="nameBlock"></p-dropdown>-->
-<!--        </div>-->
+        <!--        <div class="field">-->
+        <!--          <label for="nameBlock" class="form-label">Name Block</label>-->
+        <!--          <p-dropdown [options]="nameBlockOptions" [(ngModel)]="blockfoyer.nameBlock" optionLabel="label" id="nameBlock"></p-dropdown>-->
+        <!--        </div>-->
 
         <div class="form-group">
           <label for="nameBlock">Name Block:</label>
-          <select id="nameBlock" name="nameBlock" [(ngModel)]="blockfoyer.nameBlock" required>
+          <select type="text" pInputText id="nameBlock" name="nameBlock" [(ngModel)]="blockfoyer.nameBlock" required>
             <option *ngFor="let option of nameBlockOptions" [value]="option.value">{{option.label}}</option>
           </select>
         </div>
-
         <div class="field">
-          <label for="roomnbr">number of rooms</label>
-          <input type="number" pInputText id="roomnbr" name="roomnbr" [(ngModel)]="blockfoyer.roomNbr" required>
+          <label for="roomnbr">Number of rooms</label>
+          <input type="number" pInputText id="roomnbr" name="roomnbr" [(ngModel)]="blockfoyer.roomNbr" required min="0">
         </div>
+
+
+
         <div class="field">
           <label for="placement">placement</label>
           <input type="text" pInputText id="placement" name="placement" [(ngModel)]="blockfoyer.placement" required>
@@ -109,15 +111,15 @@
 
       <form #form="ngForm" (ngSubmit)="updateblockFoyer();hideblockfoyerUpdateDialog()">
         <div class="field">
-          <label for="nameBlock">name Block</label>
-          <input type="text" pInputText id="name1" name="name" [(ngModel)]="blockfoyer.nameBlock" required>
+          <label for="nameblock">name</label>
+          <input type="text" pInputText id="nameblock1" name="nameblock" [(ngModel)]="blockfoyer.nameBlock" required>
         </div>
         <div class="field">
-          <label for="roomnbr">number of rooms</label>
+          <label for="roomnbr">Number of rooms</label>
           <input type="number" pInputText id="roomnbr1" name="roomnbr" [(ngModel)]="blockfoyer.roomNbr" required>
         </div>
         <div class="field">
-          <label for="placement">placement</label>
+          <label for="placement">Placement</label>
           <input type="text" pInputText id="placement1" name="placement" [(ngModel)]="blockfoyer.placement" required>
         </div>
 
@@ -125,6 +127,7 @@
         <button pButton type="submit"
                 [disabled]="form.invalid" pRipple label="Save" icon="pi pi-check" class="p-button-text"></button>
       </form>
+
 
     </p-dialog>
 

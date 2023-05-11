@@ -120,13 +120,13 @@ export class FoyerComponent implements OnInit{
 
   }
 
- confirmDelete() {
+  confirmDelete() {
     this.deletefoyerDialog = false;
-   this.foyers = this.foyers.filter(val => val.idFoyer !== this.foyer.idFoyer);
-   this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'foyer Deleted', life: 3000 });
-  this.foyer = {};
+    this.foyers = this.foyers.filter(val => val.idFoyer !== this.foyer.idFoyer);
+    this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'foyer Deleted', life: 3000 });
+    this.foyer = {};
 
- }
+  }
 
 
   hideDialog() {
