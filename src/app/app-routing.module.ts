@@ -28,6 +28,15 @@ import {ThreadComponent} from "./thread/thread.component";
 import {ForumRoutingModule} from "./demo/components/landing/forum-front/forumRoutingModule";
 import {ThreadRoutingModule} from "./demo/components/landing/thread-front/threadRoutingModule";
 import {ThreadFrontComponent} from "./demo/components/landing/thread-front/thread-front.component";
+import { RegisterComponent } from './demo/components/auth/register/register.component';
+import { LoginComponent } from './demo/components/auth/login/login.component';
+import { ResetComponent } from './reset/reset.component';
+import { AuthenticationGuard } from './guard/authentication.guard';
+import { ProfileComponent } from './demo/components/profile/profile.component';
+import { DashboardComponent } from './demo/components/dashboard/dashboard.component';
+import { FmembershipComponent } from './fmembership/fmembership.component';
+import { DormComponent } from './demo/components/landing/dorm/dorm.component';
+import { RoomComponent } from './room/room.component';
 
 @NgModule({
     imports: [
@@ -35,7 +44,9 @@ import {ThreadFrontComponent} from "./demo/components/landing/thread-front/threa
             {
                 path: '', component: AppLayoutComponent,
                 children: [
-                    { path: '', loadChildren: () => import('./demo/components/dashboard/dashboard.module').then(m => m.DashboardModule) },
+                    { path: 'dashboard', loadChildren: () => import('./demo/components/dashboard/dashboard.module').then(m => m.DashboardModule),canActivate : [AuthenticationGuard] },
+                    { path: '', loadChildren: () => import('./demo/components/landing/landing.module').then(m => m.LandingModule)},
+                    { path: 'admin', component:DashboardComponent,canActivate : [AuthenticationGuard]},
                     { path: 'uikit', loadChildren: () => import('./demo/components/uikit/uikit.module').then(m => m.UIkitModule) },
                     { path: 'utilities', loadChildren: () => import('./demo/components/utilities/utilities.module').then(m => m.UtilitiesModule) },
                     { path: 'documentation', loadChildren: () => import('./demo/components/documentation/documentation.module').then(m => m.DocumentationModule) },
@@ -55,12 +66,19 @@ import {ThreadFrontComponent} from "./demo/components/landing/thread-front/threa
                     { path: 'waiting-list', component:WaitinglistComponent},
                     { path: 'claims', component: ClaimComponent},
                     {path: 'forums', component: ForumComponent},
-                    {path: 'threads/:thre', component: ThreadComponent}
+                    {path: 'threads/:thre', component: ThreadComponent},
+                    { path: 'fmemberships', component: FmembershipComponent },
+                    { path: 'rooms', component: RoomComponent },
 
                 ]
             },
+
             { path: 'auth', loadChildren: () => import('./demo/components/auth/auth.module').then(m => m.AuthModule) },
-            { path: 'landing', loadChildren: () => import('./demo/components/landing/landing.module').then(m => m.LandingModule) },
+            { path: 'register', component:RegisterComponent},
+            { path: 'login', component:LoginComponent},
+            { path: 'reset', component:ResetComponent,canActivate : [AuthenticationGuard]},
+            { path: 'profile', component:ProfileComponent},
+            { path: 'admin', component:DashboardComponent,canActivate : [AuthenticationGuard]},            { path: 'landing', loadChildren: () => import('./demo/components/landing/landing.module').then(m => m.LandingModule) },
             { path: 'landing/rmembership', loadChildren: () => import('./demo/components/landing/restaurant-Front/restauRoutingModule.module').then(m => m.RestauRoutingModule) },
             { path: 'landing/rmembership/add',component:CreateMembershipComponent },
             { path: 'landing/rmembership/myMemberships',component:MermbershipsUserComponent},
@@ -70,9 +88,11 @@ import {ThreadFrontComponent} from "./demo/components/landing/thread-front/threa
             { path: 'landing/clientrestaurant', loadChildren: () => import('./demo/components/uikit/clientrestaurant/clientrestaurant-routing.module').then(m => m.ClientrestaurantRoutingModule) },
             { path: 'landing/clientblockrestau', loadChildren: () => import('./demo/components/uikit/clientblockrestau/clientblockrestau-routing.module').then(m => m.ClientblockrestauRoutingModule) },
             { path: 'landing/dormfront', loadChildren: () => import('./demo/components/landing/dorm-Front/dormRoutingModule.module').then(m => m.DormRoutingModuleModule) },
-            {path:  'landing/claim',       loadChildren: () => import('./demo/components/landing/claim-front/claimRoutingModule').then(m=>m.claimRoutingModule)},
-            {path:  'landing/forum',       loadChildren: () => import('./demo/components/landing/forum-front/forumRoutingModule').then(m=>m.ForumRoutingModule)},
-            {path:  'landing/thread/:three',       loadChildren: () => import('./demo/components/landing/thread-front/threadRoutingModule').then(m=>m.ThreadRoutingModule)},
+            {path:  'landing/claim', loadChildren: () => import('./demo/components/landing/claim-front/claimRoutingModule').then(m=>m.claimRoutingModule)},
+            {path:  'landing/forum', loadChildren: () => import('./demo/components/landing/forum-front/forumRoutingModule').then(m=>m.ForumRoutingModule)},
+            {path:  'landing/thread/:three', loadChildren: () => import('./demo/components/landing/thread-front/threadRoutingModule').then(m=>m.ThreadRoutingModule)},
+            {path: 'landing/fmembership',loadChildren: () =>import( './demo/components/landing/fmembership/fmembership.module').then((m) => m.FmembershipModule)},
+            {path: 'landing/dorm',loadChildren: () =>import('./demo/components/landing/dorm/dorm.module').then((m) => m.DormModule)},
             { path: 'notfound', component: NotfoundComponent },
             { path: '**', redirectTo: '/notfound' },
         ], { scrollPositionRestoration: 'enabled', anchorScrolling: 'enabled', onSameUrlNavigation: 'reload' })

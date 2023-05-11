@@ -5,7 +5,7 @@ import { MessageService } from 'primeng/api';
 import { Table } from 'primeng/table';
 import { LayoutService } from 'src/app/layout/service/app.layout.service';
 import { FidelityCard } from 'src/app/models/fidelity-card';
-import { User } from 'src/app/models/user';
+import { User } from 'src/app/models/User';
 import { FidelityCardService } from 'src/app/services/FidelityCard/fidelity-card-service.service';
 
 @Component({

@@ -1,4 +1,4 @@
-import {User} from "./user";
+import { User } from "./User";
 import {Forum} from "./Forum";
 import {CommentType} from "./CommentType";
 

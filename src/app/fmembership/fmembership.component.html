@@ -1,0 +1,180 @@
+<div class="grid">
+  <div class="col-12">
+    <div class="card px-6 py-6">
+      <p-toast></p-toast>
+      <p-toolbar styleClass="mb-4">
+        <ng-template pTemplate="left">
+          <div class="my-2">
+            <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2"
+              (click)="openNew()"></button>
+            <button pButton pRipple label="Delete" icon="pi pi-trash" class="p-button-danger"></button>
+          </div>
+        </ng-template>
+
+        <ng-template pTemplate="right">
+          <p-fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" label="Import" chooseLabel="Import"
+            class="mr-2 inline-block"></p-fileUpload>
+          <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help"
+            (click)="dt.exportCSV()"></button>
+        </ng-template>
+      </p-toolbar>
+
+      <p-table #dt [value]="fmemberships" [columns]="cols" responsiveLayout="scroll" [rows]="10"
+        [globalFilterFields]="['price', 'duration']" [rows]="10" [paginator]="true" [rowsPerPageOptions]="[10, 20, 30]"
+        [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+        [(selection)]="selectedFmemberships" selectionMode="multiple" [rowHover]="true" dataKey="idFMembership">
+        <ng-template pTemplate="caption">
+          <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+            <h5 class="m-0">Manage fmemberships</h5>
+            <span class="block mt-2 md:mt-0 p-input-icon-left">
+              <i class="pi pi-search"></i>
+              <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Search..."
+                class="w-full sm:w-auto" />
+            </span>
+          </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+          <tr>
+            <th style="width: 3rem">
+              <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+            </th>
+            <th pSortableColumn="code">
+              Code <p-sortIcon field="code"></p-sortIcon>
+            </th>
+            <th pSortableColumn="duration">
+              Duration <p-sortIcon field="duration"></p-sortIcon>
+            </th>
+            <th pSortableColumn="start_date">
+              startDate<p-sortIcon field="start_date"></p-sortIcon>
+            </th>
+            <th pSortableColumn="Price">
+              Price <p-sortIcon field="Price"></p-sortIcon>
+            </th>
+            <th pSortableColumn="user">
+              User <p-sortIcon field="User"></p-sortIcon>
+            </th>
+            <th pSortableColumn="room">
+              Room <p-sortIcon field="Room"></p-sortIcon>
+            </th>
+            <th></th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-fmembership>
+          <tr>
+            <td>
+              <p-tableCheckbox [value]="fmembership"></p-tableCheckbox>
+            </td>
+            <td style="width: 14%; min-width: 10rem">
+              <span class="p-column-title">Code</span>
+              {{ fmembership.code || fmembership.idFMembership }}
+            </td>
+            <td style="width: 14%; min-width: 10rem">
+              <span class="p-column-title">Duration</span>
+              {{ fmembership.duration }}
+            </td>
+            <td style="width: 14%; min-width: 8rem">
+              <span class="p-column-title">start_date</span>
+              {{ fmembership.startDate }}
+            </td>
+            <td style="width: 14%; min-width: 10rem">
+              <span class="p-column-title">Price</span>
+              {{ fmembership.price }}
+            </td>
+            <td style="width: 14%; min-width: 10rem">
+              <span class="p-column-title">user</span>
+              {{ fmembership.user.firstName }} {{ fmembership.user.lastName }}
+            </td>
+            <td style="width: 14%; min-width: 10rem">
+              <span class="p-column-title">room</span>
+              N{{ fmembership.room.roomNbr }}
+              {{ fmembership.room.blockFoyer.nameBlock }}
+            </td>
+
+            <td>
+              <div class="flex">
+                <button (click)="preEditfmembership(fmembership)" pButton pRipple icon="pi pi-pencil"
+                  class="p-button-rounded p-button-success mr-2"></button>
+                <button (click)="deleteFmembership(fmembership.idFMembership)" pButton pRipple icon="pi pi-trash"
+                  class="p-button-rounded p-button-warning"></button>
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+
+    <p-dialog [(visible)]="fmembershipDialog" [style]="{ width: '450px' }" header="fmembership Details" [modal]="true"
+      class="p-fluid">
+      <form #form="ngForm" (ngSubmit)="savefmembership()">
+        <div class="field">
+          <label for="startDate">Start Date</label>
+          <input type="datetime-local" pInputText id="startDate" name="startDate" [(ngModel)]="fmembership.startDate"
+            required />
+        </div>
+        <div class="field">
+          <label for="duration">Duration</label>
+          <select id="duration" pInputText name="duration" [(ngModel)]="fmembership.duration" required>
+            <option selected>Select the duration</option>
+            <option value="DAY">DAY</option>
+            <option value="MONTH">MONTH</option>
+            <option value="SEMESTER">SEMESTER</option>
+            <option value="YEAR">YEAR</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="price">price</label>
+          <input type="text" pInputText id="price" name="price" [(ngModel)]="fmembership.price" required />
+        </div>
+        <div class="field">
+          <label for="User">User</label>
+          <select id="User" pInputText name="User" [(ngModel)]="userid" required #blockname>
+            <option *ngFor="let user of listuser" [value]="user.idUser">
+              {{ user.firstName }} {{ user.lastName }}
+            </option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="foyer">Foyer</label>
+          <select id="foyer" pInputText name="foyer" [(ngModel)]="foyerid" required #blockname>
+            <option *ngFor="let foyer of listfoyer" [value]="foyer.idFoyer">
+              {{ foyer.nameFoyer }}
+            </option>
+          </select>
+        </div>
+        <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+        <button pButton type="submit" [disabled]="form.invalid" pRipple label="Save" icon="pi pi-check"
+          class="p-button-text"></button>
+      </form>
+    </p-dialog>
+
+    <p-dialog [(visible)]="fmembershipsUpdateDialog" [style]="{ width: '450px' }" header="Fmembership Details"
+      [modal]="true" class="p-fluid">
+      <form #formupdate="ngForm" (ngSubmit)="updateMembership(); (hideFmembershipUpdateDialog)">
+        <div class="field">
+          <label for="start_date">Start Date</label>
+          <input type="datetime-local" pInputText id="start_date" name="start_date" [(ngModel)]="fmembership.startDate"
+            required />
+        </div>
+        <div class="field">
+          <label for="duration">Duration</label>
+          <select id="duration" pInputText name="duration" [(ngModel)]="fmembership.duration" required>
+            <option value="">Select the duration</option>
+            <option value="DAY">DAY</option>
+            <option value="MONTH">MONTH</option>
+            <option value="SEMESTER">SEMESTER</option>
+            <option value="YEAR">YEAR</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="price">price</label>
+          <input type="text" pInputText id="price" name="price" [(ngModel)]="fmembership.price" required />
+        </div>
+
+        <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text"
+          (click)="hideFmembershipUpdateDialog()"></button>
+        <button pButton type="submit" [disabled]="formupdate.invalid" pRipple label="Save" icon="pi pi-check"
+          class="p-button-text"></button>
+      </form>
+    </p-dialog>
+  </div>
+</div>

@@ -1,6 +1,6 @@
 import { Reward } from "./reward";
 import { RUserTransaction } from "./ruser-transaction";
-import { User } from "./user";
+import { User } from "./User";
 
 export class FidelityCard {
   idFidelityCard!: number;

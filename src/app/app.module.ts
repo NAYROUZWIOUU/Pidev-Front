@@ -45,10 +45,20 @@ import { ThreadComponent } from './thread/thread.component';
 import {ThreadComponentModule} from "./thread/thread.module";
 import {claimRoutingModule} from "./demo/components/landing/claim-front/claimRoutingModule";
 import {ThreadRoutingModule} from "./demo/components/landing/thread-front/threadRoutingModule";
+import { UserComponentComponent } from './user-component/user-component.component';
+import { ProfileComponent } from './demo/components/profile/profile.component';
+import { ResetComponent } from './reset/reset.component';
+import { RegisterComponent } from './demo/components/auth/register/register.component';
+import { FmembershipModule } from './fmembership/fmembership.module';
+import { RoomService } from './services/rooms/room.service';
+import { FmembershipService } from './services/Fmembership/fmembership.service';
+import { RoomComponent } from './room/room.component';
+import { RoomComponentModule } from './room/room.module';
 
 @NgModule({
   declarations: [
-    AppComponent, NotfoundComponent,DormFrontComponent
+    AppComponent, NotfoundComponent,DormFrontComponent, RegisterComponent,
+    ProfileComponent,ResetComponent
   ],
   imports: [
     AppRoutingModule,
@@ -57,7 +67,7 @@ import {ThreadRoutingModule} from "./demo/components/landing/thread-front/thread
     RmembershipComponentModule,
     RestauRoutingModule,
     FidelityCardModule,
-    RewardModule
+    RewardModule,
     FormsModule,
     FoyerModule,
     WaitinglistModule,
@@ -70,13 +80,17 @@ import {ThreadRoutingModule} from "./demo/components/landing/thread-front/thread
     ForumComponentModule,
     ThreadComponentModule,
     claimRoutingModule,
-    ThreadRoutingModule
+    ThreadRoutingModule,
+    FmembershipModule,
+    ForumComponentModule,
+    RoomComponentModule
   ],
   providers: [
     { provide: LocationStrategy, useClass: HashLocationStrategy },
     CountryService, CustomerService, EventService, IconService, NodeService,
     PhotoService, ProductService,RestaurantService,UsersService,RmembershipService,WaitingListService,MessageService,MenuService,
-    ClaimService,ForumService,ThreadService,ReactionService,FidelityCardService,RewardService
+    ClaimService,ForumService,ThreadService,ReactionService,FidelityCardService,RewardService,FmembershipService,
+    RoomService
   ],
   bootstrap: [AppComponent]
 

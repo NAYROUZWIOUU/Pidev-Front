@@ -1,4 +1,4 @@
-import { User } from './user';
+import { User } from './User';
 import { Restaurant } from './restaurant';
 import { TypeMembership } from './typeMembership';
 import { Duration } from './duration';

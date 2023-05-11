@@ -1,0 +1,105 @@
+
+<div class="surface-ground flex align-items-center justify-content-center min-h-screen min-w-screen overflow-hidden">
+  <div class="flex flex-column align-items-center justify-content-center">
+     <div style="border-radius:56px; padding:0.3rem; background: linear-gradient(180deg, var(--primary-color) 10%, rgba(33, 150, 243, 0) 30%);">
+          <div class="w-full surface-card py-8 px-5 sm:px-8" style="border-radius:53px">
+              <div class="text-center mb-5">
+
+                  <div class="text-900 text-3xl font-medium mb-3">Signup</div>
+
+              </div>
+
+
+              <div class="p-formgrid grid">
+                  <div class="field col">
+                      <label for="firstname" class="block text-900 text-xl font-medium mb-2">Firstname</label>
+                      <input pinputtext="w-full md:w-30rem mb-5" id="firstname" type="text" [(ngModel)]="user.firstName" placeholder="Firstname" class="p-inputtext p-component p-element">
+                  </div>
+                  <div class="field col">
+                      <label for="lastname" class="block text-900 text-xl font-medium mb-2">Lastname</label>
+                      <input pinputtext="w-full md:w-30rem mb-5" id="lastname" type="text" [(ngModel)]="user.lastName" placeholder="lastname" class="p-inputtext p-component p-element">
+                  </div>
+              </div>
+
+              <div class="p-formgrid grid">
+                  <div class="field col">
+                      <label for="username" class="block text-900 text-xl font-medium mb-2">Username</label>
+                      <input pinputtext="w-full md:w-30rem mb-5" id="username" type="text" [(ngModel)]="user.username" placeholder="username" class="p-inputtext p-component p-element">
+                  </div>
+                  <div class="field col">
+                      <label for="email" class="block text-900 text-xl font-medium mb-2">E-mail</label>
+                      <input pinputtext="w-full md:w-30rem mb-5" id="email" type="email" [(ngModel)]="user.email" placeholder="E-mail" class="p-inputtext p-component p-element">
+                  </div>
+              </div>
+
+              <div class="p-formgrid grid">
+                  <div class="field col">
+                      <label for="adresse" class="block text-900 text-xl font-medium mb-2">Adresse</label>
+                      <input pinputtext="w-full md:w-30rem mb-5" id="adresse" type="text" [(ngModel)]="user.address" placeholder="Adresse" class="p-inputtext p-component p-element">
+                  </div>
+                  <div class="field col">
+                      <label for="nationality" class="block text-900 text-xl font-medium mb-2">Nationality</label>
+                      <input pinputtext="w-full md:w-30rem mb-5" id="ationality" type="text" [(ngModel)]="user.nationality" placeholder="nationaity" class="p-inputtext p-component p-element">
+                  </div>
+              </div>
+
+              <div class="p-formgrid grid">
+                  <div class="field col">
+                      <label for="phonenumber" class="block text-900 text-xl font-medium mb-2">Phone number</label>
+                      <input pinputtext="w-full md:w-30rem mb-5" id="phonenumber" type="number" [(ngModel)]="user.phoneNum" type="text" placeholder="Phone number" class="p-inputtext p-component p-element">
+                  </div>
+                  <div class="field col">
+                      <label for="birthdate" class="block text-900 text-xl font-medium mb-2">Birth date</label>
+                      <input pinputtext="w-full md:w-30rem mb-5" id="birthdate" type="date"  [(ngModel)]="user.dateOfBirth" placeholder="Birth date" class="p-inputtext p-component p-element">
+                  </div>
+              </div>
+
+              <div class="p-formgrid grid">
+                  <div class="field col">
+                      <label for="sexe" class="block text-900 text-xl font-medium mb-2">Sexe</label>
+                      <label for="sexe" class="block text-90 text-xl font-medium mb-2">
+                          <input type="radio" name="sexe" value="homme" [(ngModel)]="user.sex">
+                          Homme
+                      </label>
+                      <label for="sexe" class="block text-90 text-xl font-medium mb-2">
+                          <input type="radio" name="sexe" value="femme" [(ngModel)]="user.sex">
+                          Femme
+                      </label>
+                  </div>
+                  <div class="field col">
+                      <label for="password" class="block text-900 text-xl font-medium mb-2">Password</label>
+                      <input pinputtext="w-full md:w-30rem mb-5" id="password" type="password" [(ngModel)]="user.password" placeholder="password" class="p-inputtext p-component p-element">
+                  </div>
+
+              </div>
+                  <div class="p-formgrid grid">
+                  <div class="p-formgrid grid">
+                      <div class="field col">
+
+                      <label for="password" class="block text-900 text-xl font-medium mb-2">Type</label>
+                  <select name="role">
+                      <option value="ROLE_STUDENT">Student</option>
+                      <option value="ROLE_GUEST">Guest</option>
+                      <option value="ROLE_TEACHER">Teacher</option>
+                    </select>
+                  </div>
+                  </div>
+
+              </div>
+
+
+
+
+
+
+              <button pbutton="" pripple="" type="button" (click)="AddUser()" [routerLink]="['/auth/login']" label="Signup" class="p-element p-ripple p-button-success p-button p-component" ng-reflect-label="Success">
+                  <span class="p-button-label">Signup</span>
+                  <span class="p-ink"></span>
+              </button>
+
+
+
+          </div>
+      </div>
+  </div>
+</div>
