@@ -45,10 +45,15 @@ import { ThreadComponent } from './thread/thread.component';
 import {ThreadComponentModule} from "./thread/thread.module";
 import {claimRoutingModule} from "./demo/components/landing/claim-front/claimRoutingModule";
 import {ThreadRoutingModule} from "./demo/components/landing/thread-front/threadRoutingModule";
+import { UserComponentComponent } from './user-component/user-component.component';
+import { ProfileComponent } from './demo/components/profile/profile.component';
+import { ResetComponent } from './reset/reset.component';
+import { RegisterComponent } from './demo/components/auth/register/register.component';
 
 @NgModule({
   declarations: [
-    AppComponent, NotfoundComponent,DormFrontComponent
+    AppComponent, NotfoundComponent,DormFrontComponent, RegisterComponent,
+    ProfileComponent,ResetComponent
   ],
   imports: [
     AppRoutingModule,

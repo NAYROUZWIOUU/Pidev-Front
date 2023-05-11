@@ -4,7 +4,7 @@ import { MessageService } from 'primeng/api';
 import { DatePipe } from '@angular/common';
 import { FidelityCard } from '../models/fidelity-card';
 import { FidelityCardService } from '../services/FidelityCard/fidelity-card-service.service';
-import { User } from '../models/user';
+import { User } from '../models/User';
 import { UsersService } from '../services/Users/users.service';
 import { RewardService } from '../services/Reward/reward.service';
 

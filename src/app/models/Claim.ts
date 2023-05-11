@@ -1,4 +1,4 @@
-import {User} from "./user";
+import { User } from "./User";
 import {AboutClaim} from "./AboutClaim";
 
 export class Claim {

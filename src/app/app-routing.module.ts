@@ -28,6 +28,12 @@ import {ThreadComponent} from "./thread/thread.component";
 import {ForumRoutingModule} from "./demo/components/landing/forum-front/forumRoutingModule";
 import {ThreadRoutingModule} from "./demo/components/landing/thread-front/threadRoutingModule";
 import {ThreadFrontComponent} from "./demo/components/landing/thread-front/thread-front.component";
+import { RegisterComponent } from './demo/components/auth/register/register.component';
+import { LoginComponent } from './demo/components/auth/login/login.component';
+import { ResetComponent } from './reset/reset.component';
+import { AuthenticationGuard } from './guard/authentication.guard';
+import { ProfileComponent } from './demo/components/profile/profile.component';
+import { DashboardComponent } from './demo/components/dashboard/dashboard.component';
 
 @NgModule({
     imports: [
@@ -35,7 +41,9 @@ import {ThreadFrontComponent} from "./demo/components/landing/thread-front/threa
             {
                 path: '', component: AppLayoutComponent,
                 children: [
-                    { path: '', loadChildren: () => import('./demo/components/dashboard/dashboard.module').then(m => m.DashboardModule) },
+                    { path: 'dashboard', loadChildren: () => import('./demo/components/dashboard/dashboard.module').then(m => m.DashboardModule),canActivate : [AuthenticationGuard] },
+                    { path: '', loadChildren: () => import('./demo/components/landing/landing.module').then(m => m.LandingModule)},
+                    { path: 'admin', component:DashboardComponent,canActivate : [AuthenticationGuard]},
                     { path: 'uikit', loadChildren: () => import('./demo/components/uikit/uikit.module').then(m => m.UIkitModule) },
                     { path: 'utilities', loadChildren: () => import('./demo/components/utilities/utilities.module').then(m => m.UtilitiesModule) },
                     { path: 'documentation', loadChildren: () => import('./demo/components/documentation/documentation.module').then(m => m.DocumentationModule) },
@@ -59,9 +67,13 @@ import {ThreadFrontComponent} from "./demo/components/landing/thread-front/threa
 
                 ]
             },
-            
+
             { path: 'auth', loadChildren: () => import('./demo/components/auth/auth.module').then(m => m.AuthModule) },
-            { path: 'landing', loadChildren: () => import('./demo/components/landing/landing.module').then(m => m.LandingModule) },
+            { path: 'register', component:RegisterComponent},
+            { path: 'login', component:LoginComponent},
+            { path: 'reset', component:ResetComponent,canActivate : [AuthenticationGuard]},
+            { path: 'profile', component:ProfileComponent},
+            { path: 'admin', component:DashboardComponent,canActivate : [AuthenticationGuard]},            { path: 'landing', loadChildren: () => import('./demo/components/landing/landing.module').then(m => m.LandingModule) },
             { path: 'landing/rmembership', loadChildren: () => import('./demo/components/landing/restaurant-Front/restauRoutingModule.module').then(m => m.RestauRoutingModule) },
             { path: 'landing/rmembership/add',component:CreateMembershipComponent },
             { path: 'landing/rmembership/myMemberships',component:MermbershipsUserComponent},
